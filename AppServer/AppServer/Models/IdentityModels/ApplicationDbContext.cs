@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
+using System.Data.Entity;
 
 namespace AppServer.Models
 {
@@ -13,5 +14,8 @@ namespace AppServer.Models
         {
             return new ApplicationDbContext();
         }
+
+        public DbSet<Presentation> Presentations { get; set; }
+
     }
 }
