@@ -14,6 +14,7 @@ using Microsoft.AspNet.Identity;
 
 namespace AppServer.Controllers
 {
+    [Authorize]
     public class PresentationsController : Controller
     {
 
@@ -52,7 +53,8 @@ namespace AppServer.Controllers
         // GET: Presentations
         public async Task<ActionResult> Index()
         {
-            return View( await this._Db.Presentations.ToListAsync() );
+            var user = await UserManager.FindByIdAsync( this.User.Identity.GetUserId() );
+            return View( user.Presentations );
         }
 
         // GET: Presentations/Details/5
@@ -79,11 +81,10 @@ namespace AppServer.Controllers
         // 詳細については、https://go.microsoft.com/fwlink/?LinkId=317598 を参照してください。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(PresentationsViewModel viewModel)
+        public async Task<ActionResult> Create(CreateViewModel viewModel)
         {
             if (this.ModelState.IsValid) {
                 var presentation = new Presentation {
-                    Id = Guid.NewGuid(),
                     Name = viewModel.Name,
                     HasReactionType = viewModel.HasReactionType,
                     ReactionCount = 0,
@@ -107,6 +108,9 @@ namespace AppServer.Controllers
             if (presentation == null) {
                 return HttpNotFound();
             }
+            if (presentation.Owner.Id == this.User.Identity.GetUserId()) {
+                return HttpNotFound();
+            }
             return View( presentation );
         }
 
@@ -115,14 +119,25 @@ namespace AppServer.Controllers
         // 詳細については、https://go.microsoft.com/fwlink/?LinkId=317598 を参照してください。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(PresentationsViewModel presentation)
+        public async Task<ActionResult> Edit(EditViewModel edit)
         {
             if (this.ModelState.IsValid) {
+                var presentation = await this._Db.Presentations.FindAsync( edit.Id );
+
+                if (presentation == null) {
+                    return HttpNotFound();
+                }
+                if (presentation.Owner.Id == this.User.Identity.GetUserId()) {
+                    return HttpNotFound();
+                }
+
+                presentation.Name = edit.Name;
+                presentation.HasReactionType = edit.HasReactionType;
                 this._Db.Entry( presentation ).State = EntityState.Modified;
                 await this._Db.SaveChangesAsync();
                 return RedirectToAction( "Index" );
             }
-            return View( presentation );
+            return View( edit );
         }
 
         // GET: Presentations/Delete/5
@@ -135,6 +150,9 @@ namespace AppServer.Controllers
             if (presentation == null) {
                 return HttpNotFound();
             }
+            if (presentation.Owner.Id == this.User.Identity.GetUserId()) {
+                return HttpNotFound();
+            }
             return View( presentation );
         }
 
@@ -144,6 +162,12 @@ namespace AppServer.Controllers
         public async Task<ActionResult> DeleteConfirmed(Guid id)
         {
             Presentation presentation = await this._Db.Presentations.FindAsync( id );
+            if (presentation == null) {
+                return HttpNotFound();
+            }
+            if (presentation.Owner.Id == this.User.Identity.GetUserId()) {
+                return HttpNotFound();
+            }
             this._Db.Presentations.Remove( presentation );
             await this._Db.SaveChangesAsync();
             return RedirectToAction( "Index" );

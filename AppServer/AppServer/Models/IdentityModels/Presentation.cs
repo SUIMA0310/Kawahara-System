@@ -10,12 +10,19 @@ namespace AppServer.Models
     public class Presentation
     {
 
+        public Presentation()
+        {
+
+            this.Id = Guid.NewGuid().ToString();
+
+        }
+
         /// <summary>
         /// Primary Key
         /// </summary>
         [Key]
         [DatabaseGenerated( DatabaseGeneratedOption.Identity )]
-        public Guid Id { get; set; }
+        public string Id { get; set; }
 
         /// <summary>
         /// Presentationの管理名（重複を許容）

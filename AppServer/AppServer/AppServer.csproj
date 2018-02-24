@@ -227,7 +227,8 @@
     <Compile Include="Models\ManageViewModels\ManageLoginsViewModel.cs" />
     <Compile Include="Models\ManageViewModels\SetPasswordViewModel.cs" />
     <Compile Include="Models\ManageViewModels\VerifyPhoneNumberViewModel.cs" />
-    <Compile Include="Models\PresentationViewModels\PresentationsViewModel.cs" />
+    <Compile Include="Models\PresentationViewModels\CreateViewModel.cs" />
+    <Compile Include="Models\PresentationViewModels\EditViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>

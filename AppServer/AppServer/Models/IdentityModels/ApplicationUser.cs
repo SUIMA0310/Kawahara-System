@@ -21,7 +21,7 @@ namespace AppServer.Models
         /// <summary>
         /// 所有するプレゼンテーションの一覧
         /// </summary>
-        public virtual ICollection<Presentation> Presentation { get; set; }
+        public virtual ICollection<Presentation> Presentations { get; set; }
 
     }
 }

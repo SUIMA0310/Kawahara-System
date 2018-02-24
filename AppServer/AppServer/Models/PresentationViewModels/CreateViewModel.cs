@@ -6,7 +6,7 @@ using System.Web;
 
 namespace AppServer.Models.PresentationViewModels
 {
-    public class PresentationsViewModel
+    public class CreateViewModel
     {
 
         /// <summary>
@@ -14,6 +14,7 @@ namespace AppServer.Models.PresentationViewModels
         /// </summary>
         [Required]
         [MaxLength( 256 )]
+        [Display( Name = "名前" )]
         public string Name { get; set; }
 
         /// <summary>
