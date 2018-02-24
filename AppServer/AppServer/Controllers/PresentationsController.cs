@@ -8,8 +8,9 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AppServer.Models;
-//using AppServer.Models;
+using AppServer.Models.PresentationViewModels;
 using Microsoft.AspNet.Identity.Owin;
+using Microsoft.AspNet.Identity;
 
 namespace AppServer.Controllers
 {
@@ -18,8 +19,8 @@ namespace AppServer.Controllers
 
         #region fields
 
-        private ApplicationDbContext db = new ApplicationDbContext();
-        private ApplicationUserManager _userManager;
+        private ApplicationDbContext _Db = new ApplicationDbContext();
+        private ApplicationUserManager _UserManager;
 
         #endregion
 
@@ -30,7 +31,7 @@ namespace AppServer.Controllers
         }
         public PresentationsController(ApplicationUserManager userManager)
         {
-            UserManager = userManager;
+            this.UserManager = userManager;
         }
 
         #endregion
@@ -39,10 +40,10 @@ namespace AppServer.Controllers
 
         public ApplicationUserManager UserManager {
             get {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                return this._UserManager ?? this.HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
             }
             private set {
-                _userManager = value;
+                this._UserManager = value;
             }
         }
 
@@ -51,22 +52,20 @@ namespace AppServer.Controllers
         // GET: Presentations
         public async Task<ActionResult> Index()
         {
-            return View(await db.Presentations.ToListAsync());
+            return View( await this._Db.Presentations.ToListAsync() );
         }
 
         // GET: Presentations/Details/5
         public async Task<ActionResult> Details(Guid? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            if (id == null) {
+                return new HttpStatusCodeResult( HttpStatusCode.BadRequest );
             }
-            Presentation presentation = await db.Presentations.FindAsync(id);
-            if (presentation == null)
-            {
+            Presentation presentation = await this._Db.Presentations.FindAsync( id );
+            if (presentation == null) {
                 return HttpNotFound();
             }
-            return View(presentation);
+            return View( presentation );
         }
 
         // GET: Presentations/Create
@@ -80,32 +79,35 @@ namespace AppServer.Controllers
         // 詳細については、https://go.microsoft.com/fwlink/?LinkId=317598 を参照してください。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Name,HasReaction")] Presentation presentation)
+        public async Task<ActionResult> Create(PresentationsViewModel viewModel)
         {
-            if (ModelState.IsValid)
-            {
-                presentation.Id = Guid.NewGuid();
-                db.Presentations.Add(presentation);
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+            if (this.ModelState.IsValid) {
+                var presentation = new Presentation {
+                    Id = Guid.NewGuid(),
+                    Name = viewModel.Name,
+                    HasReactionType = viewModel.HasReactionType,
+                    ReactionCount = 0,
+                    Owner = this._Db.Users.Find( this.User.Identity.GetUserId() )
+                };
+                this._Db.Presentations.Add( presentation );
+                await this._Db.SaveChangesAsync();
+                return RedirectToAction( "Index" );
             }
 
-            return View(presentation);
+            return View( viewModel );
         }
 
         // GET: Presentations/Edit/5
         public async Task<ActionResult> Edit(Guid? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            if (id == null) {
+                return new HttpStatusCodeResult( HttpStatusCode.BadRequest );
             }
-            Presentation presentation = await db.Presentations.FindAsync(id);
-            if (presentation == null)
-            {
+            Presentation presentation = await this._Db.Presentations.FindAsync( id );
+            if (presentation == null) {
                 return HttpNotFound();
             }
-            return View(presentation);
+            return View( presentation );
         }
 
         // POST: Presentations/Edit/5
@@ -113,50 +115,46 @@ namespace AppServer.Controllers
         // 詳細については、https://go.microsoft.com/fwlink/?LinkId=317598 を参照してください。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Name,HasReaction")] Presentation presentation)
+        public async Task<ActionResult> Edit(PresentationsViewModel presentation)
         {
-            if (ModelState.IsValid)
-            {
-                db.Entry(presentation).State = EntityState.Modified;
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+            if (this.ModelState.IsValid) {
+                this._Db.Entry( presentation ).State = EntityState.Modified;
+                await this._Db.SaveChangesAsync();
+                return RedirectToAction( "Index" );
             }
-            return View(presentation);
+            return View( presentation );
         }
 
         // GET: Presentations/Delete/5
         public async Task<ActionResult> Delete(Guid? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            if (id == null) {
+                return new HttpStatusCodeResult( HttpStatusCode.BadRequest );
             }
-            Presentation presentation = await db.Presentations.FindAsync(id);
-            if (presentation == null)
-            {
+            Presentation presentation = await this._Db.Presentations.FindAsync( id );
+            if (presentation == null) {
                 return HttpNotFound();
             }
-            return View(presentation);
+            return View( presentation );
         }
 
         // POST: Presentations/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost, ActionName( "Delete" )]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(Guid id)
         {
-            Presentation presentation = await db.Presentations.FindAsync(id);
-            db.Presentations.Remove(presentation);
-            await db.SaveChangesAsync();
-            return RedirectToAction("Index");
+            Presentation presentation = await this._Db.Presentations.FindAsync( id );
+            this._Db.Presentations.Remove( presentation );
+            await this._Db.SaveChangesAsync();
+            return RedirectToAction( "Index" );
         }
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
-            {
-                db.Dispose();
+            if (disposing) {
+                this._Db.Dispose();
             }
-            base.Dispose(disposing);
+            base.Dispose( disposing );
         }
     }
 }
