@@ -34,7 +34,7 @@ namespace AppServer.Models
         /// 合計リアクション回数
         /// </summary>
         [Required]
-        public ulong ReactionCount { get; set; } = 0;
+        public long ReactionCount { get; set; }
 
         /// <summary>
         /// 所有者
