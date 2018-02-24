@@ -33,6 +33,7 @@ namespace AppServer.Models
         /// <summary>
         /// 合計リアクション回数
         /// </summary>
+        [Required]
         public ulong ReactionCount { get; set; } = 0;
 
         /// <summary>
