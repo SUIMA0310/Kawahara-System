@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppServer", "AppServer\AppS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppServer.Tests", "AppServer.Tests\AppServer.Tests.csproj", "{99C91F5C-0C1D-4786-A632-9BF2D57B6CDD}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server side", "Server side", "{1FDC8E60-6806-4419-97F7-1EC4D19DBE65}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client side", "Client side", "{F15E4ED0-869E-4D21-932B-016E89B34113}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,6 +28,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F8CDABD1-6450-452B-8116-1D183E50447F} = {1FDC8E60-6806-4419-97F7-1EC4D19DBE65}
+		{99C91F5C-0C1D-4786-A632-9BF2D57B6CDD} = {1FDC8E60-6806-4419-97F7-1EC4D19DBE65}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B0B5377F-0322-431A-B5CD-82207BC11C7D}
