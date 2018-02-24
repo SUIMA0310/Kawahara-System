@@ -8,23 +8,34 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AppServer.Models;
+//using AppServer.Models;
 using Microsoft.AspNet.Identity.Owin;
 
 namespace AppServer.Controllers
 {
     public class PresentationsController : Controller
     {
+
+        #region fields
+
         private ApplicationDbContext db = new ApplicationDbContext();
         private ApplicationUserManager _userManager;
+
+        #endregion
+
+        #region Constructors
 
         public PresentationsController()
         {
         }
-
         public PresentationsController(ApplicationUserManager userManager)
         {
             UserManager = userManager;
         }
+
+        #endregion
+
+        #region Properties
 
         public ApplicationUserManager UserManager {
             get {
@@ -34,6 +45,8 @@ namespace AppServer.Controllers
                 _userManager = value;
             }
         }
+
+        #endregion
 
         // GET: Presentations
         public async Task<ActionResult> Index()
