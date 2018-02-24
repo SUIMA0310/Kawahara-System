@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
@@ -16,5 +17,11 @@ namespace AppServer.Models
             // ここにカスタム ユーザー クレームを追加します
             return userIdentity;
         }
+
+        /// <summary>
+        /// 所有するプレゼンテーションの一覧
+        /// </summary>
+        public virtual ICollection<Presentation> Presentation { get; set; }
+
     }
 }
