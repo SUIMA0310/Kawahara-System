@@ -53,18 +53,21 @@ namespace AppServer.Controllers
         // GET: Presentations
         public async Task<ActionResult> Index()
         {
-            var user = await UserManager.FindByIdAsync( this.User.Identity.GetUserId() );
+            var user = await this.UserManager.FindByIdAsync( this.User.Identity.GetUserId() );
             return View( user.Presentations );
         }
 
         // GET: Presentations/Details/5
-        public async Task<ActionResult> Details(Guid? id)
+        public async Task<ActionResult> Details(string id)
         {
             if (id == null) {
                 return new HttpStatusCodeResult( HttpStatusCode.BadRequest );
             }
             Presentation presentation = await this._Db.Presentations.FindAsync( id );
             if (presentation == null) {
+                return HttpNotFound();
+            }
+            if (presentation.Owner.Id != this.User.Identity.GetUserId()) {
                 return HttpNotFound();
             }
             return View( presentation );
@@ -85,13 +88,20 @@ namespace AppServer.Controllers
         {
             if (this.ModelState.IsValid) {
                 var presentation = new Presentation {
+                    Id = Guid.NewGuid().ToString(),
                     Name = viewModel.Name,
                     HasReactionType = viewModel.HasReactionType,
                     ReactionCount = 0,
                     Owner = this._Db.Users.Find( this.User.Identity.GetUserId() )
                 };
-                this._Db.Presentations.Add( presentation );
-                await this._Db.SaveChangesAsync();
+
+                try {
+                    this._Db.Presentations.Add( presentation );
+                    await this._Db.SaveChangesAsync();
+                } catch (Exception ex) {
+                    string str = ex.Message;
+                }
+
                 return RedirectToAction( "Index" );
             }
 
@@ -99,7 +109,7 @@ namespace AppServer.Controllers
         }
 
         // GET: Presentations/Edit/5
-        public async Task<ActionResult> Edit(Guid? id)
+        public async Task<ActionResult> Edit(string id)
         {
             if (id == null) {
                 return new HttpStatusCodeResult( HttpStatusCode.BadRequest );
@@ -108,10 +118,15 @@ namespace AppServer.Controllers
             if (presentation == null) {
                 return HttpNotFound();
             }
-            if (presentation.Owner.Id == this.User.Identity.GetUserId()) {
+            if (presentation.Owner.Id != this.User.Identity.GetUserId()) {
                 return HttpNotFound();
             }
-            return View( presentation );
+            var edit = new EditViewModel {
+                Id = presentation.Id,
+                Name = presentation.Name,
+                HasReactionType = presentation.HasReactionType
+            };
+            return View( edit );
         }
 
         // POST: Presentations/Edit/5
@@ -127,7 +142,7 @@ namespace AppServer.Controllers
                 if (presentation == null) {
                     return HttpNotFound();
                 }
-                if (presentation.Owner.Id == this.User.Identity.GetUserId()) {
+                if (presentation.Owner.Id != this.User.Identity.GetUserId()) {
                     return HttpNotFound();
                 }
 
@@ -141,7 +156,7 @@ namespace AppServer.Controllers
         }
 
         // GET: Presentations/Delete/5
-        public async Task<ActionResult> Delete(Guid? id)
+        public async Task<ActionResult> Delete(string id)
         {
             if (id == null) {
                 return new HttpStatusCodeResult( HttpStatusCode.BadRequest );
@@ -150,7 +165,7 @@ namespace AppServer.Controllers
             if (presentation == null) {
                 return HttpNotFound();
             }
-            if (presentation.Owner.Id == this.User.Identity.GetUserId()) {
+            if (presentation.Owner.Id != this.User.Identity.GetUserId()) {
                 return HttpNotFound();
             }
             return View( presentation );
@@ -159,13 +174,13 @@ namespace AppServer.Controllers
         // POST: Presentations/Delete/5
         [HttpPost, ActionName( "Delete" )]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(Guid id)
+        public async Task<ActionResult> DeleteConfirmed(string id)
         {
             Presentation presentation = await this._Db.Presentations.FindAsync( id );
             if (presentation == null) {
                 return HttpNotFound();
             }
-            if (presentation.Owner.Id == this.User.Identity.GetUserId()) {
+            if (presentation.Owner.Id != this.User.Identity.GetUserId()) {
                 return HttpNotFound();
             }
             this._Db.Presentations.Remove( presentation );

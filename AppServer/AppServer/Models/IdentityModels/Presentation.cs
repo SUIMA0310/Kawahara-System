@@ -21,7 +21,6 @@ namespace AppServer.Models
         /// Primary Key
         /// </summary>
         [Key]
-        [DatabaseGenerated( DatabaseGeneratedOption.Identity )]
         public string Id { get; set; }
 
         /// <summary>
