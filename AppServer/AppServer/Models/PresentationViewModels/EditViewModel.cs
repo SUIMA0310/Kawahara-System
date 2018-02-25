@@ -22,7 +22,7 @@ namespace AppServer.Models.PresentationViewModels
         /// <summary>
         /// 利用するリアクションの種類
         /// </summary>
-        [Display( Name = "利用するリアクションタイプ" )]
+        [Display( Name = "リアクション" )]
         public eReactionType HasReactionType { get; set; }
 
 

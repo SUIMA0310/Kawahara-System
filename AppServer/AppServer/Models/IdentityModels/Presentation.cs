@@ -28,18 +28,21 @@ namespace AppServer.Models
         /// </summary>
         [Required]
         [MaxLength( 256 )]
+        [Display( Name = "名前" )]
         public string Name { get; set; }
 
         /// <summary>
         /// 利用可能なリアクション
         /// </summary>
         [Required]
+        [Display( Name = "リアクション" )]
         public eReactionType HasReactionType { get; set; } = eReactionType.Good;
 
         /// <summary>
         /// 合計リアクション回数
         /// </summary>
         [Required]
+        [Display( Name = "リアクション回数" )]
         public long ReactionCount { get; set; }
 
         /// <summary>
