@@ -1,4 +1,4 @@
-﻿namespace AppServer.Models.HubResults
+﻿namespace AppServer.Models.HubModels
 {
     public enum eResultTypes
     {
