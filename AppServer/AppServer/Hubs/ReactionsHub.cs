@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using Microsoft.AspNet.SignalR;
 using AppServer.Models;
-using AppServer.Models.HubResults;
+using AppServer.Models.HubModels;
 
 namespace AppServer.Hubs
 {
