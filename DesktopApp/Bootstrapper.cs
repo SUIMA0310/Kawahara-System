@@ -19,7 +19,7 @@ namespace DesktopApp
         /// <returns>Windowのインスタンス</returns>
         protected override DependencyObject CreateShell()
         {
-            return this.Container.Resolve<MainWindow>();
+            return this.Container.Resolve<Shell>();
         }
 
         /// <summary>
