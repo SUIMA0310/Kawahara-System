@@ -212,6 +212,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Hubs\ReactionsHub.cs" />
     <Compile Include="Models\AccountViewModels\ExternalLoginConfirmationViewModel.cs" />
     <Compile Include="Models\AccountViewModels\ExternalLoginListViewModel.cs" />
     <Compile Include="Models\AccountViewModels\ForgotPasswordViewModel.cs" />
@@ -221,6 +222,8 @@
     <Compile Include="Models\AccountViewModels\ResetPasswordViewModel.cs" />
     <Compile Include="Models\AccountViewModels\SendCodeViewModel.cs" />
     <Compile Include="Models\AccountViewModels\VerifyCodeViewModel.cs" />
+    <Compile Include="Models\HubResults\eResultTypes.cs" />
+    <Compile Include="Models\HubResults\Result.cs" />
     <Compile Include="Models\IdentityModels\ApplicationDbContext.cs" />
     <Compile Include="Models\IdentityModels\ApplicationUser.cs" />
     <Compile Include="Helpers\DbEntityExtension.cs" />
