@@ -12,17 +12,17 @@ namespace AppServer.Models
         /// <summary>
         /// いいね！
         /// </summary>
-        Good,
+        Good = 0x01,
 
         /// <summary>
         /// ナイス！
         /// </summary>
-        Nice,
+        Nice = 0x02,
 
         /// <summary>
         /// おもしろいね！
         /// </summary>
-        Fun
+        Fun = 0x04
 
     }
 }

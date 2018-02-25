@@ -88,7 +88,6 @@ namespace AppServer.Controllers
         {
             if (this.ModelState.IsValid) {
                 var presentation = new Presentation {
-                    Id = Guid.NewGuid().ToString(),
                     Name = viewModel.Name,
                     HasReactionType = viewModel.HasReactionType,
                     ReactionCount = 0,
