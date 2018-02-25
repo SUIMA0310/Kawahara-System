@@ -51,5 +51,15 @@ namespace AppServer.Models
         [Required]
         public virtual ApplicationUser Owner { get; set; }
 
+        /// <summary>
+        /// 作成日時
+        /// </summary>
+        public DateTime CreateDateTime { get; set; }
+
+        /// <summary>
+        /// 最終更新日時
+        /// </summary>
+        public DateTime UpdateDateTime { get; set; }
+
     }
 }

@@ -217,6 +217,7 @@
     <Compile Include="Models\AccountViewModels\VerifyCodeViewModel.cs" />
     <Compile Include="Models\IdentityModels\ApplicationDbContext.cs" />
     <Compile Include="Models\IdentityModels\ApplicationUser.cs" />
+    <Compile Include="Helpers\DbEntityExtension.cs" />
     <Compile Include="Models\IdentityModels\eReactionType.cs" />
     <Compile Include="Models\IdentityModels\Presentation.cs" />
     <Compile Include="Models\ManageViewModels\AddPhoneNumberViewModel.cs" />
