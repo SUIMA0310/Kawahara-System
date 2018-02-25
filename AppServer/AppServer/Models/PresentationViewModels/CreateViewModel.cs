@@ -20,7 +20,8 @@ namespace AppServer.Models.PresentationViewModels
         /// <summary>
         /// 利用するリアクションの種類
         /// </summary>
-        public eReactionType HasReactionType { get; set; }
+        [Display( Name = "リアクション" )]
+        public eReactionType HasReactionType { get; set; } = eReactionType.Good;
 
         /// <summary>
         /// Goodを利用するか

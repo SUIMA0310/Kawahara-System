@@ -76,7 +76,7 @@ namespace AppServer.Controllers
         // GET: Presentations/Create
         public ActionResult Create()
         {
-            return View();
+            return View( new CreateViewModel() );
         }
 
         // POST: Presentations/Create
