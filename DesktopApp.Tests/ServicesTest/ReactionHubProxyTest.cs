@@ -7,7 +7,6 @@ namespace DesktopApp.Tests.ServicesTest
     public class ReactionHubProxyTest
     {
         [TestMethod]
-        [Ignore]
         public void Connnection()
         {
 
