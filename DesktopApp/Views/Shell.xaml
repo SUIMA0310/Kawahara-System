@@ -50,28 +50,8 @@
         <ContentControl prism:RegionManager.RegionName="ContentRegion"
                         Grid.Row="1"/>
 
-        <!-- region Status area -->
-        <Grid Grid.Row="2"
-			  Background="{DynamicResource AccentBrushKey}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-
-            <Rectangle x:Name="Col0"
-				   Margin="5,0" />
-            <TextBlock Style="{x:Null}"
-                       Grid.Column="0"
-				       Text="準備完了"
-				       Foreground="{DynamicResource AccentForegroundBrushKey}"
-				       TextWrapping="NoWrap"
-				       MaxWidth="{Binding ElementName=Col0, Path=ActualWidth}"
-				       Margin="5,0" 
-                       VerticalAlignment="Center" />
-
-            <metro:ResizeGrip Grid.Column="1" />
-        </Grid>
-        <!-- endregion -->
+        <ContentControl prism:RegionManager.RegionName="StatusBarRegion"
+                        Grid.Row="2"/>
 
 
     </Grid>
