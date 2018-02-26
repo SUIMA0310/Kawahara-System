@@ -25,13 +25,15 @@ namespace DesktopApp.Services
         public virtual void Open()
         {
             this.Proxy = this.Connection.CreateHubProxy(this.HubName);
-
-            this.InitializeProxy();
+            this.PreInitializeProxy();
+            this.Connection.Open();
+            this.PostInitializeProxy();
         }
 
         protected abstract string HubName { get; }
 
-        protected virtual void InitializeProxy() { }
+        protected virtual void PreInitializeProxy() { }
+        protected virtual void PostInitializeProxy() { }
 
     }
 }

@@ -115,6 +115,7 @@
     <Compile Include="BootstrapperTest.cs" />
     <Compile Include="ModulesTest\SinnalRModuleTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServicesTest\ReactionHubProxyTest.cs" />
     <Compile Include="ViewModelsTest\ViewModelBaseTest.cs" />
   </ItemGroup>
   <ItemGroup>

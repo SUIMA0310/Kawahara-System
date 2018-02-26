@@ -31,40 +31,29 @@ namespace DesktopApp.Services
 
         private HubConnection Connection { get; set; }
 
-        public ConnectionService(/*ILoggerFacade logger*/)
+        public ConnectionService(ILoggerFacade logger)
         {
 
-            //this.Logger = logger;
+            this.Logger = logger;
 
         }
 
         public IHubProxy CreateHubProxy( string hubName )
         {
-            this.Open();
+            if (this.Connection == null) { this.Connection = this.CreateHubConnection(); }
             return this.Connection.CreateHubProxy( hubName );
         }
 
         public void Open()
         {
-            this.Open(Properties.Settings.Default.ServerURL);
-        }
-
-        public void Open( string url )
-        {
-
             //2度目以降の実行を無視
             if ( this._IsOpened ) { return; }
             this._IsOpened = true;
 
-            this.Connection = new HubConnection(url);
+            if ( this.Connection == null ) { this.Connection = this.CreateHubConnection(); }
             this.Connection.Error += this.Connection_Error;
             this.Connecting = this.Connection.Start();
 
-        }
-
-        private void Connection_Error(Exception obj)
-        {
-            throw obj;
         }
 
         public void Close()
@@ -81,7 +70,15 @@ namespace DesktopApp.Services
             this.Connecting?.Dispose();
 
         }
+        private void Connection_Error(Exception obj)
+        {
+            throw obj;
+        }
 
+        private HubConnection CreateHubConnection()
+        {
+            return new HubConnection(Properties.Settings.Default.ServerURL);
+        }
 
 
     }
