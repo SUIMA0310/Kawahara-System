@@ -94,6 +94,8 @@
   <ItemGroup>
     <Compile Include="Behaviors\DisposeViewModelsBehavior.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\eStatusMessages.cs" />
+    <Compile Include="Services\StatusService.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
   </ItemGroup>
   <ItemGroup>
