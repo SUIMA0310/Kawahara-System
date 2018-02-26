@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesktopApp.Tests", "Desktop
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesktopApp.Core", "DesktopApp.Core\DesktopApp.Core.csproj", "{5048F2AA-32B1-49BF-A596-B3E59EA1DE36}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesktopApp.SignalR", "DesktopApp.SignalR\DesktopApp.SignalR.csproj", "{2627B05A-F94D-4818-BCFF-2E828972FFA3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{5048F2AA-32B1-49BF-A596-B3E59EA1DE36}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5048F2AA-32B1-49BF-A596-B3E59EA1DE36}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5048F2AA-32B1-49BF-A596-B3E59EA1DE36}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2627B05A-F94D-4818-BCFF-2E828972FFA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2627B05A-F94D-4818-BCFF-2E828972FFA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2627B05A-F94D-4818-BCFF-2E828972FFA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2627B05A-F94D-4818-BCFF-2E828972FFA3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -53,6 +59,7 @@ Global
 		{1FB637AF-4624-4E13-B0D7-AF7326DEA7E7} = {F15E4ED0-869E-4D21-932B-016E89B34113}
 		{AA5C5903-D36D-4806-B92F-EC40811DCE11} = {F15E4ED0-869E-4D21-932B-016E89B34113}
 		{5048F2AA-32B1-49BF-A596-B3E59EA1DE36} = {F15E4ED0-869E-4D21-932B-016E89B34113}
+		{2627B05A-F94D-4818-BCFF-2E828972FFA3} = {F15E4ED0-869E-4D21-932B-016E89B34113}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B0B5377F-0322-431A-B5CD-82207BC11C7D}

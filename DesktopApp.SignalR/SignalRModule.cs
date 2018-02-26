@@ -1,26 +1,27 @@
-﻿using DesktopApp.SignalR.Views;
-using Prism.Modularity;
+﻿using Prism.Modularity;
 using Prism.Regions;
 using System;
 using DryIoc;
 using Prism.DryIoc;
 
-namespace DesktopApp.SignalR
+namespace DesktopApp
 {
     public class SignalRModule : IModule
     {
-        private IRegionManager _regionManager;
-        private IContainer _container;
 
-        public SignalRModule(IContainer container, IRegionManager regionManager)
+        /// <summary>
+        /// Applicationで使用するメインのDIコンテナ
+        /// </summary>
+        private IContainer Container { get; }
+
+        public SignalRModule(IContainer container)
         {
-            _container = container;
-            _regionManager = regionManager;
+            this.Container = container;
         }
 
         public void Initialize()
         {
-            _container.RegisterTypeForNavigation<ViewA>();
+            
         }
     }
 }

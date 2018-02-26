@@ -114,6 +114,10 @@
       <Project>{5048f2aa-32b1-49bf-a596-b3e59ea1de36}</Project>
       <Name>DesktopApp.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DesktopApp.SignalR\DesktopApp.SignalR.csproj">
+      <Project>{2627b05a-f94d-4818-bcff-2e828972ffa3}</Project>
+      <Name>DesktopApp.SignalR</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
