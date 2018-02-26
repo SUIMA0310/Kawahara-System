@@ -23,6 +23,7 @@ namespace DesktopApp
         public void Initialize()
         {
             this.Container.Register<IConnectionService, ConnectionService>(Reuse.Singleton);
+            this.Container.Register<IReactionHubProxy, ReactionHubProxy>(Reuse.Singleton);
         }
     }
 }
