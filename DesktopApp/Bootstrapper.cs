@@ -38,7 +38,8 @@ namespace DesktopApp
         protected override void ConfigureModuleCatalog()
         {
             var moduleCatalog = (ModuleCatalog)this.ModuleCatalog;
-            //moduleCatalog.AddModule(typeof(YOUR_MODULE));
+
+            moduleCatalog.AddModule(typeof(SignalRModule));
         }
 
         /// <summary>
