@@ -30,7 +30,7 @@ namespace DesktopApp.Services
 
             this.Subject = new Subject<string>();
             this.Disposable = new CompositeDisposable();
-            this.Status = new ReactiveProperty<string>();
+            this.Status = new ReactiveProperty<string>( eStatusMessages.Ready.DisplayName() );
 
 
             this.Subject.Do( (msg) => {
