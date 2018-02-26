@@ -14,7 +14,7 @@
 				   Margin="5,0" />
         <TextBlock Style="{x:Null}"
                        Grid.Column="0"
-				       Text="準備完了"
+				       Text="{Binding StatusMessage.Value}"
 				       Foreground="{DynamicResource AccentForegroundBrushKey}"
 				       TextWrapping="NoWrap"
 				       MaxWidth="{Binding ElementName=Col0, Path=ActualWidth}"
