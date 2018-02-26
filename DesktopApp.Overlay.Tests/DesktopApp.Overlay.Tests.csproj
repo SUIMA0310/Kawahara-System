@@ -59,7 +59,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DesktopApp.OverlayCore\DesktopApp.Overlay.Core.csproj">
+    <ProjectReference Include="..\DesktopApp.Overlay.Core\DesktopApp.Overlay.Core.csproj">
       <Project>{dee71389-b145-4624-8ca4-b527cca09bd1}</Project>
       <Name>DesktopApp.Overlay.Core</Name>
     </ProjectReference>
