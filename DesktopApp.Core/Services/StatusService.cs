@@ -13,7 +13,7 @@ using System.Reactive.Disposables;
 namespace DesktopApp.Services
 {
 
-    public class StatusService : IDisposable
+    public class StatusService : IDisposable, IStatusService
     {
 
         private ILoggerFacade Logger { get; }
