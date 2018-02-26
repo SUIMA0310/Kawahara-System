@@ -13,12 +13,22 @@ namespace DesktopApp
     /// </summary>
     public partial class App : Application
     {
+
+        public DryIoc.IContainer Container { get; protected set; }
+
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
 
             var bootstrapper = new Bootstrapper();
             bootstrapper.Run();
+            this.Container = bootstrapper.Container;
+        }
+
+        protected override void OnExit(ExitEventArgs e)
+        {
+            this.Container.Dispose();
+            base.OnExit(e);
         }
     }
 }

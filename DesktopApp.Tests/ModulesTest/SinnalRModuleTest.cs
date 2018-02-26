@@ -16,6 +16,8 @@ namespace DesktopApp.Tests.ModulesTest
 
             module.Initialize();
 
+            container.Dispose();
+
         }
     }
 }

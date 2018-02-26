@@ -3,6 +3,7 @@ using Prism.Regions;
 using System;
 using DryIoc;
 using Prism.DryIoc;
+using DesktopApp.Services;
 
 namespace DesktopApp
 {
@@ -21,7 +22,7 @@ namespace DesktopApp
 
         public void Initialize()
         {
-            
+            this.Container.Register<IConnectionService, ConnectionService>(Reuse.Singleton);
         }
     }
 }
