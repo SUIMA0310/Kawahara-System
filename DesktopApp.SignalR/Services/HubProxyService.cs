@@ -22,7 +22,16 @@ namespace DesktopApp.Services
             this.Connection = connection ?? throw new ArgumentNullException( nameof( connection ) );
         }
 
-        public abstract void Open();
+        public virtual void Open()
+        {
+            this.Proxy = this.Connection.CreateHubProxy(this.HubName);
+
+            this.InitializeProxy();
+        }
+
+        protected abstract string HubName { get; }
+
+        protected virtual void InitializeProxy() { }
 
     }
 }

@@ -50,10 +50,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helpers\HubProxyExtensions.cs" />
+    <Compile Include="Models\Color.cs" />
+    <Compile Include="Models\eReactionType.cs" />
+    <Compile Include="Models\eResultTypes.cs" />
+    <Compile Include="Models\Result.cs" />
     <Compile Include="Services\ConnectionService.cs" />
     <Compile Include="Services\HubProxyService.cs" />
     <Compile Include="Services\IConnectionService.cs" />
     <Compile Include="Services\IHubProxyService.cs" />
+    <Compile Include="Services\IReactionHubProxy.cs" />
+    <Compile Include="Services\ReactionHubProxy.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="SignalRModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -99,6 +105,9 @@
     </PackageReference>
     <PackageReference Include="System.Reactive.Linq">
       <Version>3.1.1</Version>
+    </PackageReference>
+    <PackageReference Include="System.ValueTuple">
+      <Version>4.4.0</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup />

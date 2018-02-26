@@ -31,6 +31,40 @@ namespace DesktopApp.Helpers
             return context == null ? sequence : sequence.ObserveOn(context);
         }
 
+        public static IObservable<T> On<T>(this IHubProxy proxy, bool capturesSynchronizationContext = false, [CallerMemberName]string eventName = null)
+        {
+            var context = capturesSynchronizationContext
+                        ? SynchronizationContext.Current
+                        : null;
+            return proxy.On<T>(eventName.Substring("On".Length), context);
+        }
+
+        public static IObservable<T> On<T>(this IHubProxy proxy, string eventName, SynchronizationContext context)
+        {
+            var sequence = Observable.Create<T>(observer => {
+                Action<T> onData = (x) => observer.OnNext(x);
+                return proxy.On(eventName, onData);
+            });
+            return context == null ? sequence : sequence.ObserveOn(context);
+        }
+
+        public static IObservable<(T1, T2)> On<T1, T2>(this IHubProxy proxy, bool capturesSynchronizationContext = false, [CallerMemberName]string eventName = null)
+        {
+            var context = capturesSynchronizationContext
+                        ? SynchronizationContext.Current
+                        : null;
+            return proxy.On<T1, T2>(eventName.Substring("On".Length), context);
+        }
+
+        public static IObservable<(T1, T2)> On<T1, T2>(this IHubProxy proxy, string eventName, SynchronizationContext context)
+        {
+            var sequence = Observable.Create<(T1, T2)>(observer => {
+                Action<T1, T2> onData = (x1, x2) => observer.OnNext((x1, x2));
+                return proxy.On(eventName, onData);
+            });
+            return context == null ? sequence : sequence.ObserveOn(context);
+        }
+
         public static Task Invoke(this IHubProxy self, [CallerMemberName] string method = null, params object[] args)
         {
             if (string.IsNullOrWhiteSpace(method))
