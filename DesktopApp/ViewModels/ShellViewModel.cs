@@ -2,7 +2,7 @@
 
 namespace DesktopApp.ViewModels
 {
-    public class ShellViewModel : Core.ViewModels.ViewModelBase
+    public class ShellViewModel : ViewModelBase
     {
         
         public ShellViewModel()

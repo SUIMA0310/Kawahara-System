@@ -1,5 +1,5 @@
 ﻿using DesktopApp.Views;
-using DesktopApp.Core.Behaviors;
+using DesktopApp.Behaviors;
 using System.Windows;
 using Prism.Modularity;
 using DryIoc;

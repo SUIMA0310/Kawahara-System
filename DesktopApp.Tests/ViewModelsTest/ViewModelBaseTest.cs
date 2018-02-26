@@ -10,7 +10,7 @@ namespace DesktopApp.Tests.ViewModelsTest
         public void Title()
         {
 
-            var viewModel = new Core.ViewModels.ViewModelBase();
+            var viewModel = new ViewModels.ViewModelBase();
 
             Assert.IsNotNull(viewModel.Title.Value);
 
@@ -20,7 +20,7 @@ namespace DesktopApp.Tests.ViewModelsTest
         public void Dispose()
         {
 
-            var viewModel = new Core.ViewModels.ViewModelBase();
+            var viewModel = new ViewModels.ViewModelBase();
 
             viewModel.Dispose();
 
