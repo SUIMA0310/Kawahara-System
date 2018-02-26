@@ -7,7 +7,7 @@
     <ProjectGuid>{5048F2AA-32B1-49BF-A596-B3E59EA1DE36}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DesktopApp.Core</RootNamespace>
+    <RootNamespace>DesktopApp</RootNamespace>
     <AssemblyName>DesktopApp.Core</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

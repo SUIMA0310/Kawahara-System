@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Reactive.Bindings.Extensions;
 
-namespace DesktopApp.Core.ViewModels
+namespace DesktopApp.ViewModels
 {
     /// <summary>
     /// ベースとなるViewModel

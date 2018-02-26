@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DesktopApp.Core.Behaviors
+namespace DesktopApp.Behaviors
 {
     /// <summary>
     /// Viewが削除される際に、ViewModel含めDisposeする
