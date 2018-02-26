@@ -39,6 +39,8 @@ namespace DesktopApp
         {
             var moduleCatalog = (ModuleCatalog)this.ModuleCatalog;
 
+            moduleCatalog.AddModule(typeof(CoreModule));
+            moduleCatalog.AddModule(typeof(MainModule));
             moduleCatalog.AddModule(typeof(SignalRModule));
         }
 
