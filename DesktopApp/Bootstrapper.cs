@@ -1,8 +1,10 @@
 ﻿using DesktopApp.Views;
+using DesktopApp.Core.Behaviors;
 using System.Windows;
 using Prism.Modularity;
 using DryIoc;
 using Prism.DryIoc;
+using Prism.Regions;
 
 namespace DesktopApp
 {
@@ -37,6 +39,20 @@ namespace DesktopApp
         {
             var moduleCatalog = (ModuleCatalog)this.ModuleCatalog;
             //moduleCatalog.AddModule(typeof(YOUR_MODULE));
+        }
+
+        /// <summary>
+        /// RegionBehaviorを追加する
+        /// </summary>
+        protected override IRegionBehaviorFactory ConfigureDefaultRegionBehaviors()
+        {
+
+            var factory = base.ConfigureDefaultRegionBehaviors();
+
+            factory.AddIfMissing( nameof( DisposeViewModelsBehavior ), typeof( DisposeViewModelsBehavior ) );
+
+            return factory;
+
         }
 
     }
