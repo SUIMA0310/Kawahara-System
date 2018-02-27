@@ -63,6 +63,10 @@
       <Project>{dee71389-b145-4624-8ca4-b527cca09bd1}</Project>
       <Name>DesktopApp.Overlay.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DesktopApp.Overlay.Draw\DesktopApp.Overlay.Draw.csproj">
+      <Project>{30b89b48-d616-4fbf-9633-bf3f3920e8b9}</Project>
+      <Name>DesktopApp.Overlay.Draw</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
