@@ -61,6 +61,10 @@
     <Compile Include="Views\StatusBarControl.xaml.cs">
       <DependentUpon>StatusBarControl.xaml</DependentUpon>
     </Compile>
+    <Page Include="Styles\TabControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Shell.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

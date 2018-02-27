@@ -10,7 +10,7 @@ namespace DesktopApp.ViewModels
     {
         public OverlayControlViewModel()
         {
-
+            this.Title.Value = "Overlay";
         }
     }
 }
