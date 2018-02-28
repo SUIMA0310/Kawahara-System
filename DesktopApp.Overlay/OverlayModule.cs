@@ -26,9 +26,7 @@ namespace DesktopApp
         public void Initialize()
         {
             this.Container.RegisterTypeForNavigation<OverlayControl>();
-            this.Container.RegisterTypeForNavigation<PrismUserControl1>();
 
-            this.RegionManager.RegisterViewWithRegion("ContentRegion", typeof(PrismUserControl1));
             this.RegionManager.RegisterViewWithRegion("ContentRegion", typeof(OverlayControl));
         }
 
