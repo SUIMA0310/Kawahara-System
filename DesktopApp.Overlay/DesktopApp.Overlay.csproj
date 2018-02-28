@@ -95,11 +95,16 @@
     <Compile Include="Services\eWindowStateTypes.cs" />
     <Compile Include="Services\IWindowController.cs" />
     <Compile Include="Services\IWindowFactory.cs" />
+    <Compile Include="Services\IWindowService.cs" />
     <Compile Include="Services\OverlayWindowService.cs" />
     <Compile Include="Services\WindowServiceBase.cs" />
     <Compile Include="ViewModels\OverlayControlViewModel.cs" />
+    <Compile Include="ViewModels\PrismUserControl1ViewModel.cs" />
     <Compile Include="Views\OverlayControl.xaml.cs">
       <DependentUpon>OverlayControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PrismUserControl1.xaml.cs">
+      <DependentUpon>PrismUserControl1.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -123,6 +128,10 @@
   <ItemGroup />
   <ItemGroup>
     <Page Include="Views\OverlayControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PrismUserControl1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

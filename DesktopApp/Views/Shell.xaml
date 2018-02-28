@@ -48,7 +48,8 @@
         </Border>
 
         <TabControl prism:RegionManager.RegionName="ContentRegion"
-                    Grid.Row="1"/>
+                    Grid.Row="1"
+                    SelectedIndex="0"/>
 
         <ContentControl prism:RegionManager.RegionName="StatusBarRegion"
                         Grid.Row="2"/>

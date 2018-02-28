@@ -21,6 +21,7 @@
                         </Grid.ColumnDefinitions>
                         <StackPanel x:Name="HeaderPanel"
 									IsItemsHost="True"
+                                    Margin="0"
                                     Background="{DynamicResource ActiveBackgroundBrushKey}" />
                         <Border x:Name="ContentSize"
 								  Grid.Column="1">

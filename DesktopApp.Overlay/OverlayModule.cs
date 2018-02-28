@@ -8,14 +8,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DesktopApp.Services;
 
 namespace DesktopApp
 {
     public class OverlayModule : IModule
     {
 
-        private IContainer Container { get; }
-        private IRegionManager RegionManager { get; }
+        private readonly IContainer Container;
+        private readonly IRegionManager RegionManager;
 
         public OverlayModule(IContainer container, IRegionManager regionManager)
         {
@@ -25,6 +26,8 @@ namespace DesktopApp
 
         public void Initialize()
         {
+            this.Container.Register<IWindowService, OverlayWindowService>(Reuse.Singleton);
+
             this.Container.RegisterTypeForNavigation<OverlayControl>();
 
             this.RegionManager.RegisterViewWithRegion("ContentRegion", typeof(OverlayControl));

@@ -7,7 +7,7 @@ namespace DesktopApp.Services
     /// <summary>
     /// Windowの状態管理を行う
     /// </summary>
-    public abstract class WindowServiceBase : IDisposable
+    public abstract class WindowServiceBase : IDisposable, IWindowService
     {
 
         #region Protected
