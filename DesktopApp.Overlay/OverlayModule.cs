@@ -28,9 +28,9 @@ namespace DesktopApp
         {
             this.Container.Register<IWindowService, OverlayWindowService>(Reuse.Singleton);
 
-            this.Container.RegisterTypeForNavigation<OverlayControl>();
+            this.Container.RegisterTypeForNavigation<OverlayControlView>();
 
-            this.RegionManager.RegisterViewWithRegion("ContentRegion", typeof(OverlayControl));
+            this.RegionManager.RegisterViewWithRegion("ContentRegion", typeof(OverlayControlView));
         }
 
     }

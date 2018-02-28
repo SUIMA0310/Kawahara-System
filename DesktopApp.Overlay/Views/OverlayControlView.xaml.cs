@@ -5,9 +5,9 @@ namespace DesktopApp.Views
     /// <summary>
     /// Interaction logic for OverlayControl
     /// </summary>
-    public partial class OverlayControl : UserControl
+    public partial class OverlayControlView : UserControl
     {
-        public OverlayControl()
+        public OverlayControlView()
         {
             InitializeComponent();
         }

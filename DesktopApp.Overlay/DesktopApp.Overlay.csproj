@@ -99,9 +99,13 @@
     <Compile Include="Services\OverlayWindowService.cs" />
     <Compile Include="Services\WindowServiceBase.cs" />
     <Compile Include="ViewModels\OverlayControlViewModel.cs" />
+    <Compile Include="ViewModels\OverlayWindowViewModel.cs" />
     <Compile Include="ViewModels\PrismUserControl1ViewModel.cs" />
-    <Compile Include="Views\OverlayControl.xaml.cs">
-      <DependentUpon>OverlayControl.xaml</DependentUpon>
+    <Compile Include="Views\OverlayControlView.xaml.cs">
+      <DependentUpon>OverlayControlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\OverlayWindow.xaml.cs">
+      <DependentUpon>OverlayWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PrismUserControl1.xaml.cs">
       <DependentUpon>PrismUserControl1.xaml</DependentUpon>
@@ -127,7 +131,11 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Page Include="Views\OverlayControl.xaml">
+    <Page Include="Views\OverlayControlView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\OverlayWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
