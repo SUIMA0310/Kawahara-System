@@ -9,36 +9,40 @@ using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 using DesktopApp.Services;
 using Prism.Interactivity.InteractionRequest;
+using System.Windows.Forms;
 
 namespace DesktopApp.ViewModels
 {
     public class OverlayControlViewModel : ViewModelBase, IWindowFactory
     {
 
-        private IWindowService WindowService;
+        private IOverlayWindowService OverlayWindowService;
 
-        public InteractionRequest<INotification> PopupOverlayWindowRequest { get; } 
+        public InteractionRequest<INotification> PopupOverlayWindowRequest { get; }
 
         public ReadOnlyReactiveProperty<string> ShowOverlayWindowState { get; }
         public ReadOnlyReactiveProperty<bool> CanOperationToOverlayWindow { get; }
         public ReactiveProperty<bool> ShowOverlayWindowRequest { get; }
 
+        public ReactiveCollection<Screen> ScreenCollection { get; }
+        public ReactiveProperty<Screen> UseScreen { get; }
 
-        public OverlayControlViewModel(IWindowService windowService)
+
+        public OverlayControlViewModel(IOverlayWindowService windowService)
         {
             this.Title.Value = "Overlay";
 
 
-            this.WindowService = windowService;
-            this.WindowService.SetWindowFactory(this);
+            this.OverlayWindowService = windowService;
+            this.OverlayWindowService.SetWindowFactory(this);
 
 
             this.PopupOverlayWindowRequest = new InteractionRequest<INotification>();
 
 
             var ObservableWindowState = Observable.FromEvent<eWindowStateTypes>(
-                handler => this.WindowService.WindowStateChanged += handler,
-                handler => this.WindowService.WindowStateChanged -= handler
+                handler => this.OverlayWindowService.WindowStateChanged += handler,
+                handler => this.OverlayWindowService.WindowStateChanged -= handler
             );
 
 
@@ -50,7 +54,7 @@ namespace DesktopApp.ViewModels
 
             this.CanOperationToOverlayWindow = ObservableWindowState
                 .Select(x => eWindowStateTypes.Initializeing != x)
-                .ToReadOnlyReactiveProperty( true )
+                .ToReadOnlyReactiveProperty(true)
                 .AddTo(this.Disposable);
 
 
@@ -58,12 +62,29 @@ namespace DesktopApp.ViewModels
 
             this.ShowOverlayWindowRequest
                 .Where(x => x)
-                .Subscribe(_ => this.WindowService.Show())
+                .Subscribe(_ => this.OverlayWindowService.Show())
                 .AddTo(this.Disposable);
 
             this.ShowOverlayWindowRequest
                 .Where(x => !x)
-                .Subscribe(_ => this.WindowService.Hide())
+                .Subscribe(_ => this.OverlayWindowService.Hide())
+                .AddTo(this.Disposable);
+
+
+            this.ScreenCollection = new ReactiveCollection<Screen>();
+            this.ScreenCollection.AddRangeOnScheduler(Screen.AllScreens);
+
+            this.UseScreen = Observable.FromEventPattern
+                (
+                    handler => this.OverlayWindowService.UseScreenChanged += handler,
+                    handler => this.OverlayWindowService.UseScreenChanged -= handler
+                )
+                .Select(_ => this.OverlayWindowService.UseScreen)
+                .ToReactiveProperty(Screen.PrimaryScreen)
+                .AddTo(this.Disposable);
+            this.UseScreen
+                .Where(x => x != null)
+                .Subscribe(x => this.OverlayWindowService.UseScreen = x)
                 .AddTo(this.Disposable);
 
         }
@@ -71,7 +92,7 @@ namespace DesktopApp.ViewModels
         public override void Dispose()
         {
             base.Dispose();
-            this.WindowService.SetWindowFactory(null);
+            this.OverlayWindowService.SetWindowFactory(null);
         }
 
         void IWindowFactory.Create()

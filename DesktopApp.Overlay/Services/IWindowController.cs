@@ -8,7 +8,7 @@ namespace DesktopApp.Services
         /// <summary>
         /// Windowの可視状態
         /// </summary>
-        bool IsHidden { get; set; }
+        double Opacity { get; set; }
 
         /// <summary>
         /// Windowを閉じる
@@ -18,17 +18,12 @@ namespace DesktopApp.Services
         /// <summary>
         /// Windowの初期化が完了
         /// </summary>
-        event Action WindowInitialized;
+        event EventHandler Initialized;
 
         /// <summary>
         /// WindowのCloseが完了 もしくは、 それ以上の状態追跡ができない
         /// </summary>
-        event Action WindowClosed;
-
-        /// <summary>
-        /// Windowの可視状態が変化
-        /// </summary>
-        event Action<bool> HiddenChanged;
+        event EventHandler Closed;
 
     }
 }

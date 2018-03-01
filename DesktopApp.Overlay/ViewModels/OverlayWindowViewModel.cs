@@ -11,51 +11,10 @@ using DesktopApp.Services;
 
 namespace DesktopApp.ViewModels
 {
-    public class OverlayWindowViewModel : ViewModelBase, IWindowController
+    public class OverlayWindowViewModel : ViewModelBase
     {
-
-        private IWindowService WindowService;
-
-        public ReactiveProperty<double> WindowOpacity { get; }
-
-        public OverlayWindowViewModel(IWindowService windowService)
+        public OverlayWindowViewModel()
         {
-
-            this.WindowService = windowService;
-            //this.WindowService.SetWindowController(this);
-
-            this.WindowOpacity = new ReactiveProperty<double>(1.0);
-
-            this.WindowInitialized?.Invoke();
-        }
-
-
-        public event Action WindowInitialized;
-        public event Action WindowClosed;
-        public event Action<bool> HiddenChanged;
-
-        public void Close()
-        {
-            this.WindowClosed?.Invoke();
-        }
-        bool IWindowController.IsHidden
-        {
-            get => this.WindowOpacity.Value == 0.0;
-            set {
-
-                if ( value ) {
-
-                    this.WindowOpacity.Value = 0.0;
-
-                } else {
-
-                    this.WindowOpacity.Value = 1.0;
-
-                }
-
-                HiddenChanged?.Invoke( value );
-
-            }
         }
     }
 }

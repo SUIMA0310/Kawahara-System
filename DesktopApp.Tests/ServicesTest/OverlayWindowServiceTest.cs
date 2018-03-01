@@ -34,31 +34,48 @@ namespace DesktopApp.Tests.ServicesTest
 
             try {
 
+                //Factory 無し
                 obj.Show();
+                Assert.Fail();
 
             } catch (InvalidOperationException) { }
 
-            var ret = obj.SetWindowFactory( factory.Object );
-            Assert.IsTrue(ret);
+            //Factory セット
+            Assert.IsTrue(obj.SetWindowFactory(factory.Object));
             Assert.AreEqual(factory.Object, privateObj.GetProperty("WindowFactory"));
 
+            //Factory Use
             obj.Show();
             Assert.AreEqual(eWindowStateTypes.Initializeing, obj.WindowState);
 
             try {
 
+                //Controller 無し
                 obj.Show();
+                Assert.Fail();
 
             } catch (InvalidOperationException) { }
 
-            var ret2 = obj.SetWindowController(controller.Object);
-            Assert.IsTrue(ret2);
+            //Controller セット
+            Assert.IsTrue(obj.SetWindowController(controller.Object));
             Assert.AreEqual(controller.Object, privateObj.GetProperty("WindowController"));
+
+            try {
+
+                //初期化未完
+                obj.Show();
+                Assert.Fail();
+
+            } catch (InvalidOperationException) { }
+
+            //初期化完了
+            controller.Raise(x => x.Initialized += null, new EventArgs());
+            Assert.AreEqual(eWindowStateTypes.Shown, obj.WindowState);
 
             obj.Show();
 
-            var ret3 = obj.SetWindowController(null);
-            Assert.IsTrue(ret3);
+            //Controller 削除
+            Assert.IsTrue(obj.SetWindowController(null));
             Assert.AreEqual(null, privateObj.GetProperty("WindowController"));
 
 
@@ -75,7 +92,7 @@ namespace DesktopApp.Tests.ServicesTest
         {
             var factory = new Mock<IWindowFactory>();
             var controller = new Mock<IWindowController>();
-            controller.SetupProperty(x => x.IsHidden);                      
+            controller.SetupProperty(x => x.Opacity);
 
             var obj = new WindowService();
             var privateObj = new PrivateObject(obj);
@@ -85,20 +102,29 @@ namespace DesktopApp.Tests.ServicesTest
             obj.SetWindowFactory(factory.Object);
             obj.Show();
 
-            controller.Raise( x => x.WindowInitialized += null );
+            controller.Raise(x => x.Initialized += null);
 
             try {
                 obj.Hide();
+                Assert.Fail();
             } catch (InvalidOperationException) { }
 
-            obj.SetWindowController( controller.Object );
+            obj.SetWindowController(controller.Object);
+
+            try {
+                obj.Hide();
+                Assert.Fail();
+            } catch (InvalidOperationException) { }
+
+            controller.Raise(x=>x.Initialized += null, new EventArgs());
+
             obj.Hide();
 
-            Assert.IsTrue( controller.Object.IsHidden );
-            
+            Assert.AreEqual(0.0, controller.Object.Opacity);
+
 
         }
-        
+
         [TestMethod]
         public void Event()
         {
@@ -109,7 +135,7 @@ namespace DesktopApp.Tests.ServicesTest
             var obj = new WindowService();
             var privateObj = new PrivateObject(obj);
 
-            obj.SetWindowFactory( factory.Object );
+            obj.SetWindowFactory(factory.Object);
             Assert.AreEqual(eWindowStateTypes.Closed, obj.WindowState);
 
             obj.Show();
@@ -117,16 +143,10 @@ namespace DesktopApp.Tests.ServicesTest
 
             obj.SetWindowController(controller.Object);
 
-            controller.Raise( x => x.WindowInitialized += null );
-            Assert.AreEqual( eWindowStateTypes.Shown, obj.WindowState );
-
-            controller.Raise(x => x.HiddenChanged += null, true);
-            Assert.AreEqual(eWindowStateTypes.Hide, obj.WindowState);
-
-            controller.Raise(x => x.HiddenChanged += null, false);
+            controller.Raise(x => x.Initialized += null, new EventArgs());
             Assert.AreEqual(eWindowStateTypes.Shown, obj.WindowState);
 
-            controller.Raise(x => x.WindowClosed += null);
+            controller.Raise(x => x.Closed += null, new EventArgs());
             Assert.AreEqual(eWindowStateTypes.Closed, obj.WindowState);
 
         }

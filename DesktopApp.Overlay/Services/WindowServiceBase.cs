@@ -270,15 +270,20 @@ namespace DesktopApp.Services
         private void WindowHideControl(bool hide)
         {
 
-            if (this.WindowController != null) {
-
-                this.WindowController.IsHidden = hide;
-
-            } else {
+            if (this.WindowController == null) {
 
                 throw new InvalidOperationException($"{nameof(this.WindowController)}が指定されていません");
 
             }
+
+            if (this.WindowState == eWindowStateTypes.Initializeing) {
+
+                throw new InvalidOperationException($"Window初期化中は操作できません");
+
+            }
+
+            this.WindowController.Opacity = hide ? 0.0 : 1.0;
+            this.WindowState = hide ? eWindowStateTypes.Hide : eWindowStateTypes.Shown;
 
         }
 
@@ -309,44 +314,23 @@ namespace DesktopApp.Services
 
             if (eventArgs.NewValue != null) {
 
-                this.ObservableWindowInitialized = Observable.FromEvent
+                this.ObservableWindowInitialized = Observable.FromEventPattern
                 (
-                    handler => eventArgs.NewValue.WindowInitialized += handler,
-                    handler => eventArgs.NewValue.WindowInitialized -= handler
+                    handler => eventArgs.NewValue.Initialized += handler,
+                    handler => eventArgs.NewValue.Initialized -= handler
                 )
                 .Subscribe(_ => { this.WindowState = eWindowStateTypes.Shown; });
 
 
-                this.ObservableWindowClosed = Observable.FromEvent
+                this.ObservableWindowClosed = Observable.FromEventPattern
                 (
-                    handler => eventArgs.NewValue.WindowClosed += handler,
-                    handler => eventArgs.NewValue.WindowClosed -= handler
+                    handler => eventArgs.NewValue.Closed += handler,
+                    handler => eventArgs.NewValue.Closed -= handler
                 )
                 .Subscribe(_ =>
                 {
                     this.WindowState = eWindowStateTypes.Closed;
                     this.WindowController = default(TController);
-                });
-
-
-                this.ObservableHiddenChanged = Observable.FromEvent<bool>
-                (
-                    handler => eventArgs.NewValue.HiddenChanged += handler,
-                    handler => eventArgs.NewValue.HiddenChanged -= handler
-                )
-                .Subscribe(x =>
-                {
-
-                    if (x) {
-
-                        this.WindowState = eWindowStateTypes.Hide;
-
-                    } else {
-
-                        this.WindowState = eWindowStateTypes.Shown;
-
-                    }
-
                 });
 
             }

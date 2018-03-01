@@ -18,6 +18,10 @@
                       IsChecked="{Binding ShowOverlayWindowRequest.Value}"
                       IsEnabled="{Binding CanOperationToOverlayWindow.Value}"/>
 
+        <ComboBox ItemsSource="{Binding ScreenCollection}"
+                  SelectedItem="{Binding UseScreen.Value}"
+                  DisplayMemberPath="DeviceName"/>
+
 
     </StackPanel>
 </UserControl>
