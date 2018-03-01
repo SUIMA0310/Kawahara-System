@@ -42,6 +42,7 @@ namespace DesktopApp
             moduleCatalog.AddModule(typeof(CoreModule));
             moduleCatalog.AddModule(typeof(MainModule));
             moduleCatalog.AddModule(typeof(SignalRModule));
+            moduleCatalog.AddModule(typeof(OverlayModule));
         }
 
         /// <summary>

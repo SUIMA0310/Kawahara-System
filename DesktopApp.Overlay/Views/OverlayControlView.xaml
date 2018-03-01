@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="DesktopApp.Views.OverlayControlView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:prism="http://prismlibrary.com/"    
+             xmlns:actions="clr-namespace:DesktopApp.Actions"
+             xmlns:views="clr-namespace:DesktopApp.Views"
+             prism:ViewModelLocator.AutoWireViewModel="True">
+    <i:Interaction.Triggers>
+        <prism:InteractionRequestTrigger SourceObject="{Binding PopupOverlayWindowRequest, Mode=OneWay}">
+            <actions:ShowWindowAction WindowType="{x:Type views:OverlayWindow}"/>
+        </prism:InteractionRequestTrigger>
+    </i:Interaction.Triggers>
+    <StackPanel Margin="10">
+        
+
+        <ToggleButton Content="{Binding ShowOverlayWindowState.Value}" 
+                      IsChecked="{Binding ShowOverlayWindowRequest.Value}"
+                      IsEnabled="{Binding CanOperationToOverlayWindow.Value}"/>
+
+        <ComboBox ItemsSource="{Binding ScreenCollection}"
+                  SelectedItem="{Binding UseScreen.Value}"
+                  DisplayMemberPath="DeviceName"/>
+
+
+    </StackPanel>
+</UserControl>
