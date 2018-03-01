@@ -8,7 +8,7 @@
              prism:ViewModelLocator.AutoWireViewModel="True">
     <i:Interaction.Triggers>
         <prism:InteractionRequestTrigger SourceObject="{Binding PopupOverlayWindowRequest, Mode=OneWay}">
-            <actions:PopupOverlayWindowAction WindowContentType="{x:Type views:PrismUserControl1}"/>
+            <actions:ShowWindowAction WindowType="{x:Type views:OverlayWindow}"/>
         </prism:InteractionRequestTrigger>
     </i:Interaction.Triggers>
     <StackPanel Margin="10">

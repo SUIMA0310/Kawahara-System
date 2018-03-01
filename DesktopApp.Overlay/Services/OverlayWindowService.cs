@@ -62,9 +62,9 @@ namespace DesktopApp.Services
 
             if (this.WindowFactory != null) {
 
-                this.WindowFactory.Create();
-                this.WindowState = eWindowStateTypes.Initializeing;
                 this.IsWindowCreated = true;
+                this.WindowState = eWindowStateTypes.Initializeing;
+                this.WindowFactory.Create();
 
             } else {
 
