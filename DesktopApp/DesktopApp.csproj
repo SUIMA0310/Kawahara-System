@@ -61,6 +61,14 @@
     <Compile Include="Views\StatusBarControl.xaml.cs">
       <DependentUpon>StatusBarControl.xaml</DependentUpon>
     </Compile>
+    <Page Include="Styles\TabControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\ToggleButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Shell.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -122,6 +130,10 @@
     <ProjectReference Include="..\DesktopApp.Core\DesktopApp.Core.csproj">
       <Project>{5048f2aa-32b1-49bf-a596-b3e59ea1de36}</Project>
       <Name>DesktopApp.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DesktopApp.Overlay\DesktopApp.Overlay.csproj">
+      <Project>{14642d91-ee2a-4174-b348-51f694ea9d92}</Project>
+      <Name>DesktopApp.Overlay</Name>
     </ProjectReference>
     <ProjectReference Include="..\DesktopApp.SignalR\DesktopApp.SignalR.csproj">
       <Project>{2627b05a-f94d-4818-bcff-2e828972ffa3}</Project>
