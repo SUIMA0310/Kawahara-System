@@ -65,14 +65,8 @@ namespace DesktopApp.Tests.ServicesTest
             obj.Dispose();
 
             var disposable = privateObj.GetProperty("Disposable") as System.Reactive.Disposables.CompositeDisposable;
-            var d1 = privateObj.GetField("ObservableWindowInitialized");
-            var d2 = privateObj.GetField("ObservableWindowClosed");
-            var d3 = privateObj.GetField("ObservableHiddenChanged");
 
             Assert.AreEqual(0, disposable.Count);
-            Assert.IsNull(d1);
-            Assert.IsNull(d2);
-            Assert.IsNull(d3);
 
         }
 
