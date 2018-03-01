@@ -14,17 +14,9 @@ namespace DesktopApp.Tests.ServicesTest
     public class WindowServiceBaseTest
     {
 
-        private class TestWindowService : WindowServiceBase
+        private class TestWindowService : WindowServiceBase<IWindowFactory, IWindowController>
         {
-            public override void Hide()
-            {
-                throw new NotImplementedException();
-            }
 
-            public override void Show()
-            {
-                throw new NotImplementedException();
-            }
         }
 
         [TestMethod]

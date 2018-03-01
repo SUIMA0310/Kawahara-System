@@ -26,7 +26,7 @@ namespace DesktopApp
 
         public void Initialize()
         {
-            this.Container.Register<IWindowService, OverlayWindowService>(Reuse.Singleton);
+            this.Container.Register<IWindowService, WindowService>(Reuse.Singleton);
 
             this.Container.RegisterTypeForNavigation<OverlayControlView>();
 
