@@ -29,7 +29,7 @@ namespace DesktopApp.Overlay.Draw.Objects
             }
         }
 
-        public virtual void Render(RawPoint point, RawColor4 color)
+        public virtual void Render(RawVector2 point, RawColor4 color)
         {
 
             this.SetColor(color);
@@ -48,7 +48,7 @@ namespace DesktopApp.Overlay.Draw.Objects
             return new SolidColorBrush(renderTarget, new RawColor4());
         }
 
-        protected virtual RawMatrix3x2 GetTranslation(RawPoint point)
+        protected virtual RawMatrix3x2 GetTranslation(RawVector2 point)
         {
             return Helpers.Matrix3x2Helper.Translation(point);
         }

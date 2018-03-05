@@ -62,7 +62,11 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\AnimationExpansion.cs" />
     <Compile Include="Helpers\Matrix3x2Helper.cs" />
+    <Compile Include="Models\Bezier.cs" />
+    <Compile Include="Models\IReactionInteraction.cs" />
+    <Compile Include="Models\Item.cs" />
     <Compile Include="Objects\GoodObject.cs" />
     <Compile Include="Objects\ObjectBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -72,6 +76,11 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\DesktopApp.SignalR\DesktopApp.SignalR.csproj">
+      <Project>{2627b05a-f94d-4818-bcff-2e828972ffa3}</Project>
+      <Name>DesktopApp.SignalR</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

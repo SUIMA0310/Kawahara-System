@@ -14,6 +14,6 @@
         </Grid.ColumnDefinitions>
 
         <TextBlock Text="BBBBB" FontSize="50" Foreground="#FF0A1EE8" Grid.ColumnSpan="2" />
-        <draw:ReactionControl Grid.Column="1"/>
+        <draw:ReactionControl Grid.Column="1" Target="{Binding}"/>
     </Grid>
 </ovarlay:OverlayWindow>

@@ -12,7 +12,7 @@ namespace DesktopApp.Overlay.Draw.Helpers
 
         public static RawMatrix3x2 Identity = new RawMatrix3x2(1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f);
 
-        public static RawMatrix3x2 Translation(RawPoint point)
+        public static RawMatrix3x2 Translation(RawVector2 point)
         {
             return new RawMatrix3x2(1.0f, 0.0f, 0.0f, 1.0f, point.X, point.Y);
         }
@@ -22,7 +22,7 @@ namespace DesktopApp.Overlay.Draw.Helpers
             return new RawMatrix3x2(1.0f, 0.0f, 0.0f, 1.0f, x, y);
         }
 
-        public static RawMatrix3x2 Translation(this RawMatrix3x2 baseMatrix, RawPoint point)
+        public static RawMatrix3x2 Translation(this RawMatrix3x2 baseMatrix, RawVector2 point)
         {
             baseMatrix.M31 = point.X;
             baseMatrix.M32 = point.Y;
