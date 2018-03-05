@@ -13,7 +13,7 @@
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Text="BBBBB" FontSize="50" Foreground="#FF0A1EE8" Grid.ColumnSpan="2" />
+        <TextBlock Text="川原's System." FontSize="50" Foreground="#FFA6A6A6" Grid.ColumnSpan="2" Opacity="0.4" />
         <draw:ReactionControl Grid.Column="1" Target="{Binding}"/>
     </Grid>
 </ovarlay:OverlayWindow>
