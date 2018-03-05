@@ -1,0 +1,200 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style x:Key="TabHeaderTextStyleKey" TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground"        Value="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type TabItem}}}" />
+        <Setter Property="Margin"            Value="12,0" />
+        <Setter Property="FontSize"          Value="14" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+
+    <Style TargetType="{x:Type TabControl}">
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment"   Value="Stretch" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TabControl}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel x:Name="HeaderPanel"
+									IsItemsHost="True"
+                                    Margin="0"
+                                    Background="{DynamicResource ActiveBackgroundBrushKey}" />
+                        <Border x:Name="ContentSize"
+								  Grid.Column="1">
+                            <ContentPresenter x:Name="PART_SelectedContentHost"
+												ContentSource="SelectedContent" />
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="{x:Type TabItem}">
+
+                    <Setter Property="HeaderTemplate" >
+                        <Setter.Value>
+                            <DataTemplate>
+                                <TextBlock>
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TabHeaderTextStyleKey}">
+                                            <Setter Property="Text" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabItem}}, Path=Content.DataContext.Title.Value}"/>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>
+
+                    <Setter Property="OverridesDefaultStyle"
+							Value="True" />
+                    <Setter Property="Height"
+							Value="38" />
+                    <Setter Property="Foreground"
+							Value="{DynamicResource ForegroundBrushKey}" />
+                    <Setter Property="Background"
+							Value="Transparent" />
+                    <Setter Property="HorizontalContentAlignment"
+							Value="Stretch" />
+                    <Setter Property="VerticalContentAlignment"
+							Value="Stretch" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type TabItem}">
+                                <Border x:Name="Border" Background="{TemplateBinding Background}">
+                                    <ContentPresenter x:Name="ContentSite" ContentSource="Header" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+
+                                    <Trigger Property="IsSelected"
+											 Value="True">
+                                        <!--<Setter Property="Background"
+												Value="{DynamicResource ThemeBrushKey}" />
+                                        <Setter Property="Foreground"
+												Value="{DynamicResource AccentHighlightBrushKey}" />-->
+                                        <Setter Property="Background"
+									            Value="{DynamicResource AccentBrushKey}" />
+                                        <Setter Property="Foreground"
+									            Value="{DynamicResource AccentForegroundBrushKey}" />
+                                    </Trigger>
+                                    <Trigger SourceName="Border"
+											 Property="IsMouseOver"
+											 Value="True">
+                                        <!--<Setter Property="Background"
+												Value="{DynamicResource ActiveBackgroundBrushKey}" />
+                                        <Setter Property="Foreground"
+												Value="{DynamicResource ActiveForegroundBrushKey}" />-->
+                                        <Setter Property="Background"
+									                Value="{DynamicResource AccentHighlightBrushKey}" />
+                                        <Setter Property="Foreground"
+									                Value="{DynamicResource AccentForegroundBrushKey}" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+
+                </Style>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="InnerTabControlStyle"
+           TargetType="{x:Type TabControl}">
+        <Setter Property="HorizontalContentAlignment"
+							Value="Stretch" />
+        <Setter Property="VerticalContentAlignment"
+							Value="Stretch" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TabControl}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel x:Name="HeaderPanel"
+												IsItemsHost="True"
+												Background="{DynamicResource BackgroundBrushKey}" />
+                        <Border x:Name="ContentSize"
+											Grid.Column="1">
+                            <ContentPresenter x:Name="PART_SelectedContentHost"
+														  ContentSource="SelectedContent" />
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="{x:Type TabItem}">
+                    <Setter Property="OverridesDefaultStyle"
+										Value="True" />
+                    <Setter Property="Height"
+										Value="38" />
+                    <Setter Property="Foreground"
+										Value="{DynamicResource ForegroundBrushKey}" />
+                    <Setter Property="Background"
+										Value="Transparent" />
+                    <Setter Property="HorizontalContentAlignment"
+										Value="Stretch" />
+                    <Setter Property="VerticalContentAlignment"
+										Value="Stretch" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type TabItem}">
+                                <Border x:Name="Border"
+													Background="{TemplateBinding Background}">
+                                    <ContentPresenter x:Name="ContentSite"
+																  ContentSource="Header" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsSelected"
+														 Value="True">
+                                        <Setter Property="Background"
+															Value="{DynamicResource ThemeBrushKey}" />
+                                        <Setter Property="Foreground"
+															Value="{DynamicResource AccentHighlightBrushKey}" />
+                                    </Trigger>
+                                    <Trigger SourceName="Border"
+														 Property="IsMouseOver"
+														 Value="True">
+                                        <Setter Property="Background"
+															Value="{DynamicResource ActiveBackgroundBrushKey}" />
+                                        <Setter Property="Foreground"
+															Value="{DynamicResource ActiveForegroundBrushKey}" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="BorderTabItemStyle"
+           TargetType="{x:Type TabItem}">
+        <Setter Property="OverridesDefaultStyle"      Value="True" />
+        <Setter Property="Height"                     Value="19" />
+        <Setter Property="IsEnabled"                  Value="False"/>
+        <Setter Property="Foreground"                 Value="{DynamicResource ForegroundBrushKey}" />
+        <Setter Property="Background"                 Value="Transparent" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment"   Value="Stretch" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TabItem}">
+                    <Border x:Name="Border" Background="{TemplateBinding Background}">
+                        <Border Margin="10, 0" Height="1" Background="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type TabItem}}}"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

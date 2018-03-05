@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>川原's System</h1>
+    <p class="lead">川原's System は、プレゼンにおける傍聴者と発信者間のコミュニケーションをサポートするシステムです。</p>
+    <!--<p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>-->
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>はじめよう</h2>
+        <p>
+            川原's System を使えば、より楽しく 有意義なプレゼンを行うことが出来るでしょう。
+            使い方は簡単です。まずは登録から
+        </p>
+        <p>@Html.ActionLink( "登録 »", "Register", "Account", routeValues: null, htmlAttributes: new { @class = "btn btn-default" } )</p>
+    </div>
+    <div class="col-md-4">
+        <h2>クライアント</h2>
+        <p>クライアントアプリケーションをダウンロードして、準備を整えよう</p>
+        <p><a class="btn btn-default" href="">ダウンロード &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>OSS</h2>
+        <p>
+            GitHubにて、ソースコードを公開しています。
+            興味のある方は、覗いてみて下さい。
+        </p>
+        <p><a class="btn btn-default" href="https://github.com/SUIMA0310/Kawahara-System">リポジトリ &raquo;</a></p>
+    </div>
+</div>
