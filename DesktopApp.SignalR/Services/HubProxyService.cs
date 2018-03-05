@@ -16,6 +16,12 @@ namespace DesktopApp.Services
         protected IConnectionService Connection { get; }
         protected IHubProxy Proxy { get; private set; }
 
+        public string ServerURL
+        {
+            get => this.Connection.ServerURL;
+            set => this.Connection.ServerURL = value;
+        }
+
         public HubProxyService(ILoggerFacade logger, IConnectionService connection)
         {
             this.Logger = logger;
