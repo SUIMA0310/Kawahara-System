@@ -102,12 +102,12 @@ namespace DesktopApp.Services
         public event Action<bool> HasConnectionChanged;
         public event Action<string> ServerURLChanged;
 
-        private void OnHasConnectionChanged(bool args)
+        protected virtual void OnHasConnectionChanged(bool args)
         {
             this.HasConnectionChanged?.Invoke(args);
         }
 
-        private void OnServerURLChanged(string args)
+        protected virtual void OnServerURLChanged(string args)
         {
             this.ServerURLChanged?.Invoke(args);
         }
