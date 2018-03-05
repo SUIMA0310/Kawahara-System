@@ -38,7 +38,9 @@ namespace DesktopApp.Services
             get => this._ServerURL;
             set {
                 if (this._IsOpened) { throw new InvalidOperationException("接続開始後は変更できません"); }
+                if (this._ServerURL == value) { return; }
                 this._ServerURL = value;
+                this.OnServerURLChanged(value);
             }
         }
 
@@ -61,7 +63,13 @@ namespace DesktopApp.Services
             if (this._IsOpened) { return; }
             this._IsOpened = true;
 
-            if (this.Connection == null) { this.Connection = this.CreateHubConnection(); }
+            if (this.Connection == null) {
+                this.Connection = this.CreateHubConnection();
+                this.Connection.StateChanged += (e) =>
+                {
+                    this.OnHasConnectionChanged(this.HasConnection);
+                };
+            }
             this.Connection.Error += this.Connection_Error;
             this.Connecting = this.Connection.Start();
 
@@ -91,6 +99,18 @@ namespace DesktopApp.Services
             return new HubConnection(this.ServerURL ?? Properties.Settings.Default.ServerURL);
         }
 
+        public event Action<bool> HasConnectionChanged;
+        public event Action<string> ServerURLChanged;
+
+        private void OnHasConnectionChanged(bool args)
+        {
+            this.HasConnectionChanged?.Invoke(args);
+        }
+
+        private void OnServerURLChanged(string args)
+        {
+            this.ServerURLChanged?.Invoke(args);
+        }
 
     }
 }
