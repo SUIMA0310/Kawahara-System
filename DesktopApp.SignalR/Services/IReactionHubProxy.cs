@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using DesktopApp.Models;
 
 namespace DesktopApp.Services
@@ -6,6 +7,8 @@ namespace DesktopApp.Services
     public interface IReactionHubProxy : IHubProxyService
     {
         string PresentationID { get; set; }
+
+        event Action<string> PresentationIDChanged;
 
         System.IObservable<(eReactionType, Color)> OnReceiveReaction();
         Task<Result> AddListener();

@@ -26,6 +26,7 @@ namespace DesktopApp.Services
         {
             this.Logger = logger;
             this.Connection = connection ?? throw new ArgumentNullException( nameof( connection ) );
+            this.Connection.ServerURLChanged += (e) => { this.OnServerURLChanged(e); };
         }
 
         public virtual void Open()
@@ -40,6 +41,13 @@ namespace DesktopApp.Services
 
         protected virtual void PreInitializeProxy() { }
         protected virtual void PostInitializeProxy() { }
+
+        public event Action<string> ServerURLChanged;
+
+        protected virtual void OnServerURLChanged(string args)
+        {
+            this.ServerURLChanged?.Invoke(args);
+        }
 
     }
 }

@@ -15,11 +15,28 @@ namespace DesktopApp.Services
     /// </summary>
     public class ReactionHubProxy : HubProxyService, IReactionHubProxy
     {
-        public string PresentationID { get; set; }
+        public string PresentationID {
+            get => this._PresentationID;
+            set {
+                if (this._PresentationID == value) { return; }
+                this._PresentationID = value;
+                this.OnPresentationIDChanged(value);
+            }
+        }
 
         public ReactionHubProxy(ILoggerFacade logger, IConnectionService connection) : base(logger, connection) { }
 
         protected override string HubName => Properties.Resources.HubName;
+
+        private string _PresentationID;
+
+        public event Action<string> PresentationIDChanged;
+
+        protected virtual void OnPresentationIDChanged(string args)
+        {
+            this.PresentationIDChanged?.Invoke(args);
+        }
+
 
         /// <summary>
         /// Reactionの受信
