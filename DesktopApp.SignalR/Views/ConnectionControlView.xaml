@@ -4,14 +4,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:prism="http://prismlibrary.com/"             
              xmlns:local="clr-namespace:DesktopApp.Views"
+             xmlns:core="clr-namespace:DesktopApp.Actions;assembly=DesktopApp.Core"
              prism:ViewModelLocator.AutoWireViewModel="True">
     <i:Interaction.Triggers>
         <prism:InteractionRequestTrigger SourceObject="{Binding InputSettingRequest}">
-            <prism:PopupWindowAction IsModal="True" CenterOverAssociatedObject="True">
+            <core:PopupMetroWindowAction IsModal="True" CenterOverAssociatedObject="True">
                 <prism:PopupWindowAction.WindowContent>
                     <local:InputSettingView/>
                 </prism:PopupWindowAction.WindowContent>
-            </prism:PopupWindowAction>
+            </core:PopupMetroWindowAction>
         </prism:InteractionRequestTrigger>
     </i:Interaction.Triggers>
     <StackPanel Margin="10">
