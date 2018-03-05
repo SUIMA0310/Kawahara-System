@@ -19,17 +19,28 @@ namespace DesktopApp.Services
         /// Openが実行されたか
         /// </summary>
         private bool _IsOpened = false;
+        private string _ServerURL = null;
 
         private ILoggerFacade Logger { get; }
-
-        private Task Connecting { get; set; }
+        private HubConnection Connection;
+        private Task Connecting;
 
         /// <summary>
         /// 現在接続を完了しているか
         /// </summary>
         public bool HasConnection => this.Connection?.State == ConnectionState.Connected;
 
-        private HubConnection Connection { get; set; }
+        /// <summary>
+        /// Serverの接続先
+        /// </summary>
+        public string ServerURL
+        {
+            get => this._ServerURL;
+            set {
+                if (this._IsOpened) { throw new InvalidOperationException("接続開始後は変更できません"); }
+                this._ServerURL = value;
+            }
+        }
 
         public ConnectionService(ILoggerFacade logger)
         {
@@ -38,19 +49,19 @@ namespace DesktopApp.Services
 
         }
 
-        public IHubProxy CreateHubProxy( string hubName )
+        public IHubProxy CreateHubProxy(string hubName)
         {
             if (this.Connection == null) { this.Connection = this.CreateHubConnection(); }
-            return this.Connection.CreateHubProxy( hubName );
+            return this.Connection.CreateHubProxy(hubName);
         }
 
         public void Open()
         {
             //2度目以降の実行を無視
-            if ( this._IsOpened ) { return; }
+            if (this._IsOpened) { return; }
             this._IsOpened = true;
 
-            if ( this.Connection == null ) { this.Connection = this.CreateHubConnection(); }
+            if (this.Connection == null) { this.Connection = this.CreateHubConnection(); }
             this.Connection.Error += this.Connection_Error;
             this.Connecting = this.Connection.Start();
 
@@ -77,7 +88,7 @@ namespace DesktopApp.Services
 
         private HubConnection CreateHubConnection()
         {
-            return new HubConnection(Properties.Settings.Default.ServerURL);
+            return new HubConnection(this.ServerURL ?? Properties.Settings.Default.ServerURL);
         }
 
 

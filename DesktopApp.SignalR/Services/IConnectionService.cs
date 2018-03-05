@@ -5,6 +5,7 @@ namespace DesktopApp.Services
     public interface IConnectionService
     {
         bool HasConnection { get; }
+        string ServerURL { get; set; }
 
         IHubProxy CreateHubProxy(string hubName);
         void Open();
