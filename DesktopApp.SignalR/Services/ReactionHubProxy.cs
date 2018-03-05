@@ -51,7 +51,7 @@ namespace DesktopApp.Services
         /// <param name="reactionType">送信するReactionの種類</param>
         /// <param name="coler">送信元を示す色情報</param>
         public Task SendReaction(eReactionType reactionType, Color color) 
-            => this.Proxy.Invoke(this.PresentationID, reactionType, color);
+            => this.Proxy.Invoke("SendReaction", this.PresentationID, reactionType, color);
         /// <summary>
         /// Listenerに対し、Reactionを送信する
         /// </summary>
@@ -59,77 +59,77 @@ namespace DesktopApp.Services
         /// <param name="reactionType">送信するReactionの種類</param>
         /// <param name="coler">送信元を示す色情報</param>
         public Task SendReaction(string presentationId, eReactionType reactionType, Color color)
-            => this.Proxy.Invoke(presentationId, reactionType, color);
+            => this.Proxy.Invoke("SendReaction", presentationId, reactionType, color);
 
         /// <summary>
         /// Listenerに対し、Goodを送信する
         /// </summary>
         /// <param name="color">送信元を示す色情報</param>
         public Task SendGood(Color color)
-            => this.Proxy.Invoke(this.PresentationID, color);
+            => this.Proxy.Invoke("SendGood", this.PresentationID, color);
         /// <summary>
         /// Listenerに対し、Goodを送信する
         /// </summary>
         /// <param name="presentationId">送信先のPresentation</param>
         /// <param name="color">送信元を示す色情報</param>
         public Task SendGood(string presentationId, Color color)
-            => this.Proxy.Invoke(presentationId, color);
+            => this.Proxy.Invoke("SendGood", presentationId, color);
 
         /// <summary>
         /// Listenerに対し、Niceを送信する
         /// </summary>
         /// <param name="color">送信元を示す色情報</param>
         public Task SendNice(Color color)
-            => this.Proxy.Invoke(this.PresentationID, color);
+            => this.Proxy.Invoke("SendNice", this.PresentationID, color);
         /// <summary>
         /// Listenerに対し、Niceを送信する
         /// </summary>
         /// <param name="presentationId">送信先のPresentation</param>
         /// <param name="color">送信元を示す色情報</param>
         public Task SendNice(string presentationId, Color color)
-            => this.Proxy.Invoke(presentationId, color);
+            => this.Proxy.Invoke("SendNice", presentationId, color);
 
         /// <summary>
         /// Listenerに対し、Funを送信する
         /// </summary>
         /// <param name="color">送信元を示す色情報</param>
         public Task SendFun(Color color)
-            => this.Proxy.Invoke(this.PresentationID, color);
+            => this.Proxy.Invoke("SendFun", this.PresentationID, color);
         /// <summary>
         /// Listenerに対し、Funを送信する
         /// </summary>
         /// <param name="presentationId">送信先のPresentation</param>
         /// <param name="color">送信元を示す色情報</param>
         public Task SendFun(string presentationId, Color color)
-            => this.Proxy.Invoke(presentationId, color);
+            => this.Proxy.Invoke("SendFun", presentationId, color);
 
         /// <summary>
         /// 自身をListenerとして追加する
         /// </summary>
         /// <returns>追加に成功したか</returns>
         public Task<Result> AddListener()
-            => this.Proxy.Invoke<Result>(this.PresentationID);
+            => this.Proxy.Invoke<Result>("AddListener", this.PresentationID);
         /// <summary>
         /// 自身をListenerとして追加する
         /// </summary>
         /// <param name="presentationId">受信するPresentationのId</param>
         /// <returns>追加に成功したか</returns>
         public Task<Result> AddListener(string presentationId)
-            => this.Proxy.Invoke<Result>(presentationId);
+            => this.Proxy.Invoke<Result>("AddListener", presentationId);
 
         /// <summary>
         /// 自身をLisnerから削除する
         /// </summary>
         /// <returns>削除に成功したか</returns>
         public Task<Result> RemoveListener()
-            => this.Proxy.Invoke<Result>(this.PresentationID);
+            => this.Proxy.Invoke<Result>("RemoveListener", this.PresentationID);
         /// <summary>
         /// 自身をLisnerから削除する
         /// </summary>
         /// <param name="presentationId">受信しているPresentationのId</param>
         /// <returns>削除に成功したか</returns>
         public Task<Result> RemoveListener(string presentationId)
-            => this.Proxy.Invoke<Result>(presentationId);
+            => this.Proxy.Invoke<Result>("RemoveListener", presentationId);
 
     }
 }
