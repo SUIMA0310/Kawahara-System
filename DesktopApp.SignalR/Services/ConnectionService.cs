@@ -63,13 +63,11 @@ namespace DesktopApp.Services
             if (this._IsOpened) { return; }
             this._IsOpened = true;
 
-            if (this.Connection == null) {
-                this.Connection = this.CreateHubConnection();
-                this.Connection.StateChanged += (e) =>
-                {
-                    this.OnHasConnectionChanged(this.HasConnection);
-                };
-            }
+            if (this.Connection == null) { this.Connection = this.CreateHubConnection(); }
+            this.Connection.StateChanged += (e) =>
+            {
+                this.OnHasConnectionChanged(this.HasConnection);
+            };
             this.Connection.Error += this.Connection_Error;
             this.Connecting = this.Connection.Start();
 
