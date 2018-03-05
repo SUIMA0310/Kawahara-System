@@ -1,4 +1,4 @@
-﻿using DesktopApp.Services;
+﻿using Prism.Interactivity.InteractionRequest;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
+using DesktopApp.Services;
+using DesktopApp.Notifications;
 
 namespace DesktopApp.ViewModels
 {
@@ -20,10 +22,15 @@ namespace DesktopApp.ViewModels
         public ReactiveProperty<string> PresentationID { get; }
         public ReadOnlyReactiveProperty<string> ConnectionState { get; }
 
+        public ReactiveCommand SettingChangeCommand { get; }
+
+        public InteractionRequest<InputSettingNotification> InputSettingRequest { get; }
+
         public ConnectionControlViewModel(IReactionHubProxy reactionHubProxy, IConnectionService connectionService)
         {
             this.ReactionHub = reactionHubProxy;
             this.ConnectionService = connectionService;
+
 
             this.ServerURL = Observable.FromEvent<string>(
                 handler => this.ReactionHub.ServerURLChanged += handler,
@@ -32,7 +39,7 @@ namespace DesktopApp.ViewModels
                 .ToReactiveProperty(this.ReactionHub.ServerURL ?? "N/A")
                 .AddTo(this.Disposable);
             this.ServerURL
-                .Where( x => x != "N/A" )
+                .Where(x => x != "N/A")
                 .Subscribe(x => this.ReactionHub.ServerURL = x)
                 .AddTo(this.Disposable);
 
@@ -53,6 +60,22 @@ namespace DesktopApp.ViewModels
                 .Select(x => x ? "接続中" : "切断")
                 .ToReadOnlyReactiveProperty(this.ConnectionService.HasConnection ? "接続中" : "切断")
                 .AddTo(this.Disposable);
+
+
+            this.SettingChangeCommand = new ReactiveCommand();
+            this.SettingChangeCommand
+                .Subscribe(_ =>
+                {
+                    var inputSetting = new InputSettingNotification { Title = "通信設定 ・ 変更" };
+                    this.InputSettingRequest.Raise(inputSetting);
+                    if (inputSetting.Confirmed) {
+                        this.ReactionHub.ServerURL = inputSetting.InputServerURL;
+                        this.ReactionHub.PresentationID = inputSetting.InputPresentationID;
+                    }
+                })
+                .AddTo(this.Disposable);
+
+            this.InputSettingRequest = new InteractionRequest<InputSettingNotification>();
 
             this.Title.Value = "Connection";
         }

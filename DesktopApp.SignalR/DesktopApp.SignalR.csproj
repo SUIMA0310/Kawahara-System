@@ -55,6 +55,7 @@
     <Compile Include="Models\eReactionType.cs" />
     <Compile Include="Models\eResultTypes.cs" />
     <Compile Include="Models\Result.cs" />
+    <Compile Include="Notifications\InputSettingNotification.cs" />
     <Compile Include="Services\ConnectionService.cs" />
     <Compile Include="Services\HubProxyService.cs" />
     <Compile Include="Services\IConnectionService.cs" />
@@ -77,8 +78,12 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="ViewModels\ConnectionControlViewModel.cs" />
+    <Compile Include="ViewModels\InputSettingViewModel.cs" />
     <Compile Include="Views\ConnectionControlView.xaml.cs">
       <DependentUpon>ConnectionControlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\InputSettingView.xaml.cs">
+      <DependentUpon>InputSettingView.xaml</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -118,6 +123,10 @@
   <ItemGroup />
   <ItemGroup>
     <Page Include="Views\ConnectionControlView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\InputSettingView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

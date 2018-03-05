@@ -1,8 +1,19 @@
 ﻿<UserControl x:Class="DesktopApp.Views.ConnectionControlView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:prism="http://prismlibrary.com/"             
+             xmlns:local="clr-namespace:DesktopApp.Views"
              prism:ViewModelLocator.AutoWireViewModel="True">
+    <i:Interaction.Triggers>
+        <prism:InteractionRequestTrigger SourceObject="{Binding InputSettingRequest}">
+            <prism:PopupWindowAction IsModal="True" CenterOverAssociatedObject="True">
+                <prism:PopupWindowAction.WindowContent>
+                    <local:InputSettingView/>
+                </prism:PopupWindowAction.WindowContent>
+            </prism:PopupWindowAction>
+        </prism:InteractionRequestTrigger>
+    </i:Interaction.Triggers>
     <StackPanel Margin="10">
         <StackPanel Margin="10">
             <Label>Connection Server URL</Label>
@@ -16,5 +27,6 @@
             <Label>Connection State</Label>
             <TextBlock Text="{Binding ConnectionState.Value}"/>
         </StackPanel>
+        <Button Margin="10" Content="変更" Command="{Binding SettingChangeCommand}"/>
     </StackPanel>
 </UserControl>
