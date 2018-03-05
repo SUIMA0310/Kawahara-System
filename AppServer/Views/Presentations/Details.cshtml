@@ -34,6 +34,14 @@
             @Html.DisplayFor( model => model.HasReactionType )
         </dd>
 
+        <dt>
+            リンク
+        </dt>
+
+        <dd>
+            @Html.ActionLink( linkText:"Go to Reaction",  actionName: Model.Id,  controllerName: "Reaction");
+        </dd>
+
     </dl>
 </div>
 <p>
