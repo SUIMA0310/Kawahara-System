@@ -8,28 +8,37 @@ using System.Linq;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 using DesktopApp.Services;
-using DesktopApp.Overlay.Draw.Models;
 using DesktopApp.Models;
+using DesktopApp.Services;
+using DesktopApp.Overlay.Draw.Models;
 
 namespace DesktopApp.ViewModels
 {
     public class OverlayWindowViewModel : ViewModelBase, IReactionInteraction
     {
-        public OverlayWindowViewModel()
+        private readonly IReactionHubProxy ReactionHub;
+
+        public OverlayWindowViewModel(IReactionHubProxy reactionHubProxy)
         {
-
-            Observable.Timer(TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(1.1))
-                .Subscribe(x => this.OnInteraction(eReactionType.Good, new Color(255, 150, 150)))
+            this.ReactionHub = reactionHubProxy;
+            this.ReactionHub.Connected += async () =>
+            {
+                this.ReactionHub.OnReceiveReaction()
+                .Subscribe(x => this.OnInteraction(x.Item1, x.Item2))
                 .AddTo(this.Disposable);
+                var ret = await this.ReactionHub.AddListener();
+                if ( ret.ResultTypes == eResultTypes.Failed ) {
+                    throw new ArgumentException( "PresentationID が不正です" );
+                }
+            };
+            this.ReactionHub.Open();
 
-            Observable.Timer(TimeSpan.FromSeconds(2), TimeSpan.FromSeconds(2.6))
-                .Subscribe(x => this.OnInteraction(eReactionType.Good, new Color(150, 255, 150)))
-                .AddTo(this.Disposable);
+        }
 
-            Observable.Timer(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(5.2))
-                .Subscribe(x => this.OnInteraction(eReactionType.Good, new Color(150, 150, 255)))
-                .AddTo(this.Disposable);
-
+        public override void Dispose()
+        {
+            this.ReactionHub?.RemoveListener();
+            base.Dispose();
         }
 
         private void OnInteraction(eReactionType reactionType, Color color)

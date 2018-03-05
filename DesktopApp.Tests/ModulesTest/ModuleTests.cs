@@ -59,8 +59,9 @@ namespace DesktopApp.Tests.ModulesTest
         {
 
             var container = new DryIoc.Container();
+            var mock = new Mock<Prism.Regions.IRegionManager>();
 
-            var module = new SignalRModule( container );
+            var module = new SignalRModule(container, mock.Object);
 
             module.Initialize();
 
