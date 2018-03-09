@@ -27,7 +27,7 @@ namespace DesktopApp.Services
             this.Logger = logger;
             this.Connection = connection ?? throw new ArgumentNullException( nameof( connection ) );
             this.Connection.ServerURLChanged += (e) => { this.OnServerURLChanged(e); };
-            this.Connection.HasConnectionChanged += (e) => { if (e) { this.OnConnected(); } };
+            this.Connection.Connected += () => { this.OnConnected(); };
         }
 
         public virtual void Open()

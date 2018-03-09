@@ -70,6 +70,15 @@ namespace DesktopApp.Services
             };
             this.Connection.Error += this.Connection_Error;
             this.Connecting = this.Connection.Start();
+            this.Connecting.ContinueWith((t) =>
+            {
+                if (this.Connection.State == ConnectionState.Connected) {
+
+                    //接続完了通知
+                    this.OnConnected();
+
+                }
+            });
 
         }
 
@@ -99,6 +108,7 @@ namespace DesktopApp.Services
 
         public event Action<bool> HasConnectionChanged;
         public event Action<string> ServerURLChanged;
+        public event Action Connected;
 
         protected virtual void OnHasConnectionChanged(bool args)
         {
@@ -108,6 +118,11 @@ namespace DesktopApp.Services
         protected virtual void OnServerURLChanged(string args)
         {
             this.ServerURLChanged?.Invoke(args);
+        }
+
+        protected virtual void OnConnected()
+        {
+            this.Connected?.Invoke();
         }
 
     }
