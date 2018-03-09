@@ -135,8 +135,13 @@ namespace DesktopApp.Overlay.Core
         private const int WS_EX_TRANSPARENT = 0x00000020; // 透過ウィンドウスタイル
 
         private const int WM_SYSKEYDOWN = 0x0104; // Alt + 任意のキー の入力
+        private const int WM_DPICHANGED = 0x02E0; // DPI変更通知
 
         private const int VK_F4 = 0x73;
+
+        private const int SWP_NOACTIVATE = 0x0010;
+
+        private const int HWND_TOPMOST = -1;
 
         #endregion
 
@@ -148,6 +153,9 @@ namespace DesktopApp.Overlay.Core
         [DllImport("user32")]
         private static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwLong);
 
+        [DllImport("user32")]
+        private static extern int SetWindowPos(IntPtr hWnd, int hWndInsertAfter, int x, int y, int cx, int cy, int uFlags);
+
         #endregion
 
         public OverlayWindow()
@@ -157,9 +165,6 @@ namespace DesktopApp.Overlay.Core
             this.WindowStyle = WindowStyle.None;
             this.AllowsTransparency = true;
             this.Background = new SolidColorBrush(Colors.Transparent);
-
-            // 全画面表示
-            this.SetUseScreen( this.UseScreen );
 
             // 最前面表示
             this.Topmost = true;
@@ -177,6 +182,9 @@ namespace DesktopApp.Overlay.Core
 
             //クリックをスルー
             this.SetClickThrough(this.ClickThrough);
+
+            // 全画面表示
+            this.SetUseScreen(this.UseScreen);
 
             //Alt + F4 を無効化
             var handle = new WindowInteropHelper(this).Handle;
@@ -268,11 +276,35 @@ namespace DesktopApp.Overlay.Core
 
             if (screen == null) { return; }
 
-            this.Top = screen.Bounds.Top;
-            this.Left = screen.Bounds.Left;
-            this.Height = screen.Bounds.Height;
-            this.Width = screen.Bounds.Width;
+            var handle = new WindowInteropHelper(this).Handle;
+            if (handle == IntPtr.Zero) { return; }
 
+            SetWindowPos(
+                handle, 
+                HWND_TOPMOST,
+                screen.Bounds.Left,
+                screen.Bounds.Top,
+                screen.Bounds.Width,
+                screen.Bounds.Height,
+                SWP_NOACTIVATE );
+            //this.Top = screen.Bounds.Top;
+            //this.Left = screen.Bounds.Left;
+            //this.Height = screen.Bounds.Height;
+            //this.Width = screen.Bounds.Width;
+
+        }
+
+        public Point GetDpiScaleFactor()
+        {
+            Visual visual = this;
+            var source = PresentationSource.FromVisual(visual);
+            if (source != null && source.CompositionTarget != null) {
+                return new Point(
+                    source.CompositionTarget.TransformToDevice.M11,
+                    source.CompositionTarget.TransformToDevice.M22);
+            }
+
+            return new Point(1.0, 1.0);
         }
 
     }
