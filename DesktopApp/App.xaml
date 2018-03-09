@@ -11,6 +11,7 @@
 
                 <ResourceDictionary Source="Styles/TabControl.xaml"/> 
                 <ResourceDictionary Source="Styles/ToggleButton.xaml"/>
+                <ResourceDictionary Source="Styles/Texts.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

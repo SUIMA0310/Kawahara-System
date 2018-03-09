@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace DesktopApp.Actions
 {
@@ -83,6 +84,14 @@ namespace DesktopApp.Actions
                 }
 
                 wrapperWindow.SizeChanged += sizeHandler;
+            }
+
+            if (wrapperWindow is Views.Dialogs.PopupMetroWindow metroWindow2) {
+
+                var grind = metroWindow2.MainControl.Content as FrameworkElement;
+                metroWindow2.Width = grind.Width;
+                metroWindow2.Height = grind.Height + 34.0f;
+
             }
 
             if (this.IsModal) {
