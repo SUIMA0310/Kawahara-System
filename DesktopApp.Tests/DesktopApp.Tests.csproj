@@ -147,10 +147,7 @@
     <Compile Include="ViewModelsTest\ViewModelBaseTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Fakes Include="Fakes\DesktopApp.fakes" />
     <None Include="app.config" />
-    <Fakes Include="Fakes\DesktopApp.Core.fakes" />
-    <Fakes Include="Fakes\Prism.Wpf.fakes" />
     <Fakes Include="Fakes\Microsoft.AspNet.SignalR.Client.fakes" />
     <None Include="packages.config" />
   </ItemGroup>
