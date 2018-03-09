@@ -128,6 +128,9 @@
     <PackageReference Include="Microsoft.AspNet.SignalR.Client">
       <Version>2.2.2</Version>
     </PackageReference>
+    <PackageReference Include="MicrosoftExpressionInteractions">
+      <Version>3.0.40218</Version>
+    </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>11.0.1</Version>
     </PackageReference>
