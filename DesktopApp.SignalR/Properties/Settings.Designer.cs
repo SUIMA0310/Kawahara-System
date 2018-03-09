@@ -13,7 +13,7 @@ namespace DesktopApp.Properties {
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.5.0.0")]
-    public sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
+    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
         
@@ -25,13 +25,25 @@ namespace DesktopApp.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:56624/")]
-        public string ServerURL {
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string LastServerURL {
             get {
-                return ((string)(this["ServerURL"]));
+                return ((string)(this["LastServerURL"]));
             }
             set {
-                this["ServerURL"] = value;
+                this["LastServerURL"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string LastPresentationID {
+            get {
+                return ((string)(this["LastPresentationID"]));
+            }
+            set {
+                this["LastPresentationID"] = value;
             }
         }
     }

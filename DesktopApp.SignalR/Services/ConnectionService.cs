@@ -94,7 +94,7 @@ namespace DesktopApp.Services
 
         private HubConnection CreateHubConnection()
         {
-            return new HubConnection(this.ServerURL ?? Properties.Settings.Default.ServerURL);
+            return new HubConnection(this.ServerURL ?? throw new NullReferenceException(nameof(this.ServerURL)));
         }
 
         public event Action<bool> HasConnectionChanged;

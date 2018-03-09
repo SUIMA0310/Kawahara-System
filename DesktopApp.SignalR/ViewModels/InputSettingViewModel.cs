@@ -18,7 +18,7 @@ namespace DesktopApp.ViewModels
         {
             get => this._Notification;
             set {
-                this._Notification = value as Notifications.InputSettingNotification;
+                this._Notification = value as Notifications.IInputSettingNotification;
                 this.Initialize();
             }
         }
@@ -63,8 +63,14 @@ namespace DesktopApp.ViewModels
 
         protected virtual void Initialize()
         {
-            this.ServerURL.Value = string.Empty;
-            this.PresentetionID.Value = string.Empty;
+            this.ServerURL.Value = this._Notification.InputServerURL;
+            this.PresentetionID.Value = this._Notification.InputPresentationID;
+
+            if ( string.IsNullOrWhiteSpace(this.ServerURL.Value) ) {
+
+                this.ServerURL.Value = Properties.Resources.DefaultServerURL;
+
+            }
         }
 
         protected virtual void OnFinishInteraction()
@@ -72,6 +78,6 @@ namespace DesktopApp.ViewModels
             this.FinishInteraction?.Invoke();
         }
 
-        private Notifications.InputSettingNotification _Notification;
+        private Notifications.IInputSettingNotification _Notification;
     }
 }

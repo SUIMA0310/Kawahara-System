@@ -61,6 +61,15 @@ namespace DesktopApp.Properties {
         }
         
         /// <summary>
+        ///   http://localhost:56624/ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string DefaultServerURL {
+            get {
+                return ResourceManager.GetString("DefaultServerURL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   reactionsHub に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string HubName {
