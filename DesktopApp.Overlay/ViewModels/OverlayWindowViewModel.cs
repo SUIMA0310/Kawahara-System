@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
-using DesktopApp.Services;
 using DesktopApp.Models;
 using DesktopApp.Services;
 using DesktopApp.Overlay.Draw.Models;
