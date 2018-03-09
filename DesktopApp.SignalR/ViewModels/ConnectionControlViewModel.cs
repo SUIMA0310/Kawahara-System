@@ -2,7 +2,6 @@
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
-using System.Reactive;
 using System.Reactive.Linq;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +25,7 @@ namespace DesktopApp.ViewModels
         public ReactiveCommand SettingChangeCommand { get; }
 
         public InteractionRequest<InputSettingNotification> InputSettingRequest { get; }
+        public InteractionRequest<Notification> ExceptionNotificationRequest { get; }
 
         public ConnectionControlViewModel(IReactionHubProxy reactionHubProxy, IConnectionService connectionService)
         {
@@ -41,6 +41,7 @@ namespace DesktopApp.ViewModels
                 .AddTo(this.Disposable);
             this.ServerURL
                 .Where(x => x != "N/A")
+                .Select(x => string.IsNullOrWhiteSpace(x) ? null : x)
                 .Subscribe(x => this.ReactionHub.ServerURL = x)
                 .AddTo(this.Disposable);
 
@@ -52,14 +53,15 @@ namespace DesktopApp.ViewModels
                 .AddTo(this.Disposable);
             this.PresentationID
                 .Where(x => x != "N/A")
+                .Select(x => string.IsNullOrWhiteSpace(x) ? null : x)
                 .Subscribe(x => this.ReactionHub.PresentationID = x)
                 .AddTo(this.Disposable);
 
             this.ConnectionState = Observable.FromEvent<bool>(
                 handler => this.ConnectionService.HasConnectionChanged += handler,
                 handler => this.ConnectionService.HasConnectionChanged -= handler)
-                .Select(x => x ? "接続中" : "切断")
-                .ToReadOnlyReactiveProperty(this.ConnectionService.HasConnection ? "接続中" : "切断")
+                .Select(x => x ? "接続完了" : "切断")
+                .ToReadOnlyReactiveProperty(this.ConnectionService.HasConnection ? "接続完了" : "切断")
                 .AddTo(this.Disposable);
 
 
@@ -72,15 +74,32 @@ namespace DesktopApp.ViewModels
 
                     if (inputSetting.Confirmed) {
 
-                        this.ReactionHub.ServerURL = inputSetting.InputServerURL;
                         this.ReactionHub.PresentationID = inputSetting.InputPresentationID;
-                        
+
+                        try {
+
+                            this.ReactionHub.ServerURL = inputSetting.InputServerURL;
+                            
+
+                        }catch(InvalidOperationException ex) {
+
+                            inputSetting.InputServerURL = this.ReactionHub.ServerURL;
+
+                            this.ExceptionNotificationRequest.Raise(
+                                new Notification {
+                                    Title = "ERROR",
+                                    Content = ex.Message
+                                });
+
+                        }
+
                     }
 
                 })
                 .AddTo(this.Disposable);
 
             this.InputSettingRequest = new InteractionRequest<InputSettingNotification>();
+            this.ExceptionNotificationRequest = new InteractionRequest<Notification>();
 
             this.Title.Value = "Connection";
         }

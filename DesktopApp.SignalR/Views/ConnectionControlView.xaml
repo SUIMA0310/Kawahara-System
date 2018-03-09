@@ -6,7 +6,9 @@
              xmlns:local="clr-namespace:DesktopApp.Views"
              xmlns:core="clr-namespace:DesktopApp.Actions;assembly=DesktopApp.Core"
              prism:ViewModelLocator.AutoWireViewModel="True">
+    
     <i:Interaction.Triggers>
+        
         <prism:InteractionRequestTrigger SourceObject="{Binding InputSettingRequest}">
             <core:PopupMetroWindowAction IsModal="True" CenterOverAssociatedObject="True">
                 <prism:PopupWindowAction.WindowContent>
@@ -14,7 +16,13 @@
                 </prism:PopupWindowAction.WindowContent>
             </core:PopupMetroWindowAction>
         </prism:InteractionRequestTrigger>
+        
+        <prism:InteractionRequestTrigger SourceObject="{Binding ExceptionNotificationRequest}">
+            <prism:PopupWindowAction IsModal="True" CenterOverAssociatedObject="True"/>
+        </prism:InteractionRequestTrigger>
+        
     </i:Interaction.Triggers>
+    
     <StackPanel Margin="10">
         <StackPanel Margin="10">
             <Label>Connection Server URL</Label>
