@@ -22,12 +22,15 @@ namespace DesktopApp.ViewModels
             this.ReactionHub = reactionHubProxy;
             this.ReactionHub.Connected += async () =>
             {
+                //リアクションの受信設定
                 this.ReactionHub.OnReceiveReaction()
-                .Subscribe(x => this.OnInteraction(x.Item1, x.Item2))
-                .AddTo(this.Disposable);
+                                .Subscribe(x => this.OnInteraction(x.Item1, x.Item2))
+                                .AddTo(this.Disposable);
+
+                //リスナー登録
                 var ret = await this.ReactionHub.AddListener();
                 if ( ret.ResultTypes == eResultTypes.Failed ) {
-                    throw new ArgumentException( "PresentationID が不正です" );
+                    throw new ArgumentException( ret.Message );
                 }
             };
             this.ReactionHub.Open();
