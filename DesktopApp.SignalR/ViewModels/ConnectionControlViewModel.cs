@@ -10,6 +10,7 @@ using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 using DesktopApp.Services;
 using DesktopApp.Notifications;
+using DesktopApp.Helpers;
 
 namespace DesktopApp.ViewModels
 {
@@ -36,7 +37,7 @@ namespace DesktopApp.ViewModels
                 handler => this.ReactionHub.ServerURLChanged += handler,
                 handler => this.ReactionHub.ServerURLChanged -= handler)
                 .Select(x => x ?? "N/A")
-                .ToReactiveProperty(this.ReactionHub.ServerURL ?? "N/A")
+                .ToReactiveProperty(Properties.Settings.Default.LastServerURL.NotEmptyOrDefault("N/A"))
                 .AddTo(this.Disposable);
             this.ServerURL
                 .Where(x => x != "N/A")
@@ -47,7 +48,7 @@ namespace DesktopApp.ViewModels
                 handler => this.ReactionHub.PresentationIDChanged += handler,
                 handler => this.ReactionHub.PresentationIDChanged -= handler)
                 .Select(x => x ?? "N/A")
-                .ToReactiveProperty(this.ReactionHub.PresentationID ?? "N/A")
+                .ToReactiveProperty(Properties.Settings.Default.LastPresentationID.NotEmptyOrDefault("N/A"))
                 .AddTo(this.Disposable);
             this.PresentationID
                 .Where(x => x != "N/A")
@@ -68,10 +69,23 @@ namespace DesktopApp.ViewModels
                 {
                     var inputSetting = new InputSettingNotification { Title = "通信設定 ・ 変更" };
                     this.InputSettingRequest.Raise(inputSetting);
+
                     if (inputSetting.Confirmed) {
-                        this.ReactionHub.ServerURL = inputSetting.InputServerURL;
-                        this.ReactionHub.PresentationID = inputSetting.InputPresentationID;
+
+                        if (this.ReactionHub.ServerURL != inputSetting.InputServerURL) {
+
+                            this.ReactionHub.ServerURL = inputSetting.InputServerURL;
+
+                        }
+
+                        if (this.ReactionHub.PresentationID != inputSetting.InputPresentationID) {
+
+                            this.ReactionHub.PresentationID = inputSetting.InputPresentationID;
+
+                        }
+
                     }
+
                 })
                 .AddTo(this.Disposable);
 

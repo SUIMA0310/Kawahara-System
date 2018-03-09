@@ -51,11 +51,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helpers\HubProxyExtensions.cs" />
+    <Compile Include="Helpers\StringExtensions.cs" />
     <Compile Include="Models\Color.cs" />
     <Compile Include="Models\eReactionType.cs" />
     <Compile Include="Models\eResultTypes.cs" />
     <Compile Include="Models\Result.cs" />
+    <Compile Include="Notifications\IInputSettingNotification.cs" />
     <Compile Include="Notifications\InputSettingNotification.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="Services\ConnectionService.cs" />
     <Compile Include="Services\HubProxyService.cs" />
     <Compile Include="Services\IConnectionService.cs" />
@@ -85,6 +92,10 @@
     </EmbeddedResource>
     <None Include="app.config" />
     <AppDesigner Include="Properties\" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DesktopApp.Core\DesktopApp.Core.csproj">
