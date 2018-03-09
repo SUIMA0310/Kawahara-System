@@ -37,8 +37,8 @@ namespace DesktopApp.Services
         {
             get => this._ServerURL;
             set {
-                if (this._IsOpened) { throw new InvalidOperationException("接続開始後は変更できません"); }
                 if (this._ServerURL == value) { return; }
+                if (this._IsOpened) { throw new InvalidOperationException("接続開始後は変更できません"); }
                 this._ServerURL = value;
                 this.OnServerURLChanged(value);
             }

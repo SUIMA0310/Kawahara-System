@@ -72,18 +72,9 @@ namespace DesktopApp.ViewModels
 
                     if (inputSetting.Confirmed) {
 
-                        if (this.ReactionHub.ServerURL != inputSetting.InputServerURL) {
-
-                            this.ReactionHub.ServerURL = inputSetting.InputServerURL;
-
-                        }
-
-                        if (this.ReactionHub.PresentationID != inputSetting.InputPresentationID) {
-
-                            this.ReactionHub.PresentationID = inputSetting.InputPresentationID;
-
-                        }
-
+                        this.ReactionHub.ServerURL = inputSetting.InputServerURL;
+                        this.ReactionHub.PresentationID = inputSetting.InputPresentationID;
+                        
                     }
 
                 })
