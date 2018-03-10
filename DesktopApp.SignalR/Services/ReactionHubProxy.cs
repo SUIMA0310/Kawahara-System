@@ -15,12 +15,14 @@ namespace DesktopApp.Services
     /// </summary>
     public class ReactionHubProxy : HubProxyService, IReactionHubProxy
     {
-        public string PresentationID {
+        public string PresentationID
+        {
             get => this._PresentationID;
             set {
                 if (this._PresentationID == value) { return; }
+                string oldValue = this._PresentationID;
                 this._PresentationID = value;
-                this.OnPresentationIDChanged(value);
+                this.OnPresentationIDChanged(value, oldValue);
             }
         }
 
@@ -29,12 +31,21 @@ namespace DesktopApp.Services
         protected override string HubName => Properties.Resources.HubName;
 
         private string _PresentationID;
+        private bool _Listen;
 
-        public event Action<string> PresentationIDChanged;
+        public event Action<string, string> PresentationIDChanged;
 
-        protected virtual void OnPresentationIDChanged(string args)
+        protected virtual void OnPresentationIDChanged(string newValue, string oldValue)
         {
-            this.PresentationIDChanged?.Invoke(args);
+            if (oldValue != null && this._Listen) {
+                this.RemoveListener( oldValue );
+            }
+
+            if (newValue != null && this._Listen) {
+                this.AddListener();
+            }
+
+            this.PresentationIDChanged?.Invoke(newValue, oldValue);
         }
 
 
@@ -42,7 +53,7 @@ namespace DesktopApp.Services
         /// Reactionの受信
         /// </summary>
         /// <returns>受信ストリーム</returns>
-        public IObservable<(eReactionType, Color)> OnReceiveReaction() 
+        public IObservable<(eReactionType, Color)> OnReceiveReaction()
             => this.Proxy.On<eReactionType, Color>();
 
         /// <summary>
@@ -50,7 +61,7 @@ namespace DesktopApp.Services
         /// </summary>
         /// <param name="reactionType">送信するReactionの種類</param>
         /// <param name="coler">送信元を示す色情報</param>
-        public Task SendReaction(eReactionType reactionType, Color color) 
+        public Task SendReaction(eReactionType reactionType, Color color)
             => this.Proxy.Invoke("SendReaction", this.PresentationID, reactionType, color);
         /// <summary>
         /// Listenerに対し、Reactionを送信する
@@ -108,7 +119,11 @@ namespace DesktopApp.Services
         /// </summary>
         /// <returns>追加に成功したか</returns>
         public Task<Result> AddListener()
-            => this.Proxy.Invoke<Result>("AddListener", this.PresentationID);
+        {
+            var ret = this.Proxy.Invoke<Result>("AddListener", this.PresentationID);
+            ret.ContinueWith((x) => this._Listen = x.Result.ResultTypes == eResultTypes.Success);
+            return ret;
+        }
         /// <summary>
         /// 自身をListenerとして追加する
         /// </summary>
@@ -122,7 +137,10 @@ namespace DesktopApp.Services
         /// </summary>
         /// <returns>削除に成功したか</returns>
         public Task<Result> RemoveListener()
-            => this.Proxy.Invoke<Result>("RemoveListener", this.PresentationID);
+        {
+            this._Listen = false;
+            return this.Proxy.Invoke<Result>("RemoveListener", this.PresentationID);
+        }
         /// <summary>
         /// 自身をLisnerから削除する
         /// </summary>

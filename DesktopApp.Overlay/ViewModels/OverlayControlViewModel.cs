@@ -27,6 +27,8 @@ namespace DesktopApp.ViewModels
         public ReactiveCollection<Screen> ScreenCollection { get; }
         public ReactiveProperty<Screen> UseScreen { get; }
 
+        public ReactiveCommand ScreenUpdateCommand { get; }
+
 
         public OverlayControlViewModel(IOverlayWindowService windowService)
         {
@@ -73,6 +75,15 @@ namespace DesktopApp.ViewModels
 
             this.ScreenCollection = new ReactiveCollection<Screen>();
             this.ScreenCollection.AddRangeOnScheduler(Screen.AllScreens);
+
+            this.ScreenUpdateCommand = new ReactiveCommand();
+            this.ScreenUpdateCommand
+                .Subscribe(_ =>
+                {
+                    this.ScreenCollection.ClearOnScheduler();
+                    this.ScreenCollection.AddRangeOnScheduler(Screen.AllScreens);
+                })
+                .AddTo(this.Disposable);
 
             this.UseScreen = Observable.FromEventPattern
                 (

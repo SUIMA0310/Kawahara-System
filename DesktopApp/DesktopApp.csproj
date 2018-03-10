@@ -38,6 +38,9 @@
   <PropertyGroup>
     <StartupObject>DesktopApp.App</StartupObject>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -65,6 +68,10 @@
       <DependentUpon>StatusBarControl.xaml</DependentUpon>
     </Compile>
     <Page Include="Styles\TabControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\Texts.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -109,6 +116,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -123,6 +131,9 @@
     </PackageReference>
     <PackageReference Include="Microsoft.AspNet.SignalR.Client">
       <Version>2.2.2</Version>
+    </PackageReference>
+    <PackageReference Include="MicrosoftExpressionInteractions">
+      <Version>3.0.40218</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>11.0.1</Version>
@@ -142,6 +153,10 @@
     <ProjectReference Include="..\DesktopApp.Core\DesktopApp.Core.csproj">
       <Project>{5048f2aa-32b1-49bf-a596-b3e59ea1de36}</Project>
       <Name>DesktopApp.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DesktopApp.Overlay.Control\DesktopApp.Overlay.Control.csproj">
+      <Project>{07ad70f5-97a6-4b9a-95c7-e7f6ea8b37d1}</Project>
+      <Name>DesktopApp.Overlay.Control</Name>
     </ProjectReference>
     <ProjectReference Include="..\DesktopApp.Overlay.Core\DesktopApp.Overlay.Core.csproj">
       <Project>{dee71389-b145-4624-8ca4-b527cca09bd1}</Project>

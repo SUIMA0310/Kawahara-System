@@ -10,6 +10,7 @@ namespace DesktopApp.Services
 
         event Action<bool> HasConnectionChanged;
         event Action<string> ServerURLChanged;
+        event Action Connected;
 
         IHubProxy CreateHubProxy(string hubName);
         void Open();

@@ -51,18 +51,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helpers\HubProxyExtensions.cs" />
+    <Compile Include="Helpers\StringExtensions.cs" />
     <Compile Include="Models\Color.cs" />
     <Compile Include="Models\eReactionType.cs" />
     <Compile Include="Models\eResultTypes.cs" />
     <Compile Include="Models\Result.cs" />
+    <Compile Include="Notifications\IInputSettingNotification.cs" />
     <Compile Include="Notifications\InputSettingNotification.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="Services\ConnectionService.cs" />
     <Compile Include="Services\HubProxyService.cs" />
     <Compile Include="Services\IConnectionService.cs" />
     <Compile Include="Services\IHubProxyService.cs" />
     <Compile Include="Services\IReactionHubProxy.cs" />
     <Compile Include="Services\ReactionHubProxy.cs" />
-    <Compile Include="Settings.cs" />
     <Compile Include="SignalRModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -71,11 +77,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="ViewModels\ConnectionControlViewModel.cs" />
     <Compile Include="ViewModels\InputSettingViewModel.cs" />
@@ -90,11 +91,11 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="app.config" />
+    <AppDesigner Include="Properties\" />
     <None Include="Properties\Settings.settings">
-      <Generator>PublicSettingsSingleFileGenerator</Generator>
+      <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DesktopApp.Core\DesktopApp.Core.csproj">

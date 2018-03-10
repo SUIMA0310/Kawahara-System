@@ -34,8 +34,6 @@ namespace DesktopApp.Actions
             Window wrapperWindow = this.CreateWindow();
             if (wrapperWindow != null) {
 
-                wrapperWindow.Owner = Window.GetWindow( this.AssociatedObject );
-
                 wrapperWindow.Show();
 
             }

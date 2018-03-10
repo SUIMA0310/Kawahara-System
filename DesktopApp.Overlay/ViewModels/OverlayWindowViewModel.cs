@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
-using DesktopApp.Services;
 using DesktopApp.Models;
 using DesktopApp.Services;
 using DesktopApp.Overlay.Draw.Models;
@@ -16,19 +15,41 @@ namespace DesktopApp.ViewModels
 {
     public class OverlayWindowViewModel : ViewModelBase, IReactionInteraction
     {
-        private readonly IReactionHubProxy ReactionHub;
 
-        public OverlayWindowViewModel(IReactionHubProxy reactionHubProxy)
+        public ReactiveProperty<float> DisplayTime { get; }
+        public ReactiveProperty<float> MaxOpacity { get; }
+        public ReactiveProperty<float> Scale { get; }
+
+        private readonly IReactionHubProxy ReactionHub;
+        private readonly IDisplayControlService DisplayControl;
+        
+        public OverlayWindowViewModel(IReactionHubProxy reactionHubProxy, IDisplayControlService displayControl)
         {
+
             this.ReactionHub = reactionHubProxy;
+            this.DisplayControl = displayControl;
+
+            this.DisplayTime = this.DisplayControl.DisplayTime
+                                .ToReactiveProperty()
+                                .AddTo(this.Disposable);
+            this.MaxOpacity = this.DisplayControl.MaxOpacity
+                                .ToReactiveProperty()
+                                .AddTo(this.Disposable);
+            this.Scale = this.DisplayControl.Scale
+                                .ToReactiveProperty()
+                                .AddTo(this.Disposable);
+
             this.ReactionHub.Connected += async () =>
             {
+                //リアクションの受信設定
                 this.ReactionHub.OnReceiveReaction()
-                .Subscribe(x => this.OnInteraction(x.Item1, x.Item2))
-                .AddTo(this.Disposable);
+                                .Subscribe(x => this.OnInteraction(x.Item1, x.Item2))
+                                .AddTo(this.Disposable);
+
+                //リスナー登録
                 var ret = await this.ReactionHub.AddListener();
                 if ( ret.ResultTypes == eResultTypes.Failed ) {
-                    throw new ArgumentException( "PresentationID が不正です" );
+                    throw new ArgumentException( ret.Message );
                 }
             };
             this.ReactionHub.Open();

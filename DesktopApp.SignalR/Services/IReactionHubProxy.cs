@@ -8,7 +8,7 @@ namespace DesktopApp.Services
     {
         string PresentationID { get; set; }
 
-        event Action<string> PresentationIDChanged;
+        event Action<string, string> PresentationIDChanged;
 
         System.IObservable<(eReactionType, Color)> OnReceiveReaction();
         Task<Result> AddListener();
