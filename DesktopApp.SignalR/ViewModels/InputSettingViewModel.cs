@@ -28,6 +28,8 @@ namespace DesktopApp.ViewModels
         public ReactiveProperty<string> ServerURL { get; }
         public ReactiveProperty<string> PresentetionID { get; }
 
+        private bool AnalyzeLock = false;
+
 
         public ReactiveCommand OK { get; }
         public ReactiveCommand Cancel { get; }
@@ -37,6 +39,14 @@ namespace DesktopApp.ViewModels
         {
             this.ServerURL = new ReactiveProperty<string>();
             this.PresentetionID = new ReactiveProperty<string>();
+
+            Observable.Merge(this.ServerURL, this.PresentetionID)
+                .Where(x => !this.AnalyzeLock)
+                .Where(x => !string.IsNullOrWhiteSpace(x))
+                .Subscribe(this.UriAnalyze)
+                .AddTo(this.Disposable);
+
+
 
             this.OK = new ReactiveCommand();
             this.OK
@@ -60,13 +70,29 @@ namespace DesktopApp.ViewModels
 
         }
 
+        private void UriAnalyze(string x)
+        {
+            this.AnalyzeLock = true;
+            if (Uri.TryCreate(x, UriKind.Absolute, out Uri uri)) {
+
+                this.ServerURL.Value = uri.GetLeftPart(UriPartial.Authority) + "/";
+
+                if (Guid.TryParse(uri.Segments.LastOrDefault(), out Guid guid)) {
+
+                    this.PresentetionID.Value = guid.ToString();
+
+                }
+
+            }
+            this.AnalyzeLock = false;
+        }
 
         protected virtual void Initialize()
         {
             this.ServerURL.Value = this._Notification.InputServerURL;
             this.PresentetionID.Value = this._Notification.InputPresentationID;
 
-            if ( string.IsNullOrWhiteSpace(this.ServerURL.Value) ) {
+            if (string.IsNullOrWhiteSpace(this.ServerURL.Value)) {
 
                 this.ServerURL.Value = Properties.Resources.DefaultServerURL;
 

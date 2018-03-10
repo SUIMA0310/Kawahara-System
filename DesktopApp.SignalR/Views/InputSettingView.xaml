@@ -13,11 +13,11 @@
         </Grid.RowDefinitions>
         <StackPanel Margin="10" Grid.Row="0">
             <Label>Server URL</Label>
-            <TextBox Text="{Binding ServerURL.Value}"/>
+            <TextBox Text="{Binding Path=ServerURL.Value, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
         <StackPanel Margin="10" Grid.Row="1">
             <Label>Presentation ID</Label>
-            <TextBox Text="{Binding PresentetionID.Value}"/>
+            <TextBox Text="{Binding Path=PresentetionID.Value, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
         <StackPanel Margin="0,10,10,10" Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="2">
             <Button Margin="5, 0" 
