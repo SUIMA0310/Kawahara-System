@@ -50,6 +50,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ControlModule.cs" />
+    <Compile Include="Models\DisplaySettingsStore.cs" />
+    <Compile Include="Models\IDisplaySettingsStore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -63,10 +65,17 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Services\DisplayControlService.cs" />
+    <Compile Include="Services\IDisplayControlService.cs" />
+    <Compile Include="ViewModels\OverlayShownControlViewModel.cs" />
+    <Compile Include="Views\OverlayShownControlView.xaml.cs">
+      <DependentUpon>OverlayShownControlView.xaml</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -74,6 +83,10 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DesktopApp.Core\DesktopApp.Core.csproj">
+      <Project>{5048f2aa-32b1-49bf-a596-b3e59ea1de36}</Project>
+      <Name>DesktopApp.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DesktopApp.Overlay.Draw\DesktopApp.Overlay.Draw.csproj">
       <Project>{30b89b48-d616-4fbf-9633-bf3f3920e8b9}</Project>
       <Name>DesktopApp.Overlay.Draw</Name>
@@ -84,11 +97,16 @@
     <PackageReference Include="Prism.Wpf">
       <Version>6.3.0</Version>
     </PackageReference>
+    <PackageReference Include="ReactiveProperty">
+      <Version>4.2.0</Version>
+    </PackageReference>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Services\" />
-    <Folder Include="ViewModels\" />
-    <Folder Include="Views\" />
+    <Page Include="Views\OverlayShownControlView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

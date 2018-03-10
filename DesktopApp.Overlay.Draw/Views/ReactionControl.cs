@@ -49,25 +49,22 @@ namespace DesktopApp.Overlay.Draw.Views
                 new PropertyMetadata(
                     1.0f,
                     null,
-                    (sender, value) =>
-                    {
-                        return Math.Min(1.0f, Math.Max((float)value, 0.0f));
-                    }));
+                    (sender, value) => ((float)value).CutOut()));
 
         // Using a DependencyProperty as the backing store for Scale.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ScaleProperty =
             DependencyProperty.Register(
-                "Scale", 
-                typeof(float), 
-                typeof(ReactionControl), 
+                "Scale",
+                typeof(float),
+                typeof(ReactionControl),
                 new PropertyMetadata(1.0f));
 
         // Using a DependencyProperty as the backing store for ShowTime.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty ShowTimeProperty =
+        public static readonly DependencyProperty DisplayTimeProperty =
             DependencyProperty.Register(
-                "ShowTime", 
-                typeof(double), 
-                typeof(ReactionControl), 
+                "DisplayTime",
+                typeof(double),
+                typeof(ReactionControl),
                 new PropertyMetadata(2.0));
 
         #endregion
@@ -104,10 +101,10 @@ namespace DesktopApp.Overlay.Draw.Views
         /// <summary>
         /// 表示時間
         /// </summary>
-        public double ShowTime
+        public double DisplayTime
         {
-            get { return (double)GetValue(ShowTimeProperty); }
-            set { SetValue(ShowTimeProperty, value); }
+            get { return (double)GetValue(DisplayTimeProperty); }
+            set { SetValue(DisplayTimeProperty, value); }
         }
 
         #endregion
@@ -130,7 +127,7 @@ namespace DesktopApp.Overlay.Draw.Views
             target.AntialiasMode = AntialiasMode.PerPrimitive;
 
             //有効表示時間を取得
-            var st = TimeSpan.FromSeconds(this.ShowTime);
+            var st = TimeSpan.FromSeconds(this.DisplayTime);
 
             //描画用のObjectを取得
             var good = this.resCache["Good"] as Objects.ObjectBase;
@@ -184,7 +181,7 @@ namespace DesktopApp.Overlay.Draw.Views
         private void Interaction(DesktopApp.Models.eReactionType reactionType, DesktopApp.Models.Color color)
         {
 
-            var item = new Models.Item(this.CreateBezier(), reactionType, color);
+            var item = new Models.Item(this.Dispatcher.Invoke(() => this.CreateBezier()), reactionType, color);
 
             lock (this.ViewDates) {
 

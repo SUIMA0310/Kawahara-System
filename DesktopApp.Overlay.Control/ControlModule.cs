@@ -3,6 +3,9 @@ using Prism.Regions;
 using System;
 using DryIoc;
 using Prism.DryIoc;
+using DesktopApp.Views;
+using DesktopApp.Models;
+using DesktopApp.Services;
 
 namespace DesktopApp
 {
@@ -19,7 +22,12 @@ namespace DesktopApp
 
         public void Initialize()
         {
-            
+            this.Container.Register<IDisplaySettingsStore, DisplaySettingsStore>(Reuse.Singleton);
+            this.Container.Register<IDisplayControlService, DisplayControlService>(Reuse.Singleton);
+
+            this.Container.RegisterTypeForNavigation<OverlayShownControlView>();
+
+            this.RegionManager.RegisterViewWithRegion("ContentRegion", typeof(OverlayShownControlView));
         }
     }
 }
