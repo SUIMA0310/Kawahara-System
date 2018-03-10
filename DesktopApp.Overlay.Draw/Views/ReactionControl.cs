@@ -199,15 +199,15 @@ namespace DesktopApp.Overlay.Draw.Views
 
             var ret = new Models.Bezier();
 
-            ret.StartPoint.Y = (float)this.ActualHeight - 120.0f;
+            ret.StartPoint.Y = (float)this.ActualHeight - 120.0f * this.Scale;
             ret.Point1.Y = (float)(this.ActualHeight * (2.0 / 3.0));
             ret.Point2.Y = (float)(this.ActualHeight * (1.0 / 3.0));
-            ret.EndPoint.Y = 120.0f;
+            ret.EndPoint.Y = 120.0f * this.Scale;
 
             var random = new Random();
             float center = (float)this.ActualWidth / 2.0f;
-            int max = Math.Max((int)this.ActualWidth - 100, 101);
-            int min = 100;
+            int max = (int)((Math.Max((int)this.ActualWidth - 100, 101)) * this.Scale);
+            int min = (int)(100 * this.Scale);
 
             ret.StartPoint.X = center;
             ret.Point1.X = random.Next(min, max);
