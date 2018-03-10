@@ -15,11 +15,7 @@ namespace DesktopApp.Overlay.Draw.Views
     public class ReactionControl : D2dControl.D2dControl
     {
 
-        public Models.IReactionInteraction Target
-        {
-            get { return (Models.IReactionInteraction)GetValue(TargetProperty); }
-            set { SetValue(TargetProperty, value); }
-        }
+        #region static field
 
         // Using a DependencyProperty as the backing store for Target.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty TargetProperty =
@@ -44,6 +40,63 @@ namespace DesktopApp.Overlay.Draw.Views
 
                 }));
 
+        // Using a DependencyProperty as the backing store for MaxOpacity.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty MaxOpacityProperty =
+            DependencyProperty.Register(
+                "MaxOpacity",
+                typeof(float),
+                typeof(ReactionControl),
+                new PropertyMetadata(
+                    1.0f,
+                    null,
+                    (sender, value) =>
+                    {
+                        return Math.Min(1.0f, Math.Max((float)value, 0.0f));
+                    }));
+
+        // Using a DependencyProperty as the backing store for Scale.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ScaleProperty =
+            DependencyProperty.Register(
+                "Scale", 
+                typeof(float), 
+                typeof(ReactionControl), 
+                new PropertyMetadata(1.0f));
+
+
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// Controlに表示を追加するためのEvent発火元
+        /// </summary>
+        public Models.IReactionInteraction Target
+        {
+            get { return (Models.IReactionInteraction)GetValue(TargetProperty); }
+            set { SetValue(TargetProperty, value); }
+        }
+
+        /// <summary>
+        /// 最大不透明度
+        /// </summary>
+        public float MaxOpacity
+        {
+            get { return (float)GetValue(MaxOpacityProperty); }
+            set { SetValue(MaxOpacityProperty, value); }
+        }
+
+        /// <summary>
+        /// 表示スケール
+        /// </summary>
+        public float Scale
+        {
+            get { return (float)GetValue(ScaleProperty); }
+            set { SetValue(ScaleProperty, value); }
+        }
+
+        #endregion
+
         private Queue<Models.Item> ViewDates;
 
         public ReactionControl()
@@ -67,28 +120,40 @@ namespace DesktopApp.Overlay.Draw.Views
             lock (this.ViewDates) {
                 foreach (var item in this.ViewDates) {
 
+                    var transform = Matrix3x2Helper.Identity;
+
+                    //経過時間の割合を取得
                     float t = item.StartTime.Elapsed(TimeSpan.FromSeconds(2));
-                    var point = item.Animation.Point(t);
+
+                    //描画位置を指定
+                    transform = transform.Translation(item.Animation.Point(t));
+
+                    //表示スケールを指定
+                    transform = transform.Scale(this.Scale);
+
+                    //表示色を指定
                     var color = item.Color;
-                    color.A = 1.0f - t;
+
+                    //透明度を設定
+                    color.A = (1.0f - t) * this.MaxOpacity;
 
                     switch (item.ReactionType) {
                         case DesktopApp.Models.eReactionType.Good:
-                            good.Render(point, color);
+                            good.Render(transform, color);
                             break;
                         case DesktopApp.Models.eReactionType.Nice:
                             //TODO
-                            good.Render(point, color);
+                            good.Render(transform, color);
                             break;
                         case DesktopApp.Models.eReactionType.Fun:
                             //TODO
-                            good.Render(point, color);
+                            good.Render(transform, color);
                             break;
                     }
 
                 }
 
-                while( 
+                while (
                     this.ViewDates.Any() &&
                     this.ViewDates.Peek().StartTime.Elapsed(TimeSpan.FromSeconds(2)) >= 1.0) {
                     this.ViewDates.Dequeue();
