@@ -45,7 +45,8 @@ namespace DesktopApp.ViewModels
                 .Subscribe(x => this.ReactionHub.ServerURL = x)
                 .AddTo(this.Disposable);
 
-            this.PresentationID = Observable.FromEvent<string>(
+            this.PresentationID = Observable.FromEvent<Action<string, string>, string>(
+                handler => (newValue, oldValue) => handler(newValue),
                 handler => this.ReactionHub.PresentationIDChanged += handler,
                 handler => this.ReactionHub.PresentationIDChanged -= handler)
                 .Select(x => x ?? "N/A")
