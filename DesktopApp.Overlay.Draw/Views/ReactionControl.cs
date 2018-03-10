@@ -62,7 +62,13 @@ namespace DesktopApp.Overlay.Draw.Views
                 typeof(ReactionControl), 
                 new PropertyMetadata(1.0f));
 
-
+        // Using a DependencyProperty as the backing store for ShowTime.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ShowTimeProperty =
+            DependencyProperty.Register(
+                "ShowTime", 
+                typeof(double), 
+                typeof(ReactionControl), 
+                new PropertyMetadata(2.0));
 
         #endregion
 
@@ -95,6 +101,15 @@ namespace DesktopApp.Overlay.Draw.Views
             set { SetValue(ScaleProperty, value); }
         }
 
+        /// <summary>
+        /// 表示時間
+        /// </summary>
+        public double ShowTime
+        {
+            get { return (double)GetValue(ShowTimeProperty); }
+            set { SetValue(ShowTimeProperty, value); }
+        }
+
         #endregion
 
         private Queue<Models.Item> ViewDates;
@@ -114,7 +129,10 @@ namespace DesktopApp.Overlay.Draw.Views
             target.Transform = Matrix3x2Helper.Identity;
             target.AntialiasMode = AntialiasMode.PerPrimitive;
 
+            //有効表示時間を取得
+            var st = TimeSpan.FromSeconds(this.ShowTime);
 
+            //描画用のObjectを取得
             var good = this.resCache["Good"] as Objects.ObjectBase;
 
             lock (this.ViewDates) {
@@ -123,7 +141,7 @@ namespace DesktopApp.Overlay.Draw.Views
                     var transform = Matrix3x2Helper.Identity;
 
                     //経過時間の割合を取得
-                    float t = item.StartTime.Elapsed(TimeSpan.FromSeconds(2));
+                    float t = item.StartTime.Elapsed(st);
 
                     //描画位置を指定
                     transform = transform.Translation(item.Animation.Point(t));
@@ -155,7 +173,7 @@ namespace DesktopApp.Overlay.Draw.Views
 
                 while (
                     this.ViewDates.Any() &&
-                    this.ViewDates.Peek().StartTime.Elapsed(TimeSpan.FromSeconds(2)) >= 1.0) {
+                    this.ViewDates.Peek().StartTime.Elapsed(st) >= 1.0) {
                     this.ViewDates.Dequeue();
                 }
 
