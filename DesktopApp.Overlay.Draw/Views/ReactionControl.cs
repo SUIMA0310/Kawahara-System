@@ -203,8 +203,8 @@ namespace DesktopApp.Overlay.Draw.Views
 
             var random = new Random();
             float center = (float)this.ActualWidth / 2.0f;
-            int max = (int)((Math.Max((int)this.ActualWidth - 100, 101)) * this.Scale);
-            int min = (int)(100 * this.Scale);
+            int max = Math.Max((int)(this.ActualWidth - 100.0f * this.Scale), 101);
+            int min = (int)(100.0f * this.Scale);
 
             ret.StartPoint.X = center;
             ret.Point1.X = random.Next(min, max);
