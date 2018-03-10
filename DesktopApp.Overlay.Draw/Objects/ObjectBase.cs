@@ -29,12 +29,12 @@ namespace DesktopApp.Overlay.Draw.Objects
             }
         }
 
-        public virtual void Render(RawVector2 point, RawColor4 color)
+        public virtual void Render(RawMatrix3x2 transform, RawColor4 color)
         {
 
             this.SetColor(color);
 
-            this.RenderTarget.Transform = this.GetTranslation(point);
+            this.RenderTarget.Transform = transform;
             this.RenderTarget.FillGeometry(this.Geometry, this.Brush);
 
             this.RenderTarget.Transform = Helpers.Matrix3x2Helper.Identity;
@@ -46,11 +46,6 @@ namespace DesktopApp.Overlay.Draw.Objects
         protected virtual Brush CreateBrush(RenderTarget renderTarget)
         {
             return new SolidColorBrush(renderTarget, new RawColor4());
-        }
-
-        protected virtual RawMatrix3x2 GetTranslation(RawVector2 point)
-        {
-            return Helpers.Matrix3x2Helper.Translation(point);
         }
 
         private void SetColor(RawColor4 color)

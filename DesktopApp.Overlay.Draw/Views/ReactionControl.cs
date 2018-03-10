@@ -15,11 +15,7 @@ namespace DesktopApp.Overlay.Draw.Views
     public class ReactionControl : D2dControl.D2dControl
     {
 
-        public Models.IReactionInteraction Target
-        {
-            get { return (Models.IReactionInteraction)GetValue(TargetProperty); }
-            set { SetValue(TargetProperty, value); }
-        }
+        #region static field
 
         // Using a DependencyProperty as the backing store for Target.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty TargetProperty =
@@ -44,6 +40,75 @@ namespace DesktopApp.Overlay.Draw.Views
 
                 }));
 
+        // Using a DependencyProperty as the backing store for MaxOpacity.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty MaxOpacityProperty =
+            DependencyProperty.Register(
+                "MaxOpacity",
+                typeof(float),
+                typeof(ReactionControl),
+                new PropertyMetadata(
+                    1.0f,
+                    null,
+                    (sender, value) => ((float)value).CutOut()));
+
+        // Using a DependencyProperty as the backing store for Scale.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ScaleProperty =
+            DependencyProperty.Register(
+                "Scale",
+                typeof(float),
+                typeof(ReactionControl),
+                new PropertyMetadata(1.0f));
+
+        // Using a DependencyProperty as the backing store for ShowTime.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty DisplayTimeProperty =
+            DependencyProperty.Register(
+                "DisplayTime",
+                typeof(double),
+                typeof(ReactionControl),
+                new PropertyMetadata(2.0));
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// Controlに表示を追加するためのEvent発火元
+        /// </summary>
+        public Models.IReactionInteraction Target
+        {
+            get { return (Models.IReactionInteraction)GetValue(TargetProperty); }
+            set { SetValue(TargetProperty, value); }
+        }
+
+        /// <summary>
+        /// 最大不透明度
+        /// </summary>
+        public float MaxOpacity
+        {
+            get { return (float)GetValue(MaxOpacityProperty); }
+            set { SetValue(MaxOpacityProperty, value); }
+        }
+
+        /// <summary>
+        /// 表示スケール
+        /// </summary>
+        public float Scale
+        {
+            get { return (float)GetValue(ScaleProperty); }
+            set { SetValue(ScaleProperty, value); }
+        }
+
+        /// <summary>
+        /// 表示時間
+        /// </summary>
+        public double DisplayTime
+        {
+            get { return (double)GetValue(DisplayTimeProperty); }
+            set { SetValue(DisplayTimeProperty, value); }
+        }
+
+        #endregion
+
         private Queue<Models.Item> ViewDates;
 
         public ReactionControl()
@@ -61,36 +126,51 @@ namespace DesktopApp.Overlay.Draw.Views
             target.Transform = Matrix3x2Helper.Identity;
             target.AntialiasMode = AntialiasMode.PerPrimitive;
 
+            //有効表示時間を取得
+            var st = TimeSpan.FromSeconds(this.DisplayTime);
 
+            //描画用のObjectを取得
             var good = this.resCache["Good"] as Objects.ObjectBase;
 
             lock (this.ViewDates) {
                 foreach (var item in this.ViewDates) {
 
-                    float t = item.StartTime.Elapsed(TimeSpan.FromSeconds(2));
-                    var point = item.Animation.Point(t);
+                    var transform = Matrix3x2Helper.Identity;
+
+                    //経過時間の割合を取得
+                    float t = item.StartTime.Elapsed(st);
+
+                    //描画位置を指定
+                    transform = transform.Translation(item.Animation.Point(t));
+
+                    //表示スケールを指定
+                    transform = transform.Scale(this.Scale);
+
+                    //表示色を指定
                     var color = item.Color;
-                    color.A = 1.0f - t;
+
+                    //透明度を設定
+                    color.A = (1.0f - t) * this.MaxOpacity;
 
                     switch (item.ReactionType) {
                         case DesktopApp.Models.eReactionType.Good:
-                            good.Render(point, color);
+                            good.Render(transform, color);
                             break;
                         case DesktopApp.Models.eReactionType.Nice:
                             //TODO
-                            good.Render(point, color);
+                            good.Render(transform, color);
                             break;
                         case DesktopApp.Models.eReactionType.Fun:
                             //TODO
-                            good.Render(point, color);
+                            good.Render(transform, color);
                             break;
                     }
 
                 }
 
-                while( 
+                while (
                     this.ViewDates.Any() &&
-                    this.ViewDates.Peek().StartTime.Elapsed(TimeSpan.FromSeconds(2)) >= 1.0) {
+                    this.ViewDates.Peek().StartTime.Elapsed(st) >= 1.0) {
                     this.ViewDates.Dequeue();
                 }
 
@@ -101,7 +181,7 @@ namespace DesktopApp.Overlay.Draw.Views
         private void Interaction(DesktopApp.Models.eReactionType reactionType, DesktopApp.Models.Color color)
         {
 
-            var item = new Models.Item(this.CreateBezier(), reactionType, color);
+            var item = new Models.Item(this.Dispatcher.Invoke(() => this.CreateBezier()), reactionType, color);
 
             lock (this.ViewDates) {
 
@@ -116,15 +196,15 @@ namespace DesktopApp.Overlay.Draw.Views
 
             var ret = new Models.Bezier();
 
-            ret.StartPoint.Y = (float)this.ActualHeight - 120.0f;
+            ret.StartPoint.Y = (float)this.ActualHeight - 120.0f * this.Scale;
             ret.Point1.Y = (float)(this.ActualHeight * (2.0 / 3.0));
             ret.Point2.Y = (float)(this.ActualHeight * (1.0 / 3.0));
-            ret.EndPoint.Y = 120.0f;
+            ret.EndPoint.Y = 120.0f * this.Scale;
 
             var random = new Random();
             float center = (float)this.ActualWidth / 2.0f;
-            int max = Math.Max((int)this.ActualWidth - 100, 101);
-            int min = 100;
+            int max = Math.Max((int)(this.ActualWidth - 100.0f * this.Scale), 101);
+            int min = (int)(100.0f * this.Scale);
 
             ret.StartPoint.X = center;
             ret.Point1.X = random.Next(min, max);
