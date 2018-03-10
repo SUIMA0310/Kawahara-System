@@ -20,6 +20,7 @@
 
         <ComboBox ItemsSource="{Binding ScreenCollection}"
                   SelectedItem="{Binding UseScreen.Value}"
+                  Margin="10"
                   DisplayMemberPath="DeviceName"/>
 
 
