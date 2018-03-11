@@ -7,8 +7,24 @@
 <div class="jumbotron">
     <h1>@ViewBag.Title</h1>
 
-    <button type="button" class="btn btn-primary btn-lg btn-block" id="sendGood">Good!</button>
-    <button type="button" class="btn btn-primary btn-lg btn-block" id="sendNice">Nice!</button>
+    @if ( presentation.HasReactionType.HasFlag( AppServer.Models.eReactionType.Good ) ) {
+
+        <button type="button" class="btn btn-primary btn-lg btn-block" id="sendGood">Good!</button>
+
+    }
+
+    @if ( presentation.HasReactionType.HasFlag( AppServer.Models.eReactionType.Nice ) ) {
+
+        <button type="button" class="btn btn-primary btn-lg btn-block" id="sendNice">Nice!</button>
+
+    }
+
+    @if ( presentation.HasReactionType.HasFlag( AppServer.Models.eReactionType.Fun ) ) {
+
+        <button type="button" class="btn btn-primary btn-lg btn-block" id="sendFun">Fun!</button>
+
+    }
+
 </div>
 @section scripts {
     <script src="~/Scripts/jquery.signalR-2.2.2.min.js"></script>
@@ -38,6 +54,12 @@
 
                     // Call the method on the hub.
                     hub.server.sendNice('@presentation.Id', color);
+
+                });
+                $('#sendFun').click(function () {
+
+                    // Call the method on the hub.
+                    hub.server.sendFun('@presentation.Id', color);
 
                 });
             });
