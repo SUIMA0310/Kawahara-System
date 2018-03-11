@@ -107,6 +107,7 @@ namespace DesktopApp.Overlay.Draw.Views
         {
             this.ViewDates = new Queue<Models.Item>();
             this.resCache.Add( "Good", target => new Objects.GoodObject( target ) );
+            this.resCache.Add( "Nice", target => new Objects.NiceObject( target ) );
         }
 
         public override void Render( RenderTarget target )
@@ -121,6 +122,7 @@ namespace DesktopApp.Overlay.Draw.Views
 
             //描画用のObjectを取得
             var good = this.resCache["Good"] as Objects.ObjectBase;
+            var nice = this.resCache["Nice"] as Objects.ObjectBase;
 
             lock ( this.ViewDates ) {
                 foreach ( var item in this.ViewDates ) {
@@ -147,8 +149,7 @@ namespace DesktopApp.Overlay.Draw.Views
                             break;
 
                         case DesktopApp.Models.eReactionType.Nice:
-                            //TODO
-                            good.Render( transform, color );
+                            nice.Render( transform, color );
                             break;
 
                         case DesktopApp.Models.eReactionType.Fun:
