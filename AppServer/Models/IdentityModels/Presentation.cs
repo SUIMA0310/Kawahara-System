@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AppServer.Models
 {
@@ -9,12 +8,9 @@ namespace AppServer.Models
     /// </summary>
     public class Presentation
     {
-
         public Presentation()
         {
-
             this.Id = Guid.NewGuid().ToString();
-
         }
 
         /// <summary>
@@ -60,6 +56,5 @@ namespace AppServer.Models
         /// 最終更新日時
         /// </summary>
         public DateTime UpdateDateTime { get; set; }
-
     }
 }

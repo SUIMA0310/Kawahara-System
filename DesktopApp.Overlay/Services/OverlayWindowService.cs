@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DesktopApp.Services
@@ -23,9 +19,9 @@ namespace DesktopApp.Services
 
         public event EventHandler UseScreenChanged;
 
-        protected void OnUseScreenChanged(Screen screen)
+        protected void OnUseScreenChanged( Screen screen )
         {
-            this.UseScreenChanged?.Invoke(this, EventArgs.Empty);
+            this.UseScreenChanged?.Invoke( this, EventArgs.Empty );
         }
     }
 }

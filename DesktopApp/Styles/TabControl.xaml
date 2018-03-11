@@ -36,13 +36,13 @@
             <Setter.Value>
                 <Style TargetType="{x:Type TabItem}">
 
-                    <Setter Property="HeaderTemplate" >
+                    <Setter Property="HeaderTemplate">
                         <Setter.Value>
                             <DataTemplate>
                                 <TextBlock>
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TabHeaderTextStyleKey}">
-                                            <Setter Property="Text" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabItem}}, Path=Content.DataContext.Title.Value}"/>
+                                            <Setter Property="Text" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabItem}}, Path=Content.DataContext.Title.Value}" />
                                         </Style>
                                     </TextBlock.Style>
                                 </TextBlock>
@@ -97,7 +97,6 @@
                             </ControlTemplate>
                         </Setter.Value>
                     </Setter>
-
                 </Style>
             </Setter.Value>
         </Setter>
@@ -181,7 +180,7 @@
            TargetType="{x:Type TabItem}">
         <Setter Property="OverridesDefaultStyle"      Value="True" />
         <Setter Property="Height"                     Value="19" />
-        <Setter Property="IsEnabled"                  Value="False"/>
+        <Setter Property="IsEnabled"                  Value="False" />
         <Setter Property="Foreground"                 Value="{DynamicResource ForegroundBrushKey}" />
         <Setter Property="Background"                 Value="Transparent" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -190,11 +189,10 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TabItem}">
                     <Border x:Name="Border" Background="{TemplateBinding Background}">
-                        <Border Margin="10, 0" Height="1" Background="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type TabItem}}}"/>
+                        <Border Margin="10, 0" Height="1" Background="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type TabItem}}}" />
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
-
 </ResourceDictionary>

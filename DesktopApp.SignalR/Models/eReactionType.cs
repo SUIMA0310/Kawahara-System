@@ -8,7 +8,6 @@ namespace DesktopApp.Models
     [Flags]
     public enum eReactionType
     {
-
         /// <summary>
         /// いいね！
         /// </summary>
@@ -23,6 +22,5 @@ namespace DesktopApp.Models
         /// おもしろいね！
         /// </summary>
         Fun = 0x04
-
     }
 }

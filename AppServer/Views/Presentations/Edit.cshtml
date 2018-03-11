@@ -1,16 +1,15 @@
 ﻿@model AppServer.Models.PresentationViewModels.EditViewModel
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "編集";
 }
 
 <h2>Edit</h2>
 
-
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Presentation</h4>
         <hr />
@@ -42,7 +41,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("一覧に戻る", "Index")
 </div>
 
 @section Scripts {

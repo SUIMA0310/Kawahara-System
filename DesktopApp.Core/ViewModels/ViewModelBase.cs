@@ -1,11 +1,7 @@
-﻿using Prism.Mvvm;
-using Reactive.Bindings;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Reactive.Disposables;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 
 namespace DesktopApp.ViewModels
@@ -15,16 +11,13 @@ namespace DesktopApp.ViewModels
     /// </summary>
     public class ViewModelBase : IDisposable
     {
-
         public ViewModelBase()
         {
-
             //IDisposableをまとめる
             this.Disposable = new CompositeDisposable();
 
             //TitleのReactivePropertyを用意
-            this.Title = new ReactiveProperty<string>( this.GetType().ToString() ).AddTo(this.Disposable);
-
+            this.Title = new ReactiveProperty<string>( this.GetType().ToString() ).AddTo( this.Disposable );
         }
 
         /// <summary>

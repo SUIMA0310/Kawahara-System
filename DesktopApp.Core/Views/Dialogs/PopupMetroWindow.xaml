@@ -10,7 +10,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        
+
         <Border Grid.Row="0"
 				metro:MetroWindow.IsCaptionBar="True">
             <Grid>
@@ -20,7 +20,7 @@
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition />
-                    <RowDefinition Height="8"/>
+                    <RowDefinition Height="8" />
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Column="0"
 						   Grid.Row="0"
@@ -37,7 +37,6 @@
             </Grid>
         </Border>
 
-        <UserControl Grid.Row="1" x:Name="MainControl"/>
-
+        <UserControl Grid.Row="1" x:Name="MainControl" />
     </Grid>
 </metro:MetroWindow>

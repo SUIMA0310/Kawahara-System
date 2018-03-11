@@ -4,7 +4,6 @@ using System.Reactive.Linq;
 
 namespace DesktopApp.Services
 {
-
     /// <summary>
     /// Windowの状態管理を行う
     /// </summary>
@@ -13,7 +12,6 @@ namespace DesktopApp.Services
         where TFactory : IWindowFactory
         where TController : IWindowController
     {
-
         #region Protected
 
         /// <summary>
@@ -23,13 +21,10 @@ namespace DesktopApp.Services
         {
             get { return this._WindowFactory; }
             set {
+                if ( this._WindowFactory?.Equals( value ) ?? value == null ) { return; }
 
-                if (this._WindowFactory?.Equals(value) ?? value == null) { return; }
-
-                if (this._WindowFactory != null && value != null) {
-
-                    throw new InvalidOperationException($"既に{nameof(this.WindowFactory)}は、登録済みです。");
-
+                if ( this._WindowFactory != null && value != null ) {
+                    throw new InvalidOperationException( $"既に{nameof( this.WindowFactory )}は、登録済みです。" );
                 }
 
                 var newValue = value;
@@ -37,8 +32,7 @@ namespace DesktopApp.Services
 
                 this._WindowFactory = value;
 
-                this.OnWindowFactoryChanged(new EventArgs<IWindowFactory>(newValue, oldValue));
-
+                this.OnWindowFactoryChanged( new EventArgs<IWindowFactory>( newValue, oldValue ) );
             }
         }
 
@@ -49,13 +43,10 @@ namespace DesktopApp.Services
         {
             get { return this._WindowController; }
             set {
+                if ( this._WindowController?.Equals( value ) ?? value == null ) { return; }
 
-                if (this._WindowController?.Equals(value) ?? value == null) { return; }
-
-                if (this._WindowController != null && value != null) {
-
-                    throw new InvalidOperationException($"既に{nameof(this.WindowController)}は、登録済みです。");
-
+                if ( this._WindowController != null && value != null ) {
+                    throw new InvalidOperationException( $"既に{nameof( this.WindowController )}は、登録済みです。" );
                 }
 
                 var newValue = value;
@@ -63,8 +54,7 @@ namespace DesktopApp.Services
 
                 this._WindowController = value;
 
-                this.OnWindowControllerChanged(new EventArgs<IWindowController>(newValue, oldValue));
-
+                this.OnWindowControllerChanged( new EventArgs<IWindowController>( newValue, oldValue ) );
             }
         }
 
@@ -77,12 +67,13 @@ namespace DesktopApp.Services
         /// WindowFactoryの更新通知
         /// </summary>
         protected event Action<EventArgs<IWindowFactory>> WindowFactoryChanged;
+
         /// <summary>
         /// WindowControllerの更新通知
         /// </summary>
         protected event Action<EventArgs<IWindowController>> WindowControllerChanged;
 
-        #endregion
+        #endregion Protected
 
         /// <summary>
         /// 現在のWindow状態
@@ -91,17 +82,13 @@ namespace DesktopApp.Services
         {
             get { return this._WindowState; }
             protected set {
-
-                if (this._WindowState == value) {
-
+                if ( this._WindowState == value ) {
                     return;
-
                 }
 
                 this._WindowState = value;
 
-                this.OnWindowStateChanged(this._WindowState);
-
+                this.OnWindowStateChanged( this._WindowState );
             }
         }
 
@@ -121,16 +108,12 @@ namespace DesktopApp.Services
         /// </summary>
         public virtual void Show()
         {
-            if (!this.IsWindowCreated) {
-
+            if ( !this.IsWindowCreated ) {
                 //Windowが存在しないため作成
                 this.CreateWindow();
-
             } else {
-
                 //Windowを可視状態に変更
-                this.WindowHideControl(false);
-
+                this.WindowHideControl( false );
             }
         }
 
@@ -139,16 +122,12 @@ namespace DesktopApp.Services
         /// </summary>
         public virtual void Hide()
         {
-
-            if (!this.IsWindowCreated) {
-
+            if ( !this.IsWindowCreated ) {
                 //Windowが存在しないのでそのまま
                 return;
-
             }
 
-            this.WindowHideControl(true);
-
+            this.WindowHideControl( true );
         }
 
         public virtual void Dispose()
@@ -166,138 +145,94 @@ namespace DesktopApp.Services
             this.ObservableHiddenChanged = null;
         }
 
-
-        public virtual bool SetWindowFactory(IWindowFactory windowFactory, bool throwException = true)
+        public virtual bool SetWindowFactory( IWindowFactory windowFactory, bool throwException = true )
         {
-            if (windowFactory is TFactory factory) {
-
+            if ( windowFactory is TFactory factory ) {
                 try {
-
                     this.WindowFactory = factory;
                     return true;
-
-                } catch (InvalidOperationException) {
-
-                    if (throwException) {
-
+                } catch ( InvalidOperationException ) {
+                    if ( throwException ) {
                         throw;
-
                     }
-
                 }
-
             } else if ( windowFactory == null ) {
-
-                this.WindowFactory = default(TFactory);
-                return true;                
-
+                this.WindowFactory = default( TFactory );
+                return true;
             } else {
-
-                if (throwException) {
-
-                    throw new InvalidCastException(nameof(TFactory));
-
+                if ( throwException ) {
+                    throw new InvalidCastException( nameof( TFactory ) );
                 }
-
             }
 
             return false;
         }
 
-        public virtual bool SetWindowController(IWindowController windowController, bool throwException = true)
+        public virtual bool SetWindowController( IWindowController windowController, bool throwException = true )
         {
-
-            if (windowController is TController controller) {
-
+            if ( windowController is TController controller ) {
                 try {
-
                     this.WindowController = controller;
                     return true;
-
-                } catch (InvalidOperationException) {
-
-                    if (throwException) {
-
+                } catch ( InvalidOperationException ) {
+                    if ( throwException ) {
                         throw;
-
                     }
-
                 }
-
-            } else if (windowController == null) {
-
-                this.WindowController = default(TController);
+            } else if ( windowController == null ) {
+                this.WindowController = default( TController );
                 return true;
-
             } else {
-
-                if (throwException) {
-
-                    throw new InvalidCastException(nameof(TController));
-
+                if ( throwException ) {
+                    throw new InvalidCastException( nameof( TController ) );
                 }
-
             }
 
             return false;
-
         }
-
 
         /// <summary>
         /// Windowを作成する
         /// </summary>
         private void CreateWindow()
         {
-
-            if (this.WindowFactory != null) {
-
+            if ( this.WindowFactory != null ) {
                 this.IsWindowCreated = true;
                 this.WindowState = eWindowStateTypes.Initializeing;
                 this.WindowFactory.Create();
-
             } else {
-
-                throw new InvalidOperationException($"{nameof(this.WindowFactory)}が指定されていません");
-
+                throw new InvalidOperationException( $"{nameof( this.WindowFactory )}が指定されていません" );
             }
-
         }
+
         /// <summary>
         /// Windowの可視状態を変更する
         /// </summary>
         /// <param name="hide"><see langword="true"/>=不可視, <see langword="false"/>=可視</param>
-        private void WindowHideControl(bool hide)
+        private void WindowHideControl( bool hide )
         {
-
-            if (this.WindowController == null) {
-
-                throw new InvalidOperationException($"{nameof(this.WindowController)}が指定されていません");
-
+            if ( this.WindowController == null ) {
+                throw new InvalidOperationException( $"{nameof( this.WindowController )}が指定されていません" );
             }
 
-            if (this.WindowState == eWindowStateTypes.Initializeing) {
-
-                throw new InvalidOperationException($"Window初期化中は操作できません");
-
+            if ( this.WindowState == eWindowStateTypes.Initializeing ) {
+                throw new InvalidOperationException( $"Window初期化中は操作できません" );
             }
 
             this.WindowController.Opacity = hide ? 0.0 : 1.0;
             this.WindowState = hide ? eWindowStateTypes.Hide : eWindowStateTypes.Shown;
-
         }
 
-
-        protected virtual void OnWindowFactoryChanged(EventArgs<IWindowFactory> eventArgs)
+        protected virtual void OnWindowFactoryChanged( EventArgs<IWindowFactory> eventArgs )
         {
-            this.WindowFactoryChanged?.Invoke(eventArgs);
+            this.WindowFactoryChanged?.Invoke( eventArgs );
         }
-        protected virtual void OnWindowControllerChanged(EventArgs<IWindowController> eventArgs)
+
+        protected virtual void OnWindowControllerChanged( EventArgs<IWindowController> eventArgs )
         {
-            this.WindowControllerChanged?.Invoke(eventArgs);
+            this.WindowControllerChanged?.Invoke( eventArgs );
 
-            if (eventArgs.OldValue != null) {
-
+            if ( eventArgs.OldValue != null ) {
                 this.ObservableWindowInitialized?.Dispose();
                 this.ObservableWindowInitialized = null;
 
@@ -309,35 +244,32 @@ namespace DesktopApp.Services
 
                 this.IsWindowCreated = false;
                 this.WindowState = eWindowStateTypes.Closed;
-
             }
 
-            if (eventArgs.NewValue != null) {
-
+            if ( eventArgs.NewValue != null ) {
                 this.ObservableWindowInitialized = Observable.FromEventPattern
                 (
                     handler => eventArgs.NewValue.Initialized += handler,
                     handler => eventArgs.NewValue.Initialized -= handler
                 )
-                .Subscribe(_ => { this.WindowState = eWindowStateTypes.Shown; });
-
+                .Subscribe( _ => { this.WindowState = eWindowStateTypes.Shown; } );
 
                 this.ObservableWindowClosed = Observable.FromEventPattern
                 (
                     handler => eventArgs.NewValue.Closed += handler,
                     handler => eventArgs.NewValue.Closed -= handler
                 )
-                .Subscribe(_ =>
-                {
-                    this.WindowState = eWindowStateTypes.Closed;
-                    this.WindowController = default(TController);
-                });
-
+                .Subscribe( _ =>
+                 {
+                     this.WindowState = eWindowStateTypes.Closed;
+                     this.WindowController = default( TController );
+                 } );
             }
         }
-        protected virtual void OnWindowStateChanged(eWindowStateTypes windowState)
+
+        protected virtual void OnWindowStateChanged( eWindowStateTypes windowState )
         {
-            this.WindowStateChanged?.Invoke(windowState);
+            this.WindowStateChanged?.Invoke( windowState );
         }
 
         /// <summary>
@@ -365,12 +297,11 @@ namespace DesktopApp.Services
             public T NewValue { get; }
             public T OldValue { get; }
 
-            public EventArgs(T newValue, T oldValue)
+            public EventArgs( T newValue, T oldValue )
             {
                 this.NewValue = newValue;
                 this.OldValue = oldValue;
             }
         }
-
     }
 }

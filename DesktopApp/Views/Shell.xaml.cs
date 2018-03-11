@@ -1,5 +1,4 @@
 ﻿using MetroRadiance.UI.Controls;
-using System.Windows;
 
 namespace DesktopApp.Views
 {

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Windows;
-using DesktopApp.Services;
+﻿using DesktopApp.Services;
 
 namespace DesktopApp.Views
 {
@@ -9,12 +7,11 @@ namespace DesktopApp.Views
     /// </summary>
     public partial class OverlayWindow : Overlay.Core.OverlayWindow, IOverlayWindowController
     {
-        public OverlayWindow(IOverlayWindowService windowService )
+        public OverlayWindow( IOverlayWindowService windowService )
         {
             windowService.SetWindowController( this );
 
             InitializeComponent();
         }
-
     }
 }

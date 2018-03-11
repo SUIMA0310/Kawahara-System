@@ -1,31 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Prism.Interactivity.InteractionRequest;
-
-namespace DesktopApp.Notifications
+﻿namespace DesktopApp.Notifications
 {
     public class InputSettingNotification : IInputSettingNotification
     {
-        public string InputServerURL {
+        public string InputServerURL
+        {
             get => Properties.Settings.Default.LastServerURL;
             set => Properties.Settings.Default.LastServerURL = value;
         }
-        public string InputPresentationID {
+
+        public string InputPresentationID
+        {
             get => Properties.Settings.Default.LastPresentationID;
             set => Properties.Settings.Default.LastPresentationID = value;
         }
-        public bool Confirmed {
+
+        public bool Confirmed
+        {
             get => this._Confirmed;
             set {
-                if (value) {
+                if ( value ) {
                     Properties.Settings.Default.Save();
                 }
                 this._Confirmed = value;
             }
         }
+
         public string Title { get; set; }
         public object Content { get; set; }
 

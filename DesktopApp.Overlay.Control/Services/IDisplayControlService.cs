@@ -9,6 +9,7 @@ namespace DesktopApp.Services
         ReactiveProperty<float> Scale { get; }
 
         void Load();
+
         void Save();
     }
 }

@@ -1,5 +1,6 @@
-﻿using Microsoft.AspNet.SignalR.Client;
-using System;
+﻿using System;
+
+using Microsoft.AspNet.SignalR.Client;
 
 namespace DesktopApp.Services
 {
@@ -9,11 +10,15 @@ namespace DesktopApp.Services
         string ServerURL { get; set; }
 
         event Action<bool> HasConnectionChanged;
+
         event Action<string> ServerURLChanged;
+
         event Action Connected;
 
-        IHubProxy CreateHubProxy(string hubName);
+        IHubProxy CreateHubProxy( string hubName );
+
         void Open();
+
         void Close();
     }
 }

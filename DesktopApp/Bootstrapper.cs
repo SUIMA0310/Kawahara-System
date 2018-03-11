@@ -1,20 +1,21 @@
-﻿using DesktopApp.Views;
+﻿using System.Windows;
+
 using DesktopApp.Behaviors;
-using System.Windows;
-using Prism.Modularity;
+using DesktopApp.Views;
+
 using DryIoc;
+
 using Prism.DryIoc;
+using Prism.Modularity;
 using Prism.Regions;
 
 namespace DesktopApp
 {
-
     /// <summary>
     /// アプリケーションの起動処理
     /// </summary>
     public class Bootstrapper : DryIocBootstrapper
     {
-
         /// <summary>
         /// MainWindowの生成
         /// </summary>
@@ -39,11 +40,11 @@ namespace DesktopApp
         {
             var moduleCatalog = (ModuleCatalog)this.ModuleCatalog;
 
-            moduleCatalog.AddModule(typeof(CoreModule));
-            moduleCatalog.AddModule(typeof(MainModule));
-            moduleCatalog.AddModule(typeof(SignalRModule));
-            moduleCatalog.AddModule(typeof(OverlayModule));
-            moduleCatalog.AddModule(typeof(ControlModule));
+            moduleCatalog.AddModule( typeof( CoreModule ) );
+            moduleCatalog.AddModule( typeof( MainModule ) );
+            moduleCatalog.AddModule( typeof( SignalRModule ) );
+            moduleCatalog.AddModule( typeof( OverlayModule ) );
+            moduleCatalog.AddModule( typeof( ControlModule ) );
         }
 
         /// <summary>
@@ -51,14 +52,11 @@ namespace DesktopApp
         /// </summary>
         protected override IRegionBehaviorFactory ConfigureDefaultRegionBehaviors()
         {
-
             var factory = base.ConfigureDefaultRegionBehaviors();
 
             factory.AddIfMissing( nameof( DisposeViewModelsBehavior ), typeof( DisposeViewModelsBehavior ) );
 
             return factory;
-
         }
-
     }
 }

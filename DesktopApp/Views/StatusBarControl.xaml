@@ -1,7 +1,7 @@
 ﻿<UserControl x:Class="DesktopApp.Views.StatusBarControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:prism="http://prismlibrary.com/"             
+             xmlns:prism="http://prismlibrary.com/"
              xmlns:metro="http://schemes.grabacr.net/winfx/2014/controls"
              prism:ViewModelLocator.AutoWireViewModel="True">
     <Grid Background="{DynamicResource AccentBrushKey}">
@@ -18,7 +18,7 @@
 				       Foreground="{DynamicResource AccentForegroundBrushKey}"
 				       TextWrapping="NoWrap"
 				       MaxWidth="{Binding ElementName=Col0, Path=ActualWidth}"
-				       Margin="5,0" 
+				       Margin="5,0"
                        VerticalAlignment="Center" />
 
         <metro:ResizeGrip Grid.Column="1" />

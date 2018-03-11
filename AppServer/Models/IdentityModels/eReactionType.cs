@@ -8,7 +8,6 @@ namespace AppServer.Models
     [Flags]
     public enum eReactionType
     {
-
         /// <summary>
         /// いいね！
         /// </summary>
@@ -23,6 +22,5 @@ namespace AppServer.Models
         /// おもしろいね！
         /// </summary>
         Fun = 0x04
-
     }
 }

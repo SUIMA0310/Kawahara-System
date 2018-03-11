@@ -6,8 +6,10 @@ namespace DesktopApp.Services
     {
         ReactiveProperty<string> Status { get; }
 
-        void SetInfomation(string msg);
-        void SetStatus(eStatusMessages statusMessages);
-        void SetStatus(string msg);
+        void SetInfomation( string msg );
+
+        void SetStatus( eStatusMessages statusMessages );
+
+        void SetStatus( string msg );
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.QualityTools.Testing.Fakes;
+﻿using Microsoft.QualityTools.Testing.Fakes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DesktopApp.Tests.ServicesTest
@@ -10,7 +9,6 @@ namespace DesktopApp.Tests.ServicesTest
         [TestMethod]
         public void Connnection()
         {
-
             string URL = "http://www.hogehoge.com/";
             var logger = new Prism.Logging.TextLogger();
             var connection = new Services.ConnectionService(logger);
@@ -19,28 +17,27 @@ namespace DesktopApp.Tests.ServicesTest
             int StartCount = 0;
             int StopCount = 0;
 
-            using (ShimsContext.Create()) {
-
+            using ( ShimsContext.Create() ) {
                 var mockHubProxy = new Moq.Mock<Microsoft.AspNet.SignalR.Client.IHubProxy>();
 
-                Microsoft.AspNet.SignalR.Client.Fakes.ShimHubConnection.ConstructorString = (ins, url) =>
+                Microsoft.AspNet.SignalR.Client.Fakes.ShimHubConnection.ConstructorString = ( ins, url ) =>
                 {
-                    Assert.AreEqual(URL, url);
+                    Assert.AreEqual( URL, url );
                 };
 
-                Microsoft.AspNet.SignalR.Client.Fakes.ShimHubConnection.AllInstances.CreateHubProxyString = (ins, hubName) =>
+                Microsoft.AspNet.SignalR.Client.Fakes.ShimHubConnection.AllInstances.CreateHubProxyString = ( ins, hubName ) =>
                 {
-                    Assert.IsNotNull(hubName);
+                    Assert.IsNotNull( hubName );
                     return mockHubProxy.Object;
                 };
 
-                Microsoft.AspNet.SignalR.Client.Fakes.ShimConnection.AllInstances.Start = (ins) =>
+                Microsoft.AspNet.SignalR.Client.Fakes.ShimConnection.AllInstances.Start = ( ins ) =>
                 {
                     StartCount++;
                     return System.Threading.Tasks.Task.CompletedTask;
                 };
 
-                Microsoft.AspNet.SignalR.Client.Fakes.ShimConnection.AllInstances.Stop = (ins) =>
+                Microsoft.AspNet.SignalR.Client.Fakes.ShimConnection.AllInstances.Stop = ( ins ) =>
                 {
                     StopCount++;
                 };
@@ -48,12 +45,10 @@ namespace DesktopApp.Tests.ServicesTest
                 reactionHubProxy.ServerURL = URL;
                 reactionHubProxy.Open();
                 connection.Dispose();
-
             }
 
-            Assert.AreEqual(1, StartCount);
-            Assert.AreEqual(1, StopCount);
-
+            Assert.AreEqual( 1, StartCount );
+            Assert.AreEqual( 1, StopCount );
         }
     }
 }

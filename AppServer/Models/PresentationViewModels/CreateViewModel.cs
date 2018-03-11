@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace AppServer.Models.PresentationViewModels
 {
     public class CreateViewModel
     {
-
         /// <summary>
         /// プレゼンテーションの名前
         /// </summary>
@@ -26,12 +21,13 @@ namespace AppServer.Models.PresentationViewModels
         /// <summary>
         /// Goodを利用するか
         /// </summary>
-        public bool HasGood {
+        public bool HasGood
+        {
             get {
                 return HasReactionType.HasFlag( eReactionType.Good );
             }
             set {
-                if (value) {
+                if ( value ) {
                     HasReactionType |= eReactionType.Good;
                 } else {
                     HasReactionType &= ~eReactionType.Good;
@@ -42,12 +38,13 @@ namespace AppServer.Models.PresentationViewModels
         /// <summary>
         /// Niceを利用するか
         /// </summary>
-        public bool HasNice {
+        public bool HasNice
+        {
             get {
                 return HasReactionType.HasFlag( eReactionType.Nice );
             }
             set {
-                if (value) {
+                if ( value ) {
                     HasReactionType |= eReactionType.Nice;
                 } else {
                     HasReactionType &= ~eReactionType.Nice;
@@ -58,18 +55,18 @@ namespace AppServer.Models.PresentationViewModels
         /// <summary>
         /// Funを利用するか
         /// </summary>
-        public bool HasFun {
+        public bool HasFun
+        {
             get {
                 return HasReactionType.HasFlag( eReactionType.Fun );
             }
             set {
-                if (value) {
+                if ( value ) {
                     HasReactionType |= eReactionType.Fun;
                 } else {
                     HasReactionType &= ~eReactionType.Fun;
                 }
             }
         }
-
     }
 }

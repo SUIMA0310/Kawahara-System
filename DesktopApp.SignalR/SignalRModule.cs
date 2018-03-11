@@ -1,16 +1,16 @@
-﻿using Prism.Modularity;
-using Prism.Regions;
-using System;
-using DryIoc;
-using Prism.DryIoc;
-using DesktopApp.Services;
+﻿using DesktopApp.Services;
 using DesktopApp.Views;
+
+using DryIoc;
+
+using Prism.DryIoc;
+using Prism.Modularity;
+using Prism.Regions;
 
 namespace DesktopApp
 {
     public class SignalRModule : IModule
     {
-
         /// <summary>
         /// Applicationで使用するメインのDIコンテナ
         /// </summary>
@@ -21,7 +21,7 @@ namespace DesktopApp
         /// </summary>
         private readonly IRegionManager RegionManager;
 
-        public SignalRModule(IContainer container, IRegionManager regionManage)
+        public SignalRModule( IContainer container, IRegionManager regionManage )
         {
             this.Container = container;
             this.RegionManager = regionManage;
@@ -29,12 +29,12 @@ namespace DesktopApp
 
         public void Initialize()
         {
-            this.Container.Register<IConnectionService, ConnectionService>(Reuse.Singleton);
-            this.Container.Register<IReactionHubProxy, ReactionHubProxy>(Reuse.Singleton);
+            this.Container.Register<IConnectionService, ConnectionService>( Reuse.Singleton );
+            this.Container.Register<IReactionHubProxy, ReactionHubProxy>( Reuse.Singleton );
 
             this.Container.RegisterTypeForNavigation<ConnectionControlView>();
 
-            this.RegionManager.RegisterViewWithRegion("ContentRegion", typeof(ConnectionControlView));
+            this.RegionManager.RegisterViewWithRegion( "ContentRegion", typeof( ConnectionControlView ) );
         }
     }
 }

@@ -6,7 +6,7 @@ namespace AppServer.Models
     {
         [Required]
         [Phone]
-        [Display(Name = "電話番号")]
+        [Display( Name = "電話番号" )]
         public string Number { get; set; }
     }
 }
