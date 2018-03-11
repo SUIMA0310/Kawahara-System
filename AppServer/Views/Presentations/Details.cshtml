@@ -1,10 +1,10 @@
 ﻿@model AppServer.Models.Presentation
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "詳細";
 }
 
-<h2>Details</h2>
+<h2>@ViewBag.Title</h2>
 <div class="row">
     <div class="col-md-8">
         <section>
@@ -12,27 +12,27 @@
             <hr />
             <dl class="dl-horizontal">
                 <dt>
-                    @Html.DisplayNameFor(model => model.Id)
+                    @Html.DisplayNameFor( model => model.Id )
                 </dt>
 
                 <dd>
-                    @Html.DisplayFor(model => model.Id)
+                    @Html.DisplayFor( model => model.Id )
                 </dd>
 
                 <dt>
-                    @Html.DisplayNameFor(model => model.Name)
+                    @Html.DisplayNameFor( model => model.Name )
                 </dt>
 
                 <dd>
-                    @Html.DisplayFor(model => model.Name)
+                    @Html.DisplayFor( model => model.Name )
                 </dd>
 
                 <dt>
-                    @Html.DisplayNameFor(model => model.HasReactionType)
+                    @Html.DisplayNameFor( model => model.HasReactionType )
                 </dt>
 
                 <dd>
-                    @Html.DisplayFor(model => model.HasReactionType)
+                    @Html.DisplayFor( model => model.HasReactionType )
                 </dd>
 
                 <dt>
@@ -40,7 +40,7 @@
                 </dt>
 
                 <dd>
-                    @Html.ActionLink(linkText: "Go to Reaction", actionName: Model.Id, controllerName: "Reaction");
+                    @Html.ActionLink( linkText: "視聴者ページ", actionName: Model.Id, controllerName: "Reaction" )
                 </dd>
             </dl>
         </section>
@@ -53,6 +53,6 @@
     </div>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink( "編集", "Edit", new { id = Model.Id } ) |
+    @Html.ActionLink( "一覧に戻る", "Index" )
 </p>
