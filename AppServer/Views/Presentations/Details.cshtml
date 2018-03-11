@@ -4,7 +4,7 @@
     ViewBag.Title = "詳細";
 }
 
-<h2>Details</h2>
+<h2>@ViewBag.Title</h2>
 <div class="row">
     <div class="col-md-8">
         <section>
@@ -40,7 +40,7 @@
                 </dt>
 
                 <dd>
-                    @Html.ActionLink(linkText: "視聴者ページ", actionName: Model.Id, controllerName: "Reaction");
+                    @Html.ActionLink(linkText: "視聴者ページ", actionName: Model.Id, controllerName: "Reaction")
                 </dd>
             </dl>
         </section>
