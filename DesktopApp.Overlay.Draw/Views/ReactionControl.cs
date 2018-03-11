@@ -169,26 +169,28 @@ namespace DesktopApp.Overlay.Draw.Views
 
         private void Interaction( DesktopApp.Models.eReactionType reactionType, DesktopApp.Models.Color color )
         {
-            var item = new Models.Item(this.Dispatcher.Invoke(() => this.CreateBezier()), reactionType, color);
+            float scale = this.Dispatcher.Invoke( () => this.Scale );
+
+            var item = new Models.Item(this.CreateBezier(scale), reactionType, color);
 
             lock ( this.ViewDates ) {
                 this.ViewDates.Enqueue( item );
             }
         }
 
-        private Models.Bezier CreateBezier()
+        private Models.Bezier CreateBezier( float scale )
         {
             var ret = new Models.Bezier();
 
-            ret.StartPoint.Y = (float)this.ActualHeight - 120.0f * this.Scale;
+            ret.StartPoint.Y = (float)this.ActualHeight - 120.0f * scale;
             ret.Point1.Y = (float)(this.ActualHeight * (2.0 / 3.0));
             ret.Point2.Y = (float)(this.ActualHeight * (1.0 / 3.0));
-            ret.EndPoint.Y = 120.0f * this.Scale;
+            ret.EndPoint.Y = 120.0f * scale;
 
             var random = new Random();
             float center = (float)this.ActualWidth / 2.0f;
-            int max = Math.Max((int)(this.ActualWidth - 100.0f * this.Scale), 101);
-            int min = (int)(100.0f * this.Scale);
+            int max = Math.Max((int)(this.ActualWidth - 100.0f * scale), 101);
+            int min = (int)(100.0f * scale);
 
             ret.StartPoint.X = center;
             ret.Point1.X = random.Next( min, max );
