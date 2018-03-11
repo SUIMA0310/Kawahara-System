@@ -1,25 +1,27 @@
-﻿@{
+﻿@using AppServer.Models;
+@using AppServer.Models.HubModels;
+@{
     ViewBag.Title = "視聴者";
-    AppServer.Models.Presentation presentation = ViewBag.Presentation;
-    AppServer.Models.HubModels.Color Color = ViewBag.Color;
+    Presentation presentation = ViewBag.Presentation;
+    Color Color = ViewBag.Color;
 }
 
 <div class="jumbotron">
     <h1>@ViewBag.Title</h1>
 
-    @if ( presentation.HasReactionType.HasFlag( AppServer.Models.eReactionType.Good ) ) {
+    @if ( presentation.HasReactionType.HasFlag( eReactionType.Good ) ) {
 
         <button type="button" class="btn btn-primary btn-lg btn-block" id="sendGood">Good!</button>
 
     }
 
-    @if ( presentation.HasReactionType.HasFlag( AppServer.Models.eReactionType.Nice ) ) {
+    @if ( presentation.HasReactionType.HasFlag( eReactionType.Nice ) ) {
 
         <button type="button" class="btn btn-primary btn-lg btn-block" id="sendNice">Nice!</button>
 
     }
 
-    @if ( presentation.HasReactionType.HasFlag( AppServer.Models.eReactionType.Fun ) ) {
+    @if ( presentation.HasReactionType.HasFlag( eReactionType.Fun ) ) {
 
         <button type="button" class="btn btn-primary btn-lg btn-block" id="sendFun">Fun!</button>
 
