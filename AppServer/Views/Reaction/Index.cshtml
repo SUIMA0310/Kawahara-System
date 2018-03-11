@@ -8,30 +8,7 @@
     <h1>視聴者</h1>
 
     <button type="button" class="btn btn-primary btn-lg btn-block" id="sendGood">Good!</button>
-</div>
-<div class="row">
-    <div class="col-md-4">
-        <h2>使用方法</h2>
-        <p>
-            このページ上部の「 Good! 」を押します。
-
-            正しく動作している場合、前の画面に ハート が表示されます。
-        </p>
-    </div>
-    <div class="col-md-4">
-        <h2>注意事項</h2>
-        <p>
-            使用しているサーバは、貧弱です。
-            超!!!絶!!!連!!!打!!!とかされると、多分落ちます。
-            いじめ過ぎないで下さい。
-        </p>
-    </div>
-    <div class="col-md-4">
-        <h2>免責事項</h2>
-        <p>
-            コンテンツのご利用により、万一、ご利用者様に何らかの不都合や損害が発生したとしても、開発者は何らの責任を負うものではありません。
-        </p>
-    </div>
+    <button type="button" class="btn btn-primary btn-lg btn-block" id="sendNice">Nice!</button>
 </div>
 @section scripts {
     <!--Script references. -->
@@ -66,6 +43,12 @@
 
                     // Call the Send method on the hub.
                     hub.server.sendGood('@presentation.Id', color);
+
+                });
+                $('#sendNice').click(function () {
+
+                    // Call the Send method on the hub.
+                    hub.server.sendNice('@presentation.Id', color);
 
                 });
             });
