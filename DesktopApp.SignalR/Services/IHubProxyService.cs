@@ -7,6 +7,7 @@ namespace DesktopApp.Services
         string ServerURL { get; set; }
 
         event Action<string> ServerURLChanged;
+
         event Action Connected;
 
         void Open();

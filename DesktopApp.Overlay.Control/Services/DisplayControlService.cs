@@ -1,33 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reactive;
-using System.Reactive.Linq;
 using System.Reactive.Disposables;
-using System.Text;
-using System.Threading.Tasks;
-using Reactive.Bindings;
-using Reactive.Bindings.Extensions;
+
 using DesktopApp.Models;
+
+using Reactive.Bindings;
 
 namespace DesktopApp.Services
 {
     public class DisplayControlService : IDisposable, IDisplayControlService
     {
-
         public ReactiveProperty<float> DisplayTime { get; }
         public ReactiveProperty<float> MaxOpacity { get; }
         public ReactiveProperty<float> Scale { get; }
 
         private readonly IDisplaySettingsStore SettingsStore;
 
-        public DisplayControlService(IDisplaySettingsStore settingsStore)
+        public DisplayControlService( IDisplaySettingsStore settingsStore )
         {
             this.SettingsStore = settingsStore;
 
-            this.MaxOpacity = new ReactiveProperty<float>(this.SettingsStore.MaxOpacity);
-            this.Scale = new ReactiveProperty<float>(this.SettingsStore.Scale);
-            this.DisplayTime = new ReactiveProperty<float>(this.SettingsStore.DisplayTime);
+            this.MaxOpacity = new ReactiveProperty<float>( this.SettingsStore.MaxOpacity );
+            this.Scale = new ReactiveProperty<float>( this.SettingsStore.Scale );
+            this.DisplayTime = new ReactiveProperty<float>( this.SettingsStore.DisplayTime );
         }
 
         public void Load()
@@ -59,6 +53,5 @@ namespace DesktopApp.Services
             //まとめてDisposeする
             this.Disposable.Dispose();
         }
-
     }
 }

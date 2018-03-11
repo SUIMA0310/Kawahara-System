@@ -1,7 +1,4 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DesktopApp.Tests
 {
@@ -14,15 +11,13 @@ namespace DesktopApp.Tests
         [TestMethod]
         public void ConfigureModuleCatalog()
         {
-
             var bootstrapper = new Bootstrapper();
-            var privateObject = new PrivateObject( bootstrapper );
+            var privateObject = new PrivateObject(bootstrapper);
             var moduleCatalog = new Prism.Modularity.ModuleCatalog();
 
-            privateObject.SetProperty("ModuleCatalog", moduleCatalog);
+            privateObject.SetProperty( "ModuleCatalog", moduleCatalog );
 
-            privateObject.Invoke("ConfigureModuleCatalog");
-
+            privateObject.Invoke( "ConfigureModuleCatalog" );
         }
     }
 }

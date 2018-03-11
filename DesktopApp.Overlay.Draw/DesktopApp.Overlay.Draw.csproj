@@ -62,6 +62,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Helpers\AnimationExpansion.cs" />
     <Compile Include="Helpers\Matrix3x2Helper.cs" />
     <Compile Include="Models\Bezier.cs" />

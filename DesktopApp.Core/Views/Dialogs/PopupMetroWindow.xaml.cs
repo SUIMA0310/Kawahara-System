@@ -1,11 +1,4 @@
-﻿using System;
-using System.Runtime.InteropServices;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Interop;
-
-namespace DesktopApp.Views.Dialogs
+﻿namespace DesktopApp.Views.Dialogs
 {
     /// <summary>
     /// Interaction logic for MetroPopupWindow.xaml

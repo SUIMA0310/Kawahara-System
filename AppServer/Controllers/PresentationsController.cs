@@ -1,45 +1,45 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+
 using AppServer.Models;
 using AppServer.Models.PresentationViewModels;
-using Microsoft.AspNet.Identity.Owin;
+
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace AppServer.Controllers
 {
     [Authorize]
     public class PresentationsController : Controller
     {
-
         #region fields
 
         private ApplicationDbContext _Db = new ApplicationDbContext();
         private ApplicationUserManager _UserManager;
 
-        #endregion
+        #endregion fields
 
         #region Constructors
 
         public PresentationsController()
         {
         }
-        public PresentationsController(ApplicationUserManager userManager)
+
+        public PresentationsController( ApplicationUserManager userManager )
         {
             this.UserManager = userManager;
         }
 
-        #endregion
+        #endregion Constructors
 
         #region Properties
 
-        public ApplicationUserManager UserManager {
+        public ApplicationUserManager UserManager
+        {
             get {
                 return this._UserManager ?? this.HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
             }
@@ -48,26 +48,26 @@ namespace AppServer.Controllers
             }
         }
 
-        #endregion
+        #endregion Properties
 
         // GET: Presentations
         public async Task<ActionResult> Index()
         {
-            var user = await this.UserManager.FindByIdAsync( this.User.Identity.GetUserId() );
+            var user = await this.UserManager.FindByIdAsync(this.User.Identity.GetUserId());
             return View( user.Presentations );
         }
 
         // GET: Presentations/Details/5
-        public async Task<ActionResult> Details(string id)
+        public async Task<ActionResult> Details( string id )
         {
-            if (id == null) {
+            if ( id == null ) {
                 return new HttpStatusCodeResult( HttpStatusCode.BadRequest );
             }
-            Presentation presentation = await this._Db.Presentations.FindAsync( id );
-            if (presentation == null) {
+            Presentation presentation = await this._Db.Presentations.FindAsync(id);
+            if ( presentation == null ) {
                 return HttpNotFound();
             }
-            if (presentation.Owner.Id != this.User.Identity.GetUserId()) {
+            if ( presentation.Owner.Id != this.User.Identity.GetUserId() ) {
                 return HttpNotFound();
             }
             return View( presentation );
@@ -84,20 +84,21 @@ namespace AppServer.Controllers
         // 詳細については、https://go.microsoft.com/fwlink/?LinkId=317598 を参照してください。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(CreateViewModel viewModel)
+        public async Task<ActionResult> Create( CreateViewModel viewModel )
         {
-            if (this.ModelState.IsValid) {
-                var presentation = new Presentation {
+            if ( this.ModelState.IsValid ) {
+                var presentation = new Presentation
+                {
                     Name = viewModel.Name,
                     HasReactionType = viewModel.HasReactionType,
                     ReactionCount = 0,
-                    Owner = this._Db.Users.Find( this.User.Identity.GetUserId() )
+                    Owner = this._Db.Users.Find(this.User.Identity.GetUserId())
                 };
 
                 try {
                     this._Db.Presentations.Add( presentation );
                     await this._Db.SaveChangesAsync();
-                } catch (Exception ex) {
+                } catch ( Exception ex ) {
                     string str = ex.Message;
                 }
 
@@ -108,19 +109,20 @@ namespace AppServer.Controllers
         }
 
         // GET: Presentations/Edit/5
-        public async Task<ActionResult> Edit(string id)
+        public async Task<ActionResult> Edit( string id )
         {
-            if (id == null) {
+            if ( id == null ) {
                 return new HttpStatusCodeResult( HttpStatusCode.BadRequest );
             }
-            Presentation presentation = await this._Db.Presentations.FindAsync( id );
-            if (presentation == null) {
+            Presentation presentation = await this._Db.Presentations.FindAsync(id);
+            if ( presentation == null ) {
                 return HttpNotFound();
             }
-            if (presentation.Owner.Id != this.User.Identity.GetUserId()) {
+            if ( presentation.Owner.Id != this.User.Identity.GetUserId() ) {
                 return HttpNotFound();
             }
-            var edit = new EditViewModel {
+            var edit = new EditViewModel
+            {
                 Id = presentation.Id,
                 Name = presentation.Name,
                 HasReactionType = presentation.HasReactionType
@@ -133,15 +135,15 @@ namespace AppServer.Controllers
         // 詳細については、https://go.microsoft.com/fwlink/?LinkId=317598 を参照してください。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(EditViewModel edit)
+        public async Task<ActionResult> Edit( EditViewModel edit )
         {
-            if (this.ModelState.IsValid) {
-                var presentation = await this._Db.Presentations.FindAsync( edit.Id );
+            if ( this.ModelState.IsValid ) {
+                var presentation = await this._Db.Presentations.FindAsync(edit.Id);
 
-                if (presentation == null) {
+                if ( presentation == null ) {
                     return HttpNotFound();
                 }
-                if (presentation.Owner.Id != this.User.Identity.GetUserId()) {
+                if ( presentation.Owner.Id != this.User.Identity.GetUserId() ) {
                     return HttpNotFound();
                 }
 
@@ -155,16 +157,16 @@ namespace AppServer.Controllers
         }
 
         // GET: Presentations/Delete/5
-        public async Task<ActionResult> Delete(string id)
+        public async Task<ActionResult> Delete( string id )
         {
-            if (id == null) {
+            if ( id == null ) {
                 return new HttpStatusCodeResult( HttpStatusCode.BadRequest );
             }
-            Presentation presentation = await this._Db.Presentations.FindAsync( id );
-            if (presentation == null) {
+            Presentation presentation = await this._Db.Presentations.FindAsync(id);
+            if ( presentation == null ) {
                 return HttpNotFound();
             }
-            if (presentation.Owner.Id != this.User.Identity.GetUserId()) {
+            if ( presentation.Owner.Id != this.User.Identity.GetUserId() ) {
                 return HttpNotFound();
             }
             return View( presentation );
@@ -173,13 +175,13 @@ namespace AppServer.Controllers
         // POST: Presentations/Delete/5
         [HttpPost, ActionName( "Delete" )]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(string id)
+        public async Task<ActionResult> DeleteConfirmed( string id )
         {
-            Presentation presentation = await this._Db.Presentations.FindAsync( id );
-            if (presentation == null) {
+            Presentation presentation = await this._Db.Presentations.FindAsync(id);
+            if ( presentation == null ) {
                 return HttpNotFound();
             }
-            if (presentation.Owner.Id != this.User.Identity.GetUserId()) {
+            if ( presentation.Owner.Id != this.User.Identity.GetUserId() ) {
                 return HttpNotFound();
             }
             this._Db.Presentations.Remove( presentation );
@@ -187,9 +189,9 @@ namespace AppServer.Controllers
             return RedirectToAction( "Index" );
         }
 
-        protected override void Dispose(bool disposing)
+        protected override void Dispose( bool disposing )
         {
-            if (disposing) {
+            if ( disposing ) {
                 this._Db.Dispose();
             }
             base.Dispose( disposing );

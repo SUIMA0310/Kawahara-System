@@ -1,11 +1,8 @@
-﻿using Prism.Common;
-using Prism.Regions;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Collections.Specialized;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+using Prism.Common;
+using Prism.Regions;
 
 namespace DesktopApp.Behaviors
 {
@@ -19,27 +16,20 @@ namespace DesktopApp.Behaviors
             this.Region.Views.CollectionChanged += this.ViewsCollectionChanged;
         }
 
-        protected virtual void ViewsCollectionChanged(object sender, NotifyCollectionChangedEventArgs eventArgs)
+        protected virtual void ViewsCollectionChanged( object sender, NotifyCollectionChangedEventArgs eventArgs )
         {
-
             //Eventの種類を確認
-            switch (eventArgs.Action)
-            {
+            switch ( eventArgs.Action ) {
                 case NotifyCollectionChangedAction.Remove:
-                case NotifyCollectionChangedAction.Replace:
-                {
-
-                    foreach (object oldView in eventArgs.OldItems)
-                    {
+                case NotifyCollectionChangedAction.Replace: {
+                    foreach ( object oldView in eventArgs.OldItems ) {
                         //ViewからViewModelを取り出して、Disposeする
-                        MvvmHelpers.ViewAndViewModelAction<IDisposable>(oldView, d => d.Dispose());
+                        MvvmHelpers.ViewAndViewModelAction<IDisposable>( oldView, d => d.Dispose() );
                     }
 
                     break;
                 }
             }
-
         }
-
     }
 }

@@ -1,20 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SharpDX;
-using SharpDX.Direct2D1;
-using SharpDX.DXGI;
-using SharpDX.Mathematics.Interop;
-using DesktopApp.Overlay.Draw.Helpers;
 using System.Windows;
+
+using DesktopApp.Overlay.Draw.Helpers;
+
+using SharpDX.Direct2D1;
 
 namespace DesktopApp.Overlay.Draw.Views
 {
     public class ReactionControl : D2dControl.D2dControl
     {
-
         #region static field
 
         // Using a DependencyProperty as the backing store for Target.  This enables animation, styling, binding, etc...
@@ -25,9 +21,7 @@ namespace DesktopApp.Overlay.Draw.Views
                 typeof(ReactionControl),
                 new PropertyMetadata((sender, eventArgs) =>
                 {
-
                     if (sender is ReactionControl reactionControl) {
-
                         if (eventArgs.OldValue is Models.IReactionInteraction oldValue) {
                             oldValue.Interaction -= reactionControl.Interaction;
                         }
@@ -35,9 +29,7 @@ namespace DesktopApp.Overlay.Draw.Views
                         if (eventArgs.NewValue is Models.IReactionInteraction newValue) {
                             newValue.Interaction += reactionControl.Interaction;
                         }
-
                     }
-
                 }));
 
         // Using a DependencyProperty as the backing store for MaxOpacity.  This enables animation, styling, binding, etc...
@@ -67,7 +59,7 @@ namespace DesktopApp.Overlay.Draw.Views
                 typeof(ReactionControl),
                 new PropertyMetadata(2.0));
 
-        #endregion
+        #endregion static field
 
         #region Properties
 
@@ -76,8 +68,8 @@ namespace DesktopApp.Overlay.Draw.Views
         /// </summary>
         public Models.IReactionInteraction Target
         {
-            get { return (Models.IReactionInteraction)GetValue(TargetProperty); }
-            set { SetValue(TargetProperty, value); }
+            get { return (Models.IReactionInteraction)GetValue( TargetProperty ); }
+            set { SetValue( TargetProperty, value ); }
         }
 
         /// <summary>
@@ -85,8 +77,8 @@ namespace DesktopApp.Overlay.Draw.Views
         /// </summary>
         public float MaxOpacity
         {
-            get { return (float)GetValue(MaxOpacityProperty); }
-            set { SetValue(MaxOpacityProperty, value); }
+            get { return (float)GetValue( MaxOpacityProperty ); }
+            set { SetValue( MaxOpacityProperty, value ); }
         }
 
         /// <summary>
@@ -94,8 +86,8 @@ namespace DesktopApp.Overlay.Draw.Views
         /// </summary>
         public float Scale
         {
-            get { return (float)GetValue(ScaleProperty); }
-            set { SetValue(ScaleProperty, value); }
+            get { return (float)GetValue( ScaleProperty ); }
+            set { SetValue( ScaleProperty, value ); }
         }
 
         /// <summary>
@@ -103,25 +95,23 @@ namespace DesktopApp.Overlay.Draw.Views
         /// </summary>
         public double DisplayTime
         {
-            get { return (double)GetValue(DisplayTimeProperty); }
-            set { SetValue(DisplayTimeProperty, value); }
+            get { return (double)GetValue( DisplayTimeProperty ); }
+            set { SetValue( DisplayTimeProperty, value ); }
         }
 
-        #endregion
+        #endregion Properties
 
         private Queue<Models.Item> ViewDates;
 
         public ReactionControl()
         {
-
             this.ViewDates = new Queue<Models.Item>();
-            this.resCache.Add("Good", target => new Objects.GoodObject(target));
-
+            this.resCache.Add( "Good", target => new Objects.GoodObject( target ) );
         }
 
-        public override void Render(RenderTarget target)
+        public override void Render( RenderTarget target )
         {
-            target.Clear(null);
+            target.Clear( null );
 
             target.Transform = Matrix3x2Helper.Identity;
             target.AntialiasMode = AntialiasMode.PerPrimitive;
@@ -132,19 +122,18 @@ namespace DesktopApp.Overlay.Draw.Views
             //描画用のObjectを取得
             var good = this.resCache["Good"] as Objects.ObjectBase;
 
-            lock (this.ViewDates) {
-                foreach (var item in this.ViewDates) {
-
+            lock ( this.ViewDates ) {
+                foreach ( var item in this.ViewDates ) {
                     var transform = Matrix3x2Helper.Identity;
 
                     //経過時間の割合を取得
                     float t = item.StartTime.Elapsed(st);
 
                     //描画位置を指定
-                    transform = transform.Translation(item.Animation.Point(t));
+                    transform = transform.Translation( item.Animation.Point( t ) );
 
                     //表示スケールを指定
-                    transform = transform.Scale(this.Scale);
+                    transform = transform.Scale( this.Scale );
 
                     //表示色を指定
                     var color = item.Color;
@@ -152,48 +141,42 @@ namespace DesktopApp.Overlay.Draw.Views
                     //透明度を設定
                     color.A = (1.0f - t) * this.MaxOpacity;
 
-                    switch (item.ReactionType) {
+                    switch ( item.ReactionType ) {
                         case DesktopApp.Models.eReactionType.Good:
-                            good.Render(transform, color);
+                            good.Render( transform, color );
                             break;
+
                         case DesktopApp.Models.eReactionType.Nice:
                             //TODO
-                            good.Render(transform, color);
+                            good.Render( transform, color );
                             break;
+
                         case DesktopApp.Models.eReactionType.Fun:
                             //TODO
-                            good.Render(transform, color);
+                            good.Render( transform, color );
                             break;
                     }
-
                 }
 
                 while (
                     this.ViewDates.Any() &&
-                    this.ViewDates.Peek().StartTime.Elapsed(st) >= 1.0) {
+                    this.ViewDates.Peek().StartTime.Elapsed( st ) >= 1.0 ) {
                     this.ViewDates.Dequeue();
                 }
-
             }
-
         }
 
-        private void Interaction(DesktopApp.Models.eReactionType reactionType, DesktopApp.Models.Color color)
+        private void Interaction( DesktopApp.Models.eReactionType reactionType, DesktopApp.Models.Color color )
         {
-
             var item = new Models.Item(this.Dispatcher.Invoke(() => this.CreateBezier()), reactionType, color);
 
-            lock (this.ViewDates) {
-
-                this.ViewDates.Enqueue(item);
-
+            lock ( this.ViewDates ) {
+                this.ViewDates.Enqueue( item );
             }
-
         }
 
         private Models.Bezier CreateBezier()
         {
-
             var ret = new Models.Bezier();
 
             ret.StartPoint.Y = (float)this.ActualHeight - 120.0f * this.Scale;
@@ -207,13 +190,11 @@ namespace DesktopApp.Overlay.Draw.Views
             int min = (int)(100.0f * this.Scale);
 
             ret.StartPoint.X = center;
-            ret.Point1.X = random.Next(min, max);
-            ret.Point2.X = random.Next(min, max);
-            ret.EndPoint.X = random.Next(min, max);
+            ret.Point1.X = random.Next( min, max );
+            ret.Point2.X = random.Next( min, max );
+            ret.EndPoint.X = random.Next( min, max );
 
             return ret;
-
         }
-
     }
 }

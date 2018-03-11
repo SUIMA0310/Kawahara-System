@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ControlModule.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Models\DisplaySettingsStore.cs" />
     <Compile Include="Models\IDisplaySettingsStore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">

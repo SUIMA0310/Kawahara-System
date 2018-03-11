@@ -8,11 +8,12 @@ namespace AppServer.Models
         public string Provider { get; set; }
 
         [Required]
-        [Display(Name = "コード")]
+        [Display( Name = "コード" )]
         public string Code { get; set; }
+
         public string ReturnUrl { get; set; }
 
-        [Display(Name = "認証情報をこのブラウザーに保存しますか?")]
+        [Display( Name = "認証情報をこのブラウザーに保存しますか?" )]
         public bool RememberBrowser { get; set; }
 
         public bool RememberMe { get; set; }

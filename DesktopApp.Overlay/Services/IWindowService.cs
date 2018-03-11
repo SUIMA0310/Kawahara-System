@@ -9,8 +9,11 @@ namespace DesktopApp.Services
         event Action<eWindowStateTypes> WindowStateChanged;
 
         void Hide();
-        bool SetWindowController(IWindowController windowController, bool throwException = true);
-        bool SetWindowFactory(IWindowFactory windowFactory, bool throwException = true);
+
+        bool SetWindowController( IWindowController windowController, bool throwException = true );
+
+        bool SetWindowFactory( IWindowFactory windowFactory, bool throwException = true );
+
         void Show();
     }
 }

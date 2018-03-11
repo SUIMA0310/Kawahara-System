@@ -50,6 +50,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Helpers\HubProxyExtensions.cs" />
     <Compile Include="Helpers\StringExtensions.cs" />
     <Compile Include="Models\Color.cs" />

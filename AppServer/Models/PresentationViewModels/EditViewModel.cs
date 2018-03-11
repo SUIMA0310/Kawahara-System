@@ -4,7 +4,6 @@ namespace AppServer.Models.PresentationViewModels
 {
     public class EditViewModel
     {
-
         /// <summary>
         /// プレゼンテーションのId
         /// </summary>
@@ -24,7 +23,5 @@ namespace AppServer.Models.PresentationViewModels
         /// </summary>
         [Display( Name = "リアクション" )]
         public eReactionType HasReactionType { get; set; }
-
-
     }
 }

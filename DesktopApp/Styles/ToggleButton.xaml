@@ -13,7 +13,7 @@
         <Setter Property="Padding"
 				Value="15,10" />
         <Setter Property="Margin"
-                Value="10"/>
+                Value="10" />
         <Setter Property="FocusVisualStyle"
 				Value="{DynamicResource {x:Static SystemParameters.FocusVisualStyleKey}}" />
         <Setter Property="Template">
@@ -68,5 +68,4 @@
             </Trigger>
         </Style.Triggers>
     </Style>
-
 </ResourceDictionary>

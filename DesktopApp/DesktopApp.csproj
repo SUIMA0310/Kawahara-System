@@ -62,6 +62,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="MainModule.cs" />
     <Compile Include="ViewModels\StatusBarControlViewModel.cs" />
     <Compile Include="Views\StatusBarControl.xaml.cs">

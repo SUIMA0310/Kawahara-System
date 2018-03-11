@@ -1,18 +1,15 @@
-﻿using Prism.Commands;
-using Prism.Mvvm;
-using System;
-using System.Linq;
+﻿using System;
 using System.Reactive.Linq;
-using System.Collections.Generic;
+
+using DesktopApp.Services;
+
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
-using DesktopApp.Services;
 
 namespace DesktopApp.ViewModels
 {
     public class OverlayShownControlViewModel : ViewModelBase
     {
-
         public ReactiveProperty<float> DisplayTime { get; }
         public ReactiveProperty<float> MaxOpacity { get; }
         public ReactiveProperty<float> Scale { get; }
@@ -22,7 +19,7 @@ namespace DesktopApp.ViewModels
 
         private readonly IDisplayControlService DisplayControl;
 
-        public OverlayShownControlViewModel(IDisplayControlService displayControl)
+        public OverlayShownControlViewModel( IDisplayControlService displayControl )
         {
             this.DisplayControl = displayControl;
 
@@ -32,20 +29,19 @@ namespace DesktopApp.ViewModels
 
             this.SaveCommand = new ReactiveCommand();
             this.SaveCommand
-                .Subscribe(_ =>
-            {
-                this.DisplayControl.Save();
-            })
-            .AddTo(this.Disposable);
+                .Subscribe( _ =>
+             {
+                 this.DisplayControl.Save();
+             } )
+            .AddTo( this.Disposable );
 
             this.ResetCommand = new ReactiveCommand();
             this.ResetCommand
-                .Subscribe(_ =>
-            {
-                this.DisplayControl.Load();
-            })
-            .AddTo(this.Disposable);
-
+                .Subscribe( _ =>
+             {
+                 this.DisplayControl.Load();
+             } )
+            .AddTo( this.Disposable );
 
             this.Title.Value = "Display control";
         }

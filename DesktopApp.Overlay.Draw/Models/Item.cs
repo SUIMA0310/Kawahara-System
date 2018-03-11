@@ -1,22 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 using DesktopApp.Models;
+
 using SharpDX.Mathematics.Interop;
 
 namespace DesktopApp.Overlay.Draw.Models
 {
     internal struct Item
     {
-
         public Bezier Animation { get; }
         public eReactionType ReactionType { get; }
         public RawColor4 Color { get; }
         public DateTime StartTime { get; }
 
-        public Item(Bezier animation, eReactionType reactionType, Color color) : this()
+        public Item( Bezier animation, eReactionType reactionType, Color color ) : this()
         {
             this.Animation = animation;
             this.ReactionType = reactionType;

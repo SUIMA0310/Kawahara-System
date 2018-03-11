@@ -10,9 +10,9 @@
                 <ResourceDictionary Source="pack://application:,,,/MetroRadiance;component/Themes/Dark.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MetroRadiance;component/Themes/Accents/Blue.xaml" />
 
-                <ResourceDictionary Source="Styles/TabControl.xaml"/> 
-                <ResourceDictionary Source="Styles/ToggleButton.xaml"/>
-                <ResourceDictionary Source="Styles/Texts.xaml"/>
+                <ResourceDictionary Source="Styles/TabControl.xaml" />
+                <ResourceDictionary Source="Styles/ToggleButton.xaml" />
+                <ResourceDictionary Source="Styles/Texts.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DesktopApp.Overlay.Control.Properties;
+﻿using DesktopApp.Overlay.Control.Properties;
 
 namespace DesktopApp.Models
 {
     public class DisplaySettingsStore : IDisplaySettingsStore
     {
-
         public float MaxOpacity
         {
             get => Settings.Default.MaxOpacity;

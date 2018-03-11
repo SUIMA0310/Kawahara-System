@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Web.Mvc;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using AppServer;
+﻿using System.Web.Mvc;
+
 using AppServer.Controllers;
+
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AppServer.Tests.Controllers
 {
@@ -22,7 +19,7 @@ namespace AppServer.Tests.Controllers
             ViewResult result = controller.Index() as ViewResult;
 
             // Assert
-            Assert.IsNotNull(result);
+            Assert.IsNotNull( result );
         }
 
         [TestMethod]
@@ -35,7 +32,7 @@ namespace AppServer.Tests.Controllers
             ViewResult result = controller.About() as ViewResult;
 
             // Assert
-            Assert.AreEqual("Your application description page.", result.ViewBag.Message);
+            Assert.AreEqual( "Your application description page.", result.ViewBag.Message );
         }
 
         [TestMethod]
@@ -48,7 +45,7 @@ namespace AppServer.Tests.Controllers
             ViewResult result = controller.Contact() as ViewResult;
 
             // Assert
-            Assert.IsNotNull(result);
+            Assert.IsNotNull( result );
         }
     }
 }

@@ -2,11 +2,9 @@
 {
     public enum eWindowStateTypes
     {
-
         Initializeing,
         Shown,
         Hide,
         Closed
-
     }
 }

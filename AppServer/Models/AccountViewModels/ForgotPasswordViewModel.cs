@@ -6,7 +6,7 @@ namespace AppServer.Models
     {
         [Required]
         [EmailAddress]
-        [Display(Name = "電子メール")]
+        [Display( Name = "電子メール" )]
         public string Email { get; set; }
     }
 }

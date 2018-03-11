@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+
 using Microsoft.AspNet.Identity;
 
 namespace AppServer.Models

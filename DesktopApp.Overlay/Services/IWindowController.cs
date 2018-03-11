@@ -4,7 +4,6 @@ namespace DesktopApp.Services
 {
     public interface IWindowController
     {
-        
         /// <summary>
         /// Windowの可視状態
         /// </summary>
@@ -24,6 +23,5 @@ namespace DesktopApp.Services
         /// WindowのCloseが完了 もしくは、 それ以上の状態追跡ができない
         /// </summary>
         event EventHandler Closed;
-
     }
 }
