@@ -68,6 +68,7 @@
     <Compile Include="Models\Bezier.cs" />
     <Compile Include="Models\IReactionInteraction.cs" />
     <Compile Include="Models\Item.cs" />
+    <Compile Include="Objects\FunObject.cs" />
     <Compile Include="Objects\GoodObject.cs" />
     <Compile Include="Objects\NiceObject.cs" />
     <Compile Include="Objects\ObjectBase.cs" />
