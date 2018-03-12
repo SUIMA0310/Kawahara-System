@@ -69,16 +69,13 @@ namespace DesktopApp.Overlay.Draw.Views
                 typeof(ReactionControl),
                 new PropertyMetadata(Constant.Instance));
 
-
         // Using a DependencyProperty as the backing store for OpacityCurve.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty OpacityCurveProperty =
             DependencyProperty.Register(
-                "OpacityCurve", 
-                typeof(IParameterCurve), 
-                typeof(ReactionControl), 
+                "OpacityCurve",
+                typeof(IParameterCurve),
+                typeof(ReactionControl),
                 new PropertyMetadata(Constant.Instance));
-
-
 
         #endregion static field
 
@@ -182,7 +179,7 @@ namespace DesktopApp.Overlay.Draw.Views
                     var color = item.Color;
 
                     //透明度を設定
-                    color.A = (1.0f - this.OpacityCurve.GetValue(t)) * this.MaxOpacity;
+                    color.A = (1.0f - this.OpacityCurve.GetValue( t )) * this.MaxOpacity;
 
                     switch ( item.ReactionType ) {
                         case eReactionType.Good:
