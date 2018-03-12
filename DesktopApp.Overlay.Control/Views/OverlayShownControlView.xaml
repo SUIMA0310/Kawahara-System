@@ -16,16 +16,23 @@
             <Slider MinWidth="100"
                     MinHeight="25"
                     Maximum="1.5"
+                    Minimum="0.1"
                     Value="{Binding Scale.Value}" />
         </StackPanel>
         <StackPanel Margin="10">
             <Label Content="Display time" />
             <Slider MinWidth="100"
                     MinHeight="25"
-                    Maximum="3"
-                    Minimum="0.1"
+                    Maximum="4"
+                    Minimum="0.3"
                     Value="{Binding DisplayTime.Value}" />
         </StackPanel>
+        <ComboBox ItemsSource="{Binding CurveOptions}"
+                  Margin="10"
+                  SelectedItem="{Binding MoveMethod.Value}"/>
+        <ComboBox ItemsSource="{Binding CurveOptions}"
+                  Margin="10"
+                  SelectedItem="{Binding OpacityCurve.Value}"/>
 
         <StackPanel Margin="5" HorizontalAlignment="Right" Orientation="Horizontal">
             <Button Margin="5" Content="Save"  Command="{Binding SaveCommand}" />

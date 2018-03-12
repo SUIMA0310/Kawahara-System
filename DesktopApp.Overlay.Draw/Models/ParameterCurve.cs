@@ -15,6 +15,9 @@ namespace DesktopApp.Overlay.Draw.Models
 
         public float GetValue( float t )
             => t.CutOut();
+
+        public override string ToString()
+            => "等速";
     }
 
     public class Quadratic : IParameterCurve
@@ -30,5 +33,8 @@ namespace DesktopApp.Overlay.Draw.Models
 
         public float GetValue( float t )
             => (t * t).CutOut();
+
+        public override string ToString()
+            => "2乗";
     }
 }

@@ -19,6 +19,8 @@
             Target="{Binding}"
             DisplayTime="{Binding DisplayTime.Value}"
             MaxOpacity="{Binding MaxOpacity.Value}"
-            Scale="{Binding Scale.Value}" />
+            Scale="{Binding Scale.Value}"
+            MoveMethod="{Binding MoveMethod.Value}"
+            OpacityCurve="{Binding OpacityCurve.Value}"/>
     </Grid>
 </ovarlay:OverlayWindow>
