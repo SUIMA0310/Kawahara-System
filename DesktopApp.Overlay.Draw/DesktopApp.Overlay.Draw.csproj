@@ -66,8 +66,10 @@
     <Compile Include="Helpers\AnimationExpansion.cs" />
     <Compile Include="Helpers\Matrix3x2Helper.cs" />
     <Compile Include="Models\Bezier.cs" />
+    <Compile Include="Models\IParameterCurve.cs" />
     <Compile Include="Models\IReactionInteraction.cs" />
     <Compile Include="Models\Item.cs" />
+    <Compile Include="Models\ParameterCurve.cs" />
     <Compile Include="Objects\FunObject.cs" />
     <Compile Include="Objects\GoodObject.cs" />
     <Compile Include="Objects\NiceObject.cs" />
