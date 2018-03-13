@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Reactive.Linq;
 
 using DesktopApp.Services;
 using DesktopApp.Overlay.Draw.Models;
+using DesktopApp.Overlay.Draw.Helpers;
 
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
@@ -12,16 +14,16 @@ namespace DesktopApp.ViewModels
 {
     public class OverlayShownControlViewModel : ViewModelBase
     {
-        public ReactiveProperty<float>  DisplayTime  { get; }
-        public ReactiveProperty<float>  MaxOpacity   { get; }
-        public ReactiveProperty<float>  Scale        { get; }
+        public ReactiveProperty<float>  DisplayTime           { get; }
+        public ReactiveProperty<float>  MaxOpacity            { get; }
+        public ReactiveProperty<float>  Scale                 { get; }
         public ReactiveProperty<IParameterCurve> MoveMethod   { get; }
         public ReactiveProperty<IParameterCurve> OpacityCurve { get; }
 
-        public ReactiveCommand SaveCommand           { get; }
-        public ReactiveCommand ResetCommand          { get; }
+        public ReactiveCommand SaveCommand                    { get; }
+        public ReactiveCommand ResetCommand                   { get; }
 
-        public List<IParameterCurve> CurveOptions    { get; }
+        public IEnumerable<IParameterCurve> CurveOptions      { get; }
 
         private readonly IDisplayControlService DisplayControl;
 
@@ -35,9 +37,7 @@ namespace DesktopApp.ViewModels
             this.OpacityCurve = this.DisplayControl.OpacityCurve;
             this.Scale        = this.DisplayControl.Scale       ;
 
-            this.CurveOptions = new List<IParameterCurve>();
-            this.CurveOptions.Add( Constant.Instance  );
-            this.CurveOptions.Add( Quadratic.Instance );
+            this.CurveOptions = ParameterCurveHelpers.GetParameterCurves().ToArray();
 
             this.SaveCommand = new ReactiveCommand();
             this.SaveCommand

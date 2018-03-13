@@ -65,6 +65,7 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Helpers\AnimationExpansion.cs" />
     <Compile Include="Helpers\Matrix3x2Helper.cs" />
+    <Compile Include="Helpers\ParameterCurveHelpers.cs" />
     <Compile Include="Models\Bezier.cs" />
     <Compile Include="Models\IParameterCurve.cs" />
     <Compile Include="Models\IReactionInteraction.cs" />

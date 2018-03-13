@@ -5,6 +5,7 @@ using System.Linq;
 
 using DesktopApp.Models;
 using DesktopApp.Overlay.Draw.Models;
+using DesktopApp.Overlay.Draw.Helpers;
 
 using Reactive.Bindings;
 
@@ -29,9 +30,9 @@ namespace DesktopApp.Services
             this.DisplayTime = new ReactiveProperty<float>( this.SettingsStore.DisplayTime );
 
             this.MoveMethod = new ReactiveProperty<IParameterCurve>(
-                    this.GetParameterCurve( this.SettingsStore.MoveMethodName, false )   ?? Constant.Instance );
+                    this.SettingsStore.MoveMethodName.GetParameterCurveInstance( false )   ?? Constant.Instance );
             this.OpacityCurve = new ReactiveProperty<IParameterCurve>(
-                    this.GetParameterCurve( this.SettingsStore.OpacityCurveName, false ) ?? Constant.Instance );
+                    this.SettingsStore.OpacityCurveName.GetParameterCurveInstance( false ) ?? Constant.Instance );
         }
 
         public void Load()
@@ -41,9 +42,9 @@ namespace DesktopApp.Services
             this.DisplayTime.Value = this.SettingsStore.DisplayTime;
 
             this.MoveMethod.Value
-                = this.GetParameterCurve( this.SettingsStore.MoveMethodName, false )   ?? Constant.Instance;
+                = this.SettingsStore.MoveMethodName.GetParameterCurveInstance( false )   ?? Constant.Instance;
             this.OpacityCurve.Value
-                = this.GetParameterCurve( this.SettingsStore.OpacityCurveName, false ) ?? Constant.Instance;
+                = this.SettingsStore.OpacityCurveName.GetParameterCurveInstance( false ) ?? Constant.Instance;
         }
 
         public void Save()
@@ -56,46 +57,6 @@ namespace DesktopApp.Services
             this.SettingsStore.OpacityCurveName = this.OpacityCurve.Value.GetType().FullName;
 
             this.SettingsStore.Save();
-        }
-
-        private IParameterCurve GetParameterCurve( string className, bool throwOnError = true )
-        {
-            try {
-
-                //型情報を取得
-                var type = AppDomain.CurrentDomain
-                                    .GetAssemblies()
-                                    .AsParallel()
-                                    .Select( a => a.GetType( className ) )
-                                    .Where( x => x != null )
-                                    .First();
-
-                //型がinterfaceを実装しているか確認
-                var ifType = type.GetInterface( nameof( IParameterCurve ) );
-                if ( ifType == null ) {
-                    throw new ArgumentException( $"{className} は、{nameof( IParameterCurve )}を実装しません." );
-                }
-
-                // Instance プロパティ情報を取得
-                var propInfo = type.GetProperty( "Instance", BindingFlags.Static | BindingFlags.Public );
-                if ( propInfo == null ) {
-                    throw new ArgumentException( $"{className} は、Instance Propertyを実装しません." );
-                }
-
-                //プロパティから値を取得
-                var instance = propInfo.GetValue( null ) as IParameterCurve;
-                if ( instance == null ) {
-                    throw new AggregateException( $"{className}.Instance の戻り値を取得できません." );
-                }
-
-                return instance;
-            } catch ( Exception ex ) {
-                if ( throwOnError ) {
-                    throw new ArgumentException( $"{className} のインスタンス取得に失敗しました.", ex );
-                }
-
-                return null;
-            }
         }
 
         /// <summary>
