@@ -36,9 +36,11 @@ namespace DesktopApp.Overlay.Draw.Helpers
 
         #region Scale
 
-        public static RawMatrix3x2 Scale( float scale ) => Scale( scale, scale );
+        public static RawMatrix3x2 Scale( float scale                               ) 
+            => Scale( scale, scale );
 
-        public static RawMatrix3x2 Scale( float sx, float sy ) => Identity.Scale( sx, sy );
+        public static RawMatrix3x2 Scale( float sx, float sy                        ) 
+            => Identity.Scale( sx, sy );
 
         public static RawMatrix3x2 Scale( this RawMatrix3x2 baseMatrix, float scale )
             => baseMatrix.Scale( scale, scale );

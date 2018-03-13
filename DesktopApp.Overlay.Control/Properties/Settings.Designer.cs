@@ -58,5 +58,29 @@ namespace DesktopApp.Overlay.Control.Properties {
                 this["DisplayTime"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("DesktopApp.Overlay.Draw.Models.Constant")]
+        public string MoveMethodName {
+            get {
+                return ((string)(this["MoveMethodName"]));
+            }
+            set {
+                this["MoveMethodName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("DesktopApp.Overlay.Draw.Models.Constant")]
+        public string OpacityCurveName {
+            get {
+                return ((string)(this["OpacityCurveName"]));
+            }
+            set {
+                this["OpacityCurveName"] = value;
+            }
+        }
     }
 }

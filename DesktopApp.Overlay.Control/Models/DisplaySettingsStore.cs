@@ -22,6 +22,18 @@ namespace DesktopApp.Models
             set => Settings.Default.DisplayTime = value;
         }
 
+        public string MoveMethodName
+        {
+            get => Settings.Default.MoveMethodName;
+            set => Settings.Default.MoveMethodName = value;
+        }
+
+        public string OpacityCurveName
+        {
+            get => Settings.Default.OpacityCurveName;
+            set => Settings.Default.OpacityCurveName = value;
+        }
+
         public void Save()
         {
             Settings.Default.Save();

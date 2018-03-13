@@ -25,15 +25,18 @@ namespace DesktopApp.Overlay.Test
             window.AltF4Cancel = true;
             window.AltF4Cancel = false;
 
+            window.SourceInitialized += ( s, e ) =>
+            {
+                window.AltF4Cancel = true;
+                window.AltF4Cancel = false;
+                window.AltF4Cancel = true;
+                window.AltF4Cancel = false;
+
+                window.Close();
+            };
+
             window.Show();
-            System.Threading.Tasks.Task.Delay( TimeSpan.FromSeconds( 2 ) ).Wait();
 
-            window.AltF4Cancel = true;
-            window.AltF4Cancel = false;
-            window.AltF4Cancel = true;
-            window.AltF4Cancel = false;
-
-            window.Close();
         }
 
         [TestMethod]
@@ -46,15 +49,17 @@ namespace DesktopApp.Overlay.Test
             window.ClickThrough = true;
             window.ClickThrough = false;
 
+            window.SourceInitialized += ( s, e ) =>
+            {
+                window.ClickThrough = true;
+                window.ClickThrough = false;
+                window.ClickThrough = true;
+                window.ClickThrough = false;
+
+                window.Close();
+            };
+
             window.Show();
-            System.Threading.Tasks.Task.Delay( TimeSpan.FromSeconds( 2 ) ).Wait();
-
-            window.ClickThrough = true;
-            window.ClickThrough = false;
-            window.ClickThrough = true;
-            window.ClickThrough = false;
-
-            window.Close();
         }
 
         [TestMethod]
@@ -62,11 +67,12 @@ namespace DesktopApp.Overlay.Test
         {
             var window = new OverlayWindow();
 
+            window.SourceInitialized += ( s, e ) =>
+            {
+                window.Close();
+            };
+
             window.Show();
-
-            System.Threading.Tasks.Task.Delay( TimeSpan.FromSeconds( 3 ) ).Wait();
-
-            window.Close();
         }
     }
 }
