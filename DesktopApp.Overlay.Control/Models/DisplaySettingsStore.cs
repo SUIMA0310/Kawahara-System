@@ -24,14 +24,14 @@ namespace DesktopApp.Models
 
         public string MoveMethodName
         {
-            get;
-            set;
+            get => Settings.Default.MoveMethodName;
+            set => Settings.Default.MoveMethodName = value;
         }
 
         public string OpacityCurveName
         {
-            get;
-            set;
+            get => Settings.Default.OpacityCurveName;
+            set => Settings.Default.OpacityCurveName = value;
         }
 
         public void Save()

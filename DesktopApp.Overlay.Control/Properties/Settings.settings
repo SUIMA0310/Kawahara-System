@@ -11,5 +11,11 @@
     <Setting Name="DisplayTime" Type="System.Single" Scope="User">
       <Value Profile="(Default)">1.5</Value>
     </Setting>
+    <Setting Name="MoveMethodName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">DesktopApp.Overlay.Draw.Models.Constant</Value>
+    </Setting>
+    <Setting Name="OpacityCurveName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">DesktopApp.Overlay.Draw.Models.Constant</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
