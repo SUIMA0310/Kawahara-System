@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 
+using DesktopApp.Models;
 using DesktopApp.Overlay.Draw.Helpers;
+using DesktopApp.Overlay.Draw.Models;
 
 using SharpDX.Direct2D1;
 
@@ -17,16 +19,16 @@ namespace DesktopApp.Overlay.Draw.Views
         public static readonly DependencyProperty TargetProperty =
             DependencyProperty.Register(
                 "Target",
-                typeof(Models.IReactionInteraction),
+                typeof(IReactionInteraction),
                 typeof(ReactionControl),
                 new PropertyMetadata((sender, eventArgs) =>
                 {
                     if (sender is ReactionControl reactionControl) {
-                        if (eventArgs.OldValue is Models.IReactionInteraction oldValue) {
+                        if (eventArgs.OldValue is IReactionInteraction oldValue) {
                             oldValue.Interaction -= reactionControl.Interaction;
                         }
 
-                        if (eventArgs.NewValue is Models.IReactionInteraction newValue) {
+                        if (eventArgs.NewValue is IReactionInteraction newValue) {
                             newValue.Interaction += reactionControl.Interaction;
                         }
                     }
@@ -59,6 +61,22 @@ namespace DesktopApp.Overlay.Draw.Views
                 typeof(ReactionControl),
                 new PropertyMetadata(2.0));
 
+        // Using a DependencyProperty as the backing store for MoveMethod.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty MoveMethodProperty =
+            DependencyProperty.Register(
+                "MoveMethod",
+                typeof(IParameterCurve),
+                typeof(ReactionControl),
+                new PropertyMetadata(Constant.Instance));
+
+        // Using a DependencyProperty as the backing store for OpacityCurve.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty OpacityCurveProperty =
+            DependencyProperty.Register(
+                "OpacityCurve",
+                typeof(IParameterCurve),
+                typeof(ReactionControl),
+                new PropertyMetadata(Constant.Instance));
+
         #endregion static field
 
         #region Properties
@@ -66,9 +84,9 @@ namespace DesktopApp.Overlay.Draw.Views
         /// <summary>
         /// Controlに表示を追加するためのEvent発火元
         /// </summary>
-        public Models.IReactionInteraction Target
+        public IReactionInteraction Target
         {
-            get { return (Models.IReactionInteraction)GetValue( TargetProperty ); }
+            get { return (IReactionInteraction)GetValue( TargetProperty ); }
             set { SetValue( TargetProperty, value ); }
         }
 
@@ -99,15 +117,34 @@ namespace DesktopApp.Overlay.Draw.Views
             set { SetValue( DisplayTimeProperty, value ); }
         }
 
+        /// <summary>
+        /// 移動速度計算用メソッド
+        /// </summary>
+        public IParameterCurve MoveMethod
+        {
+            get { return (IParameterCurve)GetValue( MoveMethodProperty ); }
+            set { SetValue( MoveMethodProperty, value ); }
+        }
+
+        /// <summary>
+        /// 不透明度計算用メソッド
+        /// </summary>
+        public IParameterCurve OpacityCurve
+        {
+            get { return (IParameterCurve)GetValue( OpacityCurveProperty ); }
+            set { SetValue( OpacityCurveProperty, value ); }
+        }
+
         #endregion Properties
 
-        private Queue<Models.Item> ViewDates;
+        private Queue<Item> ViewDates;
 
         public ReactionControl()
         {
-            this.ViewDates = new Queue<Models.Item>();
+            this.ViewDates = new Queue<Item>();
             this.resCache.Add( "Good", target => new Objects.GoodObject( target ) );
             this.resCache.Add( "Nice", target => new Objects.NiceObject( target ) );
+            this.resCache.Add( "Fun", target => new Objects.FunObject( target ) );
         }
 
         public override void Render( RenderTarget target )
@@ -123,6 +160,7 @@ namespace DesktopApp.Overlay.Draw.Views
             //描画用のObjectを取得
             var good = this.resCache["Good"] as Objects.ObjectBase;
             var nice = this.resCache["Nice"] as Objects.ObjectBase;
+            var fun  = this.resCache["Fun"]  as Objects.ObjectBase;
 
             lock ( this.ViewDates ) {
                 foreach ( var item in this.ViewDates ) {
@@ -132,7 +170,7 @@ namespace DesktopApp.Overlay.Draw.Views
                     float t = item.StartTime.Elapsed(st);
 
                     //描画位置を指定
-                    transform = transform.Translation( item.Animation.Point( t ) );
+                    transform = transform.Translation( item.Animation.Point( this.MoveMethod.GetValue( t ) ) );
 
                     //表示スケールを指定
                     transform = transform.Scale( this.Scale );
@@ -141,20 +179,19 @@ namespace DesktopApp.Overlay.Draw.Views
                     var color = item.Color;
 
                     //透明度を設定
-                    color.A = (1.0f - t) * this.MaxOpacity;
+                    color.A = (1.0f - this.OpacityCurve.GetValue( t )) * this.MaxOpacity;
 
                     switch ( item.ReactionType ) {
-                        case DesktopApp.Models.eReactionType.Good:
+                        case eReactionType.Good:
                             good.Render( transform, color );
                             break;
 
-                        case DesktopApp.Models.eReactionType.Nice:
+                        case eReactionType.Nice:
                             nice.Render( transform, color );
                             break;
 
-                        case DesktopApp.Models.eReactionType.Fun:
-                            //TODO
-                            good.Render( transform, color );
+                        case eReactionType.Fun:
+                            fun.Render( transform, color );
                             break;
                     }
                 }
@@ -167,28 +204,30 @@ namespace DesktopApp.Overlay.Draw.Views
             }
         }
 
-        private void Interaction( DesktopApp.Models.eReactionType reactionType, DesktopApp.Models.Color color )
+        private void Interaction( eReactionType reactionType, Color color )
         {
-            var item = new Models.Item(this.Dispatcher.Invoke(() => this.CreateBezier()), reactionType, color);
+            float scale = this.Dispatcher.Invoke( () => this.Scale );
+
+            var item = new Item(this.CreateBezier(scale), reactionType, color);
 
             lock ( this.ViewDates ) {
                 this.ViewDates.Enqueue( item );
             }
         }
 
-        private Models.Bezier CreateBezier()
+        private Bezier CreateBezier( float scale )
         {
-            var ret = new Models.Bezier();
+            var ret = new Bezier();
 
-            ret.StartPoint.Y = (float)this.ActualHeight - 120.0f * this.Scale;
+            ret.StartPoint.Y = (float)this.ActualHeight - 120.0f * scale;
             ret.Point1.Y = (float)(this.ActualHeight * (2.0 / 3.0));
             ret.Point2.Y = (float)(this.ActualHeight * (1.0 / 3.0));
-            ret.EndPoint.Y = 120.0f * this.Scale;
+            ret.EndPoint.Y = 120.0f * scale;
 
             var random = new Random();
             float center = (float)this.ActualWidth / 2.0f;
-            int max = Math.Max((int)(this.ActualWidth - 100.0f * this.Scale), 101);
-            int min = (int)(100.0f * this.Scale);
+            int max = Math.Max((int)(this.ActualWidth - 100.0f * scale), 101);
+            int min = (int)(100.0f * scale);
 
             ret.StartPoint.X = center;
             ret.Point1.X = random.Next( min, max );

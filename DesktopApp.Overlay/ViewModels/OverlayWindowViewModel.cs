@@ -12,27 +12,35 @@ namespace DesktopApp.ViewModels
 {
     public class OverlayWindowViewModel : ViewModelBase, IReactionInteraction
     {
-        public ReactiveProperty<float> DisplayTime { get; }
-        public ReactiveProperty<float> MaxOpacity { get; }
-        public ReactiveProperty<float> Scale { get; }
+        public ReactiveProperty<float> DisplayTime            { get; }
+        public ReactiveProperty<float> MaxOpacity             { get; }
+        public ReactiveProperty<float> Scale                  { get; }
+        public ReactiveProperty<IParameterCurve> MoveMethod   { get; }
+        public ReactiveProperty<IParameterCurve> OpacityCurve { get; }
 
         private readonly IReactionHubProxy ReactionHub;
         private readonly IDisplayControlService DisplayControl;
 
         public OverlayWindowViewModel( IReactionHubProxy reactionHubProxy, IDisplayControlService displayControl )
         {
-            this.ReactionHub = reactionHubProxy;
+            this.ReactionHub    = reactionHubProxy;
             this.DisplayControl = displayControl;
 
-            this.DisplayTime = this.DisplayControl.DisplayTime
-                                .ToReactiveProperty()
-                                .AddTo( this.Disposable );
-            this.MaxOpacity = this.DisplayControl.MaxOpacity
-                                .ToReactiveProperty()
-                                .AddTo( this.Disposable );
-            this.Scale = this.DisplayControl.Scale
-                                .ToReactiveProperty()
-                                .AddTo( this.Disposable );
+            this.DisplayTime  = this.DisplayControl.DisplayTime
+                                    .ToReactiveProperty()
+                                    .AddTo( this.Disposable );
+            this.MaxOpacity   = this.DisplayControl.MaxOpacity
+                                    .ToReactiveProperty()
+                                    .AddTo( this.Disposable );
+            this.Scale        = this.DisplayControl.Scale
+                                    .ToReactiveProperty()
+                                    .AddTo( this.Disposable );
+            this.MoveMethod   = this.DisplayControl.MoveMethod
+                                    .ToReactiveProperty()
+                                    .AddTo( this.Disposable );
+            this.OpacityCurve = this.DisplayControl.OpacityCurve
+                                    .ToReactiveProperty()
+                                    .AddTo( this.Disposable );
 
             this.ReactionHub.Connected += async () =>
             {

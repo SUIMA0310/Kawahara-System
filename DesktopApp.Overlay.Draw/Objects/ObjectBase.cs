@@ -47,7 +47,7 @@ namespace DesktopApp.Overlay.Draw.Objects
             }
         }
 
-        public void Dispose()
+        public virtual void Dispose()
         {
             this.RenderTarget = null;
 
