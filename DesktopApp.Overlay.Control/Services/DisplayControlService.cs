@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reactive.Disposables;
 using System.Reflection;
+using System.Linq;
 
 using DesktopApp.Models;
 using DesktopApp.Overlay.Draw.Models;
@@ -62,7 +63,12 @@ namespace DesktopApp.Services
             try {
 
                 //型情報を取得
-                var type = Type.GetType( className );
+                var type = AppDomain.CurrentDomain
+                                    .GetAssemblies()
+                                    .AsParallel()
+                                    .Select( a => a.GetType( className ) )
+                                    .Where( x => x != null )
+                                    .First();
 
                 //型がinterfaceを実装しているか確認
                 var ifType = type.GetInterface( nameof( IParameterCurve ) );
@@ -71,7 +77,7 @@ namespace DesktopApp.Services
                 }
 
                 // Instance プロパティ情報を取得
-                var propInfo = type.GetProperty( "Instance", BindingFlags.Static | BindingFlags.GetProperty );
+                var propInfo = type.GetProperty( "Instance", BindingFlags.Static | BindingFlags.Public );
                 if ( propInfo == null ) {
                     throw new ArgumentException( $"{className} は、Instance Propertyを実装しません." );
                 }
