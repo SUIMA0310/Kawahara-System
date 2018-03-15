@@ -6,20 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DesktopApp.MultiUsers.ViewModels
+namespace DesktopApp.ViewModels
 {
-    public class MultiUsersViewModel : BindableBase
+    public class MultiUsersViewModel : ViewModelBase
     {
-        private string _message;
-        public string Message
-        {
-            get { return _message; }
-            set { SetProperty(ref _message, value); }
-        }
-
         public MultiUsersViewModel()
         {
-            Message = "View A from your Prism Module";
+            this.Title.Value = "Multi Users";
         }
     }
 }

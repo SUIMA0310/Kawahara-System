@@ -1,4 +1,4 @@
-﻿using DesktopApp.MultiUsers.Views;
+﻿using DesktopApp.Views;
 using Prism.Modularity;
 using Prism.Regions;
 using System;
