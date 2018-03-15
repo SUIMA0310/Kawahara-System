@@ -155,6 +155,10 @@
       <Project>{5048f2aa-32b1-49bf-a596-b3e59ea1de36}</Project>
       <Name>DesktopApp.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DesktopApp.MultiUsers\DesktopApp.MultiUsers.csproj">
+      <Project>{8b072979-bf47-4d07-ad97-8053721b4b48}</Project>
+      <Name>DesktopApp.MultiUsers</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DesktopApp.Overlay.Control\DesktopApp.Overlay.Control.csproj">
       <Project>{07ad70f5-97a6-4b9a-95c7-e7f6ea8b37d1}</Project>
       <Name>DesktopApp.Overlay.Control</Name>
