@@ -35,10 +35,15 @@
 
         <ComboBox ItemsSource="{Binding ScreenCollection}"
                   SelectedItem="{Binding UseScreen.Value}"
-                  DisplayMemberPath="DeviceName"
                   Grid.Row="1"
                   Grid.Column="0"
-                  Margin="10,10,5,10" />
+                  Margin="10,10,5,10" >
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding DeviceName}"/>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
 
         <Button Content="更新"
                 Command="{Binding ScreenUpdateCommand}"

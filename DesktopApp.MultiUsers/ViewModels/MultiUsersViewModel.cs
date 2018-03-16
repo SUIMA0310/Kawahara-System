@@ -54,7 +54,14 @@ namespace DesktopApp.ViewModels
                 .Subscribe( _ =>
                 {
                     this.UsersActivity.RemoveUser( this.SelectedUser.Value );
+                    this.SelectedUser.Value = null;
                 } );
+            this.UnselectCommand
+                .Subscribe( _ =>
+                {
+                    this.SelectedUser.Value = null;
+                } );
+
 
             this.Title.Value = "Multi Users";
         }
