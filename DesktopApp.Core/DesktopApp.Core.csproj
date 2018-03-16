@@ -109,7 +109,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\eStatusMessages.cs" />
     <Compile Include="Services\IStatusService.cs" />
+    <Compile Include="Services\IThemeService.cs" />
+    <Compile Include="Services\ServiceBace.cs" />
     <Compile Include="Services\StatusService.cs" />
+    <Compile Include="Services\ThemeService.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\Dialogs\PopupMetroWindow.xaml.cs">
       <DependentUpon>PopupMetroWindow.xaml</DependentUpon>

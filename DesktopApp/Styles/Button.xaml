@@ -1,0 +1,27 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+        <Setter Property="Background" Value="{DynamicResource ActiveBackgroundBrushKey}"/>
+        <Setter Property="Margin" Value="10"/>
+        <Style.Triggers>
+            <Trigger Property="IsPressed"
+					 Value="True">
+                <Setter Property="Background"
+						Value="{DynamicResource BackgroundBrushKey}" />
+                <Setter Property="BorderBrush"
+						Value="{DynamicResource BorderBrushKey}" />
+            </Trigger>
+            <Trigger Property="IsMouseOver"
+					 Value="True">
+                <Setter Property="Background"
+						Value="{DynamicResource AccentHighlightBrushKey}" />
+                <Setter Property="BorderBrush"
+						Value="{DynamicResource ActiveBorderBrushKey}" />
+                <Setter Property="Foreground"
+						Value="{DynamicResource AccentForegroundBrushKey}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+</ResourceDictionary>

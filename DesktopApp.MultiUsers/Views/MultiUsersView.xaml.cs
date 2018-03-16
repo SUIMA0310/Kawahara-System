@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace DesktopApp.MultiUsers.Views
+namespace DesktopApp.Views
 {
     /// <summary>
     /// Interaction logic for ViewA.xaml
