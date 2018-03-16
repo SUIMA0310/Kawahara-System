@@ -46,11 +46,13 @@ namespace DesktopApp.Services
                     }
                 } )
                 .AddTo( this.Disposable );
+
             };
                 
-
             this.SelectedUser = new ReactivePropertySlim<IUser>();
             this.Users = new ReactiveCollection<IUser>();
+
+            this.Load();
         }
 
         public ReactivePropertySlim<IUser> SelectedUser { get; }
@@ -94,13 +96,22 @@ namespace DesktopApp.Services
 
         public void Load()
         {
-            this.Users.Clear();
-            this.Users.AddRange( this.UsersStore.Load<User>() );
+            var users = this.UsersStore.Load<User>();
+            if ( users != null ) {
+                this.Users.Clear();
+                this.Users.AddRange( users );
+            }
         }
 
         protected virtual IUser CreateUser()
         {
             return new User();
+        }
+
+        public override void Dispose()
+        {
+            this.Save();
+            base.Dispose();
         }
 
     }
