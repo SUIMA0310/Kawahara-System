@@ -5,13 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
-using DesktopApp.Services;
 using System.Reactive.Linq;
 using System.Collections.ObjectModel;
+using DesktopApp.MultiUsers.Models;
 
-namespace DesktopApp.MultiUsers.Models
+namespace DesktopApp.Services
 {
-    public class UsersActivity
+    public class UsersActivity : ServiceBace
     {
         private readonly IReactionHubProxy ReactionHubProxy;
 
