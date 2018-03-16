@@ -16,10 +16,12 @@ namespace DesktopApp.ViewModels
     public class MultiUsersViewModel : ViewModelBase
     {
         private readonly IUsersActivity UsersActivity;
+        private readonly IUsersStore UserStore;
 
-        public MultiUsersViewModel( IUsersActivity usersActivity )
+        public MultiUsersViewModel( IUsersActivity usersActivity, IUsersStore usersStore )
         {
             this.UsersActivity = usersActivity;
+            this.UserStore = usersStore;
 
             this.NewUserName = new ReactiveProperty<string>();
             this.SelectedUser = this.UsersActivity
@@ -30,6 +32,9 @@ namespace DesktopApp.ViewModels
                              .Users
                              .ToReadOnlyReactiveCollection()
                              .AddTo( this.Disposable );
+            this.FilePath = this.UserStore
+                                .ToReactivePropertyAsSynchronized( x => x.FilePath )
+                                .AddTo( this.Disposable );
 
             this.AddUserCommand = this.NewUserName
                                       .Select( x => !string.IsNullOrWhiteSpace( x ) )
@@ -47,6 +52,14 @@ namespace DesktopApp.ViewModels
                                        .Select( x => x != null )
                                        .ToReactiveCommand()
                                        .AddTo( this.Disposable );
+            this.SaveCommand = this.FilePath
+                                   .Select( x => !string.IsNullOrWhiteSpace( x ) )
+                                   .ToReactiveCommand()
+                                   .AddTo( this.Disposable );
+            this.LoadCommand = this.FilePath
+                                   .Select( x => !string.IsNullOrWhiteSpace( x ) )
+                                   .ToReactiveCommand()
+                                   .AddTo( this.Disposable );
 
             this.AddUserCommand
                 .Subscribe( _ =>
@@ -70,7 +83,16 @@ namespace DesktopApp.ViewModels
                 {
                     this.UsersActivity.CountReset();
                 } );
-
+            this.SaveCommand
+                .Subscribe( _ =>
+                {
+                    this.UsersActivity.Save();
+                } );
+            this.LoadCommand
+                .Subscribe( _ =>
+                {
+                    this.UsersActivity.Load();
+                } );
 
             this.Title.Value = "Multi Users";
         }
@@ -86,6 +108,10 @@ namespace DesktopApp.ViewModels
         public ReactiveCommand UnselectCommand { get; }
 
         public ReactiveCommand ResetUserCount { get; }
+
+        public ReactiveProperty<string> FilePath { get; }
+        public ReactiveCommand SaveCommand { get; }
+        public ReactiveCommand LoadCommand { get; }
 
     }
 }

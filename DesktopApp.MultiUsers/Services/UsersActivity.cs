@@ -14,10 +14,13 @@ namespace DesktopApp.Services
     public class UsersActivity : ServiceBace, IUsersActivity
     {
         private readonly IReactionHubProxy ReactionHubProxy;
+        private readonly IUsersStore UsersStore;
 
-        public UsersActivity( IReactionHubProxy reactionHubProxy )
+        public UsersActivity( IReactionHubProxy reactionHubProxy, IUsersStore usersStore )
         {
             this.ReactionHubProxy = reactionHubProxy;
+            this.UsersStore = usersStore;
+
             this.ReactionHubProxy.Connected += () =>
             {
                 this.ReactionHubProxy
@@ -82,6 +85,17 @@ namespace DesktopApp.Services
             }
 
             this.Users.Remove( user );
+        }
+
+        public void Save()
+        {
+            this.UsersStore.Save( this.Users );
+        }
+
+        public void Load()
+        {
+            this.Users.Clear();
+            this.Users.AddRange( this.UsersStore.Load<User>() );
         }
 
         protected virtual IUser CreateUser()

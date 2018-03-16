@@ -12,5 +12,7 @@ namespace DesktopApp.Services
         void AddUser( string userName );
         void CountReset();
         void RemoveUser( IUser user );
+        void Save();
+        void Load();
     }
 }

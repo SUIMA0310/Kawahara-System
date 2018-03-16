@@ -70,7 +70,12 @@
                 </StackPanel>
             </Expander>
 
-
+            <Expander Header="永続化" Margin="10">
+                <StackPanel Margin="10" Orientation="Horizontal">
+                    <Button Content="保存" Command="{Binding SaveCommand}"/>
+                    <Button Content="読み込み" Command="{Binding LoadCommand}"/>
+                </StackPanel>
+            </Expander>
 
         </StackPanel>
     </ScrollViewer>
