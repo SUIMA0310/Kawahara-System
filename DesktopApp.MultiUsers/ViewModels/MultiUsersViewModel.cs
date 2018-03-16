@@ -18,12 +18,17 @@ namespace DesktopApp.ViewModels
         private readonly IUsersActivity UsersActivity;
         private readonly IUsersStore UserStore;
         private readonly IThemeService ThemeService;
+        private readonly IStatusService StatusService;
 
-        public MultiUsersViewModel( IUsersActivity usersActivity, IUsersStore usersStore, IThemeService themeService )
+        public MultiUsersViewModel( IUsersActivity usersActivity, 
+                                    IUsersStore usersStore, 
+                                    IThemeService themeService, 
+                                    IStatusService statusService )
         {
             this.UsersActivity = usersActivity;
-            this.UserStore = usersStore;
-            this.ThemeService = themeService;
+            this.UserStore     = usersStore   ;
+            this.ThemeService  = themeService ;
+            this.StatusService = statusService;
 
             this.NewUserName = new ReactiveProperty<string>();
             this.SelectedUser = this.UsersActivity
@@ -101,7 +106,15 @@ namespace DesktopApp.ViewModels
                 .Subscribe( x =>
                 {
                     this.ThemeService.IsBusy = x;
-                } );
+                } )
+                .AddTo( this.Disposable );
+            this.SelectedUser
+                .Select( x => x != null ? $"発表者:{x.Name}" : "準備完了" )
+                .Subscribe( x =>
+                {
+                    this.StatusService.SetStatus( x );
+                } )
+                .AddTo( this.Disposable );
 
             this.Title.Value = "Multi Users";
         }
