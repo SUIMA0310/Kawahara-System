@@ -43,6 +43,10 @@ namespace DesktopApp.ViewModels
                                        .Select( x => x != null )
                                        .ToReactiveCommand()
                                        .AddTo( this.Disposable );
+            this.ResetUserCount = this.SelectedUser
+                                       .Select( x => x != null )
+                                       .ToReactiveCommand()
+                                       .AddTo( this.Disposable );
 
             this.AddUserCommand
                 .Subscribe( _ =>
@@ -61,6 +65,11 @@ namespace DesktopApp.ViewModels
                 {
                     this.SelectedUser.Value = null;
                 } );
+            this.ResetUserCount
+                .Subscribe( _ =>
+                {
+                    this.UsersActivity.CountReset();
+                } );
 
 
             this.Title.Value = "Multi Users";
@@ -75,6 +84,8 @@ namespace DesktopApp.ViewModels
         public ReactiveCommand RemoveUserCommand { get; }
 
         public ReactiveCommand UnselectCommand { get; }
+
+        public ReactiveCommand ResetUserCount { get; }
 
     }
 }
