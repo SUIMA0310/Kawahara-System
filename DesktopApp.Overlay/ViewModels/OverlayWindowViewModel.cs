@@ -18,13 +18,19 @@ namespace DesktopApp.ViewModels
         public ReactiveProperty<IParameterCurve> MoveMethod   { get; }
         public ReactiveProperty<IParameterCurve> OpacityCurve { get; }
 
-        private readonly IReactionHubProxy ReactionHub;
-        private readonly IDisplayControlService DisplayControl;
+        public ReactiveProperty<string> Message               { get; }
 
-        public OverlayWindowViewModel( IReactionHubProxy reactionHubProxy, IDisplayControlService displayControl )
+        private readonly IReactionHubProxy      ReactionHub   ;
+        private readonly IDisplayControlService DisplayControl;
+        private readonly IUsersActivity         UsersActivity ;
+
+        public OverlayWindowViewModel( IReactionHubProxy reactionHubProxy, 
+                                       IDisplayControlService displayControl,
+                                       IUsersActivity usersActivity)
         {
             this.ReactionHub    = reactionHubProxy;
-            this.DisplayControl = displayControl;
+            this.DisplayControl = displayControl  ;
+            this.UsersActivity  = usersActivity   ;
 
             this.DisplayTime  = this.DisplayControl.DisplayTime
                                     .ToReactiveProperty()
@@ -39,6 +45,11 @@ namespace DesktopApp.ViewModels
                                     .ToReactiveProperty()
                                     .AddTo( this.Disposable );
             this.OpacityCurve = this.DisplayControl.OpacityCurve
+                                    .ToReactiveProperty()
+                                    .AddTo( this.Disposable );
+            this.Message      = this.UsersActivity
+                                    .SelectedUser
+                                    .Select( x => x?.Name ?? "川原's System." )
                                     .ToReactiveProperty()
                                     .AddTo( this.Disposable );
 
