@@ -18,6 +18,7 @@ namespace DesktopApp
         public void Initialize()
         {
             this.Container.Register<IStatusService, StatusService>( Reuse.Singleton );
+            this.Container.Register<IThemeService, ThemeService>( Reuse.Singleton );
         }
     }
 }

@@ -42,6 +42,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationFramework.Aero2" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -68,6 +69,18 @@
     <Compile Include="Views\StatusBarControl.xaml.cs">
       <DependentUpon>StatusBarControl.xaml</DependentUpon>
     </Compile>
+    <Page Include="Styles\Button.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\ComboBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\ListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Styles\TabControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -154,6 +167,10 @@
     <ProjectReference Include="..\DesktopApp.Core\DesktopApp.Core.csproj">
       <Project>{5048f2aa-32b1-49bf-a596-b3e59ea1de36}</Project>
       <Name>DesktopApp.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DesktopApp.MultiUsers\DesktopApp.MultiUsers.csproj">
+      <Project>{8b072979-bf47-4d07-ad97-8053721b4b48}</Project>
+      <Name>DesktopApp.MultiUsers</Name>
     </ProjectReference>
     <ProjectReference Include="..\DesktopApp.Overlay.Control\DesktopApp.Overlay.Control.csproj">
       <Project>{07ad70f5-97a6-4b9a-95c7-e7f6ea8b37d1}</Project>
