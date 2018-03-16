@@ -49,6 +49,9 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\IUser.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\UsersActivity.cs" />
     <Compile Include="MultiUsersModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

@@ -140,6 +140,7 @@
   <ItemGroup>
     <Compile Include="BootstrapperTest.cs" />
     <Compile Include="HelpersTest\ParameterCurveHelpersTest.cs" />
+    <Compile Include="ModelsTest\UserTest.cs" />
     <Compile Include="ModulesTest\ModuleTests.cs" />
     <Compile Include="OverlayWindowTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
