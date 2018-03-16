@@ -11,14 +11,16 @@ using DesktopApp.MultiUsers.Models;
 
 namespace DesktopApp.Services
 {
-    public class UsersActivity : ServiceBace
+    public class UsersActivity : ServiceBace, IUsersActivity
     {
         private readonly IReactionHubProxy ReactionHubProxy;
 
         public UsersActivity( IReactionHubProxy reactionHubProxy )
         {
             this.ReactionHubProxy = reactionHubProxy;
-            this.ReactionHubProxy
+            this.ReactionHubProxy.Connected += () =>
+            {
+                this.ReactionHubProxy
                 .OnReceiveReaction()
                 .Subscribe( x =>
                 {
@@ -41,6 +43,8 @@ namespace DesktopApp.Services
                     }
                 } )
                 .AddTo( this.Disposable );
+            };
+                
 
             this.SelectedUser = new ReactivePropertySlim<IUser>();
             this.Users = new ReactiveCollection<IUser>();
