@@ -17,11 +17,13 @@ namespace DesktopApp.ViewModels
     {
         private readonly IUsersActivity UsersActivity;
         private readonly IUsersStore UserStore;
+        private readonly IThemeService ThemeService;
 
-        public MultiUsersViewModel( IUsersActivity usersActivity, IUsersStore usersStore )
+        public MultiUsersViewModel( IUsersActivity usersActivity, IUsersStore usersStore, IThemeService themeService )
         {
             this.UsersActivity = usersActivity;
             this.UserStore = usersStore;
+            this.ThemeService = themeService;
 
             this.NewUserName = new ReactiveProperty<string>();
             this.SelectedUser = this.UsersActivity
@@ -92,6 +94,13 @@ namespace DesktopApp.ViewModels
                 .Subscribe( _ =>
                 {
                     this.UsersActivity.Load();
+                } );
+
+            this.SelectedUser
+                .Select( x => x != null )
+                .Subscribe( x =>
+                {
+                    this.ThemeService.IsBusy = x;
                 } );
 
             this.Title.Value = "Multi Users";

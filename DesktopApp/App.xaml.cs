@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using MetroRadiance.UI;
 
 namespace DesktopApp
 {
@@ -12,6 +13,8 @@ namespace DesktopApp
         protected override void OnStartup( StartupEventArgs e )
         {
             base.OnStartup( e );
+
+            ThemeService.Current.Register( this, Theme.Dark, Accent.Blue );
 
             var bootstrapper = new Bootstrapper();
             bootstrapper.Run();
